@@ -1,0 +1,43 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+.btn-edit {
+  width: 50px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: orange;
+
+  &:hover {
+    background-color: transparent !important;
+    color: orange;
+  }
+}
+.btn-delete {
+  width: 50px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: rgb(235, 15, 15);
+
+  &:hover {
+    background-color: transparent !important;
+    color: rgb(235, 15, 15);
+  }
+}
