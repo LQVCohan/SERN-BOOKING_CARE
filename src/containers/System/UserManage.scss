@@ -41,3 +41,36 @@ tr:nth-child(even) {
     color: rgb(235, 15, 15);
   }
 }
+.modal-user-container {
+  .modal-content {
+    .modal-header {
+      button {
+        background-color: transparent;
+        color: white;
+        border: none;
+        font-size: 30px;
+      }
+    }
+  }
+
+  .modal-user-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    .input-container {
+      display: flex;
+      width: 49%;
+      flex-direction: column;
+      &.max-width-input {
+        width: 100%;
+      }
+      input {
+        padding: 0 10px;
+        outline: none;
+        border: 1 px solid gray;
+        border-radius: 5 px;
+        height: 30px;
+      }
+    }
+  }
+}
