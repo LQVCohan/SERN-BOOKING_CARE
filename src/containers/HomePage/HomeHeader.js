@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./HomeHeader.scss";
+import { FormattedMessage } from "react-intl";
 
 class HomeHeader extends Component {
   render() {
@@ -15,34 +16,52 @@ class HomeHeader extends Component {
             <div className="center-content">
               <div className="child-content">
                 <div>
-                  <b>Chuyên khoa</b>
+                  <b>
+                    <FormattedMessage id="home-header.speciality" />
+                  </b>
                 </div>
-                <div className="subs-title">Tìm bác sĩ theo chuyên khoa</div>
+                <div className="subs-title">
+                  <FormattedMessage id="home-header.search-doctor" />
+                </div>
               </div>
               <div className="child-content">
                 <div>
-                  <b>Cơ sở y tế</b>
+                  <b>
+                    <FormattedMessage id="home-header.health-facility" />
+                  </b>
                 </div>
-                <div className="subs-title">Chọn bệnh viện phòng khám</div>
+                <div className="subs-title">
+                  <FormattedMessage id="home-header.select-room" />
+                </div>
               </div>
               <div className="child-content">
                 <div>
-                  <b>Bác sĩ</b>
+                  <b>
+                    <FormattedMessage id="home-header.doctor" />
+                  </b>
                 </div>
-                <div className="subs-title">Chọn bác sĩ giỏi</div>
+                <div className="subs-title">
+                  <FormattedMessage id="home-header.select-doctor" />
+                </div>
               </div>
               <div className="child-content">
                 <div>
-                  <b>Gói khám</b>
+                  <b>
+                    <FormattedMessage id="home-header.fee" />
+                  </b>
                 </div>
-                <div className="subs-title">Khám sức khỏe tổng quát</div>
+                <div className="subs-title">
+                  <FormattedMessage id="home-header.check-health" />
+                </div>
               </div>
             </div>
             <div className="right-content">
               <div className="support">
-                <i class="fa fa-question"></i> Hỗ trợ{" "}
+                <i class="fa fa-question"></i>{" "}
+                <FormattedMessage id="home-header.support" />
               </div>
-              <div className="flag">VN</div>
+              <div className="language-vi">VN</div>
+              <div className="language-en">EN</div>
             </div>
           </div>
         </div>
@@ -104,6 +123,7 @@ class HomeHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    language: state.app.language,
   };
 };
 
