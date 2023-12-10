@@ -8,7 +8,10 @@
     "select-doctor": "Chọn bác sĩ giỏi",
     "fee": "Gói khám",
     "check-health": "Khám sức khỏe tổng quát",
-    "support": "Hỗ trợ"
+    "support": "Hỗ trợ",
+    "title1": "Nền tảng y tế",
+    "title2": "Chăm sóc sức khỏe toàn diện",
+    "placeholderInput": "Tìm chuyên khoa khám bệnh"
   },
 
   "common": {

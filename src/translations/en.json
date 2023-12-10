@@ -1,14 +1,17 @@
 {
   "home-header": {
-    "speciality": "Chuyên khoa",
-    "search-doctor": "Tìm bác sĩ theo chuyên khoa",
-    "health-facility": "Cơ sở y tế",
-    "select-room": "Chọn bệnh viện phòng khám",
-    "doctor": "Bác sĩ",
-    "select-doctor": "Chọn bác sĩ giỏi",
-    "fee": "Gói khám",
-    "check-health": "Khám sức khỏe tổng quát",
-    "support": "Hỗ trợ"
+    "speciality": "Medical speciality",
+    "search-doctor": "Find a doctor by speciality",
+    "health-facility": "health facility",
+    "select-room": "Choose a hospital clinic",
+    "doctor": "Doctor",
+    "select-doctor": "Choose a good doctor",
+    "fee": "Checkup packages",
+    "check-health": "General health check",
+    "support": "Support",
+    "title1": "Medical foundation",
+    "title2": "Holistic health care",
+    "placeholderInput": "Find a medical specialty"
   },
   "common": {
     "add": "Add",

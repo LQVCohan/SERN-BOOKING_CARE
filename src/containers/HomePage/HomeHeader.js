@@ -2,9 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import { FormattedMessage } from "react-intl";
+import { LANGUAGES } from "../../utils";
+import { changeLanguageApp } from "../../store/actions/appActions";
+import { last } from "lodash";
+import { lang } from "moment/moment";
 
 class HomeHeader extends Component {
+  changeLanguage = (language) => {
+    this.props.changeLanguageAppRedux(language);
+  };
+
   render() {
+    let language = this.props.language;
+    console.log("check language header", language);
+    let placeholdertest = (
+      <FormattedMessage id="home-header.placeholderInput" />
+    );
     return (
       <React.Fragment>
         <div className="home-header-container">
@@ -60,18 +73,43 @@ class HomeHeader extends Component {
                 <i class="fa fa-question"></i>{" "}
                 <FormattedMessage id="home-header.support" />
               </div>
-              <div className="language-vi">VN</div>
-              <div className="language-en">EN</div>
+              <div
+                className={
+                  language === LANGUAGES.VI
+                    ? "language-vi active"
+                    : "language-vi"
+                }
+              >
+                <span onClick={() => this.changeLanguage(LANGUAGES.VI)}>
+                  VI
+                </span>
+              </div>
+              <div
+                className={
+                  language === LANGUAGES.EN
+                    ? "language-en active"
+                    : "language-en"
+                }
+              >
+                <span onClick={() => this.changeLanguage(LANGUAGES.EN)}>
+                  EN
+                </span>
+              </div>
             </div>
           </div>
         </div>
         <div className="home-header-banner">
           <div className="content-up">
-            <div className="title1">NỀN TẢNG Y TẾ</div>
-            <div className="title2">CHĂM SÓC SỨC KHỎE TOÀN DIỆN</div>
+            <div className="title1">
+              <FormattedMessage id="home-header.title1" />
+            </div>
+            <div className="title2">
+              <FormattedMessage id="home-header.title2" />
+            </div>
             <div className="search">
               <i className="fas fa-search"></i>
-              <input type="text" placeholder="Tìm chuyên khoa khám bệnh" />
+
+              <input type="text" placeholder={placeholdertest} />
             </div>
           </div>
           <div className="content-down">
@@ -128,7 +166,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
