@@ -1,0 +1,30 @@
+// reset slick slider css
+.slick-prev {
+  // position: relative !important;
+  left: -10 !important;
+  z-index: 1000 !important;
+  height: 48px !important;
+  width: 44px !important;
+  background: #f5f5f5 !important;
+  border: 2px solid #ddd !important;
+  &:hover {
+    background: #eaeaea !important;
+  }
+}
+.slick-next {
+  right: -10 !important;
+  z-index: 1000 !important;
+  height: 48px !important;
+  width: 44px !important;
+  background: #f5f5f5 !important;
+  border: 2px solid #ddd !important;
+  &:hover {
+    background: #eaeaea !important;
+  }
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: FontAwesome !important;
+  color: red !important;
+}
