@@ -10,6 +10,8 @@ import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
 import HandBook from "./Section/HandBook";
 import OutStandingDoctor from "./Section/OutStandingDoctor";
+import About from "./Section/About";
+import HomeFooter from "./HomeFooter";
 class HomePage extends Component {
   render() {
     let settings = {
@@ -28,6 +30,8 @@ class HomePage extends Component {
         <MedicalFacility settings={settings} />
         <OutStandingDoctor settings={settings} />
         <HandBook settings={settings} />
+        <About />
+        <HomeFooter />
       </div>
     );
   }
