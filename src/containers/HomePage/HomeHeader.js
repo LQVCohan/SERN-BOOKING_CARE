@@ -14,7 +14,7 @@ class HomeHeader extends Component {
 
   render() {
     let language = this.props.language;
-    console.log("check language header", language);
+    console.log("check user", this.props.userInfo);
     let placeholdertest = (
       <FormattedMessage id="home-header.placeholderInput" />
     );
@@ -161,6 +161,7 @@ class HomeHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
     language: state.app.language,
   };
 };
