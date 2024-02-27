@@ -9,7 +9,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.1",
+    "bootstrap": "^4.6.0",
     "connected-react-router": "^6.9.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.0",
