@@ -41,6 +41,7 @@
     "gender": "Giới tính",
     "img": "Ảnh đại diện",
     "position": "Chức vụ",
-    "save": "Lưu thông tin"
+    "save": "Lưu thông tin",
+    "cancel": "Hủy bỏ"
   }
 }
