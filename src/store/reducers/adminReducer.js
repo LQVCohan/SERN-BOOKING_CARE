@@ -5,6 +5,7 @@ const initialState = {
   genders: [],
   roles: [],
   positions: [],
+  user: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -51,6 +52,18 @@ const adminReducer = (state = initialState, action) => {
         ...state,
       };
 
+    case actionTypes.FETCH_ALL_USERS_SUCCESS:
+      state.user = action.user;
+
+      console.log("check user - reducer", state.user);
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_ALL_USERS_FAIL:
+      state.user = [];
+      return {
+        ...state,
+      };
     default:
       return state;
   }

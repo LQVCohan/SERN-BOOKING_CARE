@@ -18,6 +18,7 @@ class UserRedux extends Component {
       roleArr: [],
       previewImgURL: "",
       isOpen: false,
+      isUserCreated: false,
       email: "",
       password: "",
       firstName: "",
@@ -66,6 +67,20 @@ class UserRedux extends Component {
       this.setState({
         roleArr: arrRoles,
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
+      });
+    }
+    if (prevProps.listUsers !== this.props.listUsers) {
+      this.setState({
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        address: "",
+        gender: "",
+        position: "",
+        role: "",
+        avatar: "",
       });
     }
   }
@@ -342,7 +357,7 @@ class UserRedux extends Component {
                   <FormattedMessage id="manage-user.save" />
                 </button>
               </div>
-              <div className="col-12">
+              <div className="col-12 mb-5">
                 <TableManageUser />
               </div>
             </div>
@@ -367,6 +382,7 @@ const mapStateToProps = (state) => {
     isLoadingGender: state.admin.isLoadingGender,
     roleRedux: state.admin.roles,
     positionRedux: state.admin.positions,
+    listUsers: state.admin.user,
   };
 };
 
@@ -376,6 +392,7 @@ const mapDispatchToProps = (dispatch) => {
     getPositionStart: () => dispatch(actions.fetchPositionStart()),
     getRoleStart: () => dispatch(actions.fetchRoleStart()),
     createNewUser: (data) => dispatch(actions.createNewUser(data)),
+    fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
     // changeLanguageAppRedux: (language) =>
     //   dispatch(actions.changeLanguageApp(language)),
   };
