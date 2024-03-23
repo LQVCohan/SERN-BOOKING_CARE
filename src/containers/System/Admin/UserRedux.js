@@ -2,7 +2,7 @@ import React, { Component, isValidElement } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { getAllCodeService } from "../../../services/userService";
-import { LANGUAGES, CRUD_ACTIONS } from "../../../utils";
+import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from "../../../utils";
 import * as actions from "../../../store/actions";
 import "./UserRedux.scss";
 import { every } from "lodash";
@@ -30,7 +30,7 @@ class UserRedux extends Component {
       role: "",
       avatar: "",
 
-      action: "",
+      action: CRUD_ACTIONS.CREATE,
       userEditId: "",
     };
   }
@@ -54,7 +54,7 @@ class UserRedux extends Component {
       let arrGenders = this.props.genderRedux;
       this.setState({
         genderArr: arrGenders,
-        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : "",
+        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
       });
     }
     if (prevProps.positionRedux !== this.props.positionRedux) {
@@ -63,7 +63,7 @@ class UserRedux extends Component {
       this.setState({
         positionArr: arrPositions,
         position:
-          arrPositions && arrPositions.length > 0 ? arrPositions[0].key : "",
+          arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
       });
     }
     if (prevProps.roleRedux !== this.props.roleRedux) {
@@ -71,7 +71,7 @@ class UserRedux extends Component {
 
       this.setState({
         roleArr: arrRoles,
-        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
+        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
       });
     }
     if (prevProps.listUsers !== this.props.listUsers) {
@@ -86,24 +86,28 @@ class UserRedux extends Component {
         lastName: "",
         phoneNumber: "",
         address: "",
-        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
+        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
         position:
-          arrPositions && arrPositions.length > 0 ? arrPositions[0].key : "",
-        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : "",
+          arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
+        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
         avatar: "",
-        actions: CRUD_ACTIONS.CREATE,
+        action: CRUD_ACTIONS.CREATE,
       });
     }
   }
-  handleOnchangeImage = (event) => {
+  handleOnchangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
+    console.log("what is in data", data);
     if (file) {
+      let base64 = await CommonUtils.getBase64(file);
+      console.log("base 64 pic", base64);
       let objectUrl = URL.createObjectURL(file);
       this.setState({
         previewImgURL: objectUrl,
-        avatar: file,
+        avatar: base64,
       });
+      console.log("what is in avatar", this.state.avatar);
     }
   };
   openPreviewImage = () => {
@@ -120,6 +124,7 @@ class UserRedux extends Component {
     console.log("State of action", action);
     if (action === CRUD_ACTIONS.CREATE) {
       // fire create redux action
+      console.log("Check state before create", this.state);
       this.props.createNewUser({
         email: this.state.email,
         password: this.state.password,
@@ -130,9 +135,11 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
+        avatar: this.state.avatar,
       });
     }
     if (action === CRUD_ACTIONS.EDIT) {
+      console.log("Check state before update", this.state);
       this.props.editAUserRedux({
         id: this.state.userEditId,
         email: this.state.email,
@@ -144,6 +151,7 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
+        avatar: this.state.avatar,
       });
       this.setState({
         action: CRUD_ACTIONS.CREATE,
@@ -178,6 +186,11 @@ class UserRedux extends Component {
     return isValid;
   };
   handleEditUserFromParent = (user) => {
+    let imageBase64 = "";
+
+    if (user.image) {
+      imageBase64 = new Buffer(user.image, "base64").toString("binary");
+    }
     console.log("check handle edit user from parent", user);
     this.setState({
       email: user.email,
@@ -189,9 +202,10 @@ class UserRedux extends Component {
       role: user.roleId,
       position: user.positionId,
       gender: user.gender,
-      avatar: "",
+      avatar: imageBase64,
       action: CRUD_ACTIONS.EDIT,
       userEditId: user.id,
+      previewImgURL: imageBase64,
     });
   };
   render() {
@@ -324,7 +338,7 @@ class UserRedux extends Component {
                     genders.length > 0 &&
                     genders.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {language === LANGUAGES.VI
                             ? item.valueVi
                             : item.valueEn}
@@ -348,7 +362,7 @@ class UserRedux extends Component {
                     positions.length > 0 &&
                     positions.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {language === LANGUAGES.VI
                             ? item.valueVi
                             : item.valueEn}
@@ -372,7 +386,7 @@ class UserRedux extends Component {
                     roles.length > 0 &&
                     roles.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {language === LANGUAGES.VI
                             ? item.valueVi
                             : item.valueEn}

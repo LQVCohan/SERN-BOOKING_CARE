@@ -8,6 +8,8 @@ const getAllUsers = (inputId) => {
 };
 
 const createNewUserS = (data) => {
+  console.log("check data in react ", data);
+
   return axios.post("/api/create-new-user", data);
 };
 
@@ -21,6 +23,9 @@ const editUserService = (inputData) => {
 const getAllCodeService = (inputType) => {
   return axios.get("/api/allcode?type=" + inputType);
 };
+const getTopDoctorHomeService = (limit) => {
+  return axios.get(`/api/top-doctor-home?limit=${limit}`);
+};
 export {
   editUserService,
   deleteUser,
@@ -28,4 +33,5 @@ export {
   getAllUsers,
   createNewUserS,
   getAllCodeService,
+  getTopDoctorHomeService,
 };
