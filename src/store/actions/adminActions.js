@@ -7,6 +7,8 @@ import {
   deleteUser,
   editUserService,
   getTopDoctorHomeService,
+  getAllDoctors,
+  saveDetailDoctorService,
 } from "../../services/userService";
 
 export const fetchGenderStart = () => {
@@ -193,9 +195,58 @@ export const fetchTopDoctor = () => {
         });
       }
     } catch (error) {
-      console.log("FETCH_TOP_DOCTORS_FAIL", error);
+      console.log("FETCH_TOP_DOCTORS_FAIL ", error);
       dispatch({
         type: actionTypes.FETCH_TOP_DOCTORS_FAIL,
+      });
+    }
+  };
+};
+export const fetchAllDoctors = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllDoctors();
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+          dataDoctors: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_ALL_DOCTORS_FAIL,
+        });
+      }
+    } catch (error) {
+      console.log("FETCH_ALL_DOCTORS_FAIL ", error);
+      dispatch({
+        type: actionTypes.FETCH_ALL_DOCTORS_FAIL,
+      });
+    }
+  };
+};
+export const saveDetailDoctor = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await saveDetailDoctorService(data);
+      console.log("res info:", res);
+      if (res && res.errCode === 0) {
+        toast.success("Save doctor's detail infomation success!");
+
+        dispatch({
+          type: actionTypes.FETCH_SAVE_DETAIL_DOCTOR_SUCCESS,
+        });
+      } else {
+        toast.error("Save doctor's detail infomation fail!");
+        dispatch({
+          type: actionTypes.FETCH_SAVE_DETAIL_DOCTOR_FAIL,
+        });
+      }
+    } catch (error) {
+      toast.error("Save doctor's detail infomation fail!, error: ", error);
+
+      console.log("FETCH_SAVE_DETAIL_DOCTOR_FAIL ", error);
+      dispatch({
+        type: actionTypes.FETCH_SAVE_DETAIL_DOCTOR_FAIL,
       });
     }
   };
