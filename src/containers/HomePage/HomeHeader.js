@@ -6,12 +6,17 @@ import { LANGUAGES } from "../../utils";
 import { changeLanguageApp } from "../../store/actions/appActions";
 import { last } from "lodash";
 import { lang } from "moment/moment";
+import { withRouter } from "react-router";
 
 class HomeHeader extends Component {
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
-
+  returnToHome = () => {
+    if (this.props.history) {
+      this.props.history.push(`/home`);
+    }
+  };
   render() {
     let language = this.props.language;
     console.log("check user", this.props.userInfo);
@@ -24,7 +29,9 @@ class HomeHeader extends Component {
           <div className="home-header-content">
             <div className="left-content">
               <i className="fa fa-bars"></i>
-              <div className="header-logo"> </div>
+              <div className="header-logo" onClick={this.returnToHome}>
+                {" "}
+              </div>
             </div>
             <div className="center-content">
               <div className="child-content">
@@ -98,61 +105,63 @@ class HomeHeader extends Component {
             </div>
           </div>
         </div>
-        <div className="home-header-banner">
-          <div className="content-up">
-            <div className="title1">
-              <FormattedMessage id="home-header.title1" />
-            </div>
-            <div className="title2">
-              <FormattedMessage id="home-header.title2" />
-            </div>
-            <div className="search">
-              <i className="fas fa-search"></i>
+        {this.props.isShowBanner === true && (
+          <div className="home-header-banner">
+            <div className="content-up">
+              <div className="title1">
+                <FormattedMessage id="home-header.title1" />
+              </div>
+              <div className="title2">
+                <FormattedMessage id="home-header.title2" />
+              </div>
+              <div className="search">
+                <i className="fas fa-search"></i>
 
-              <input type="text" placeholder={placeholdertest} />
-            </div>
-          </div>
-          <div className="content-down">
-            <div className="options">
-              <div className="option-child">
-                <div className="icon-child">
-                  <i class="fa fa-hospital"></i>
-                </div>
-                <div className="text-child">Khám chuyên khoa</div>
-              </div>
-              <div className="option-child">
-                <div className="icon-child">
-                  <i className="fa fa-phone"></i>
-                </div>
-                <div className="text-child">Khám từ xa</div>
-              </div>
-              <div className="option-child">
-                <div className="icon-child">
-                  <i className="fa fa-bed-pulse"></i>
-                </div>
-                <div className="text-child">Khám tổng quát</div>
-              </div>
-              <div className="option-child">
-                <div className="icon-child">
-                  <i className="fa fa-microscope"></i>
-                </div>
-                <div className="text-child">Xét nghiệm y học</div>
-              </div>
-              <div className="option-child">
-                <div className="icon-child">
-                  <i className="fa fa-person"></i>
-                </div>
-                <div className="text-child">Sức khỏe tinh thần</div>
-              </div>
-              <div className="option-child">
-                <div className="icon-child">
-                  <i className="fa fa-tooth"></i>
-                </div>
-                <div className="text-child">Khám nha khoa</div>
+                <input type="text" placeholder={placeholdertest} />
               </div>
             </div>
+            <div className="content-down">
+              <div className="options">
+                <div className="option-child">
+                  <div className="icon-child">
+                    <i class="fa fa-hospital"></i>
+                  </div>
+                  <div className="text-child">Khám chuyên khoa</div>
+                </div>
+                <div className="option-child">
+                  <div className="icon-child">
+                    <i className="fa fa-phone"></i>
+                  </div>
+                  <div className="text-child">Khám từ xa</div>
+                </div>
+                <div className="option-child">
+                  <div className="icon-child">
+                    <i className="fa fa-bed-pulse"></i>
+                  </div>
+                  <div className="text-child">Khám tổng quát</div>
+                </div>
+                <div className="option-child">
+                  <div className="icon-child">
+                    <i className="fa fa-microscope"></i>
+                  </div>
+                  <div className="text-child">Xét nghiệm y học</div>
+                </div>
+                <div className="option-child">
+                  <div className="icon-child">
+                    <i className="fa fa-person"></i>
+                  </div>
+                  <div className="text-child">Sức khỏe tinh thần</div>
+                </div>
+                <div className="option-child">
+                  <div className="icon-child">
+                    <i className="fa fa-tooth"></i>
+                  </div>
+                  <div className="text-child">Khám nha khoa</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </React.Fragment>
     );
   }
@@ -172,4 +181,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HomeHeader)
+);
