@@ -58,5 +58,24 @@
     "choose-doctor": "Chọn bác sĩ",
     "choose-date": "Chọn ngày khám",
     "save": "Lưu thông tin"
+  },
+  "patient": {
+    "detail-doctor": {
+      "schedule": "Lịch khám",
+      "no-schedule": "Hiện không có lịch hẹn nào của bác sĩ này trong hôm nay, vui lòng chọn hôm khác",
+      "choose": "Chọn ",
+      "book": "đặt",
+      "free": "(miễn phí)",
+      "and": "và"
+    }
+  },
+  "admin": {
+    "manage-doctor": {
+      "title": "TẠO THÔNG TIN BÁC SĨ",
+      "select-doctor": "Chọn bác sĩ",
+      "intro": "Thông tin giới thiệu",
+      "create": "Lưu thông tin",
+      "update": "Cập nhật thông tin"
+    }
   }
 }

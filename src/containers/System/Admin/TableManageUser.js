@@ -27,7 +27,6 @@ class TableManageUser extends Component {
       this.setState({
         usersRedux: this.props.listUsers,
       });
-      console.log("check userRedux", this.props.usersRedux);
     }
   }
   handleDeleteUser = (user) => {
