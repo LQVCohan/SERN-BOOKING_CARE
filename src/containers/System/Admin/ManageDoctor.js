@@ -150,16 +150,52 @@ class ManageDoctor extends Component {
 
     });
   };
+
+
+
   handleChangeSelect = async (selectedDoctor) => {
     this.setState({ selectedDoctor: selectedDoctor });
+    console.log('state', this.state)
+    let { listPrices, listPayments, listProvinces } = this.state;
     let res = await getDetailInfoDoctor(selectedDoctor.value);
     if (res && res.errCode === 0 && res.data && res.data.Markdown) {
       let markdown = res.data.Markdown;
+
+      let addressClinic = '', nameClinic = '', note = '',
+        paymentId = '', priceId = '', provinceId = '',
+        selectedPrice='', selectedPayment='', selectedProvince='';
+
+      if (res.data.Doctor_Info) {
+        addressClinic = res.data.Doctor_Info.addressClinic;
+        nameClinic = res.data.Doctor_Info.nameClinic;
+        note = res.data.Doctor_Info.note;
+        priceId = res.data.Doctor_Info.priceId;
+        paymentId = res.data.Doctor_Info.paymentId;
+        provinceId = res.data.Doctor_Info.provinceId;
+        console.log('before find array', listPayments)
+        selectedPrice = listPrices.find(item => {
+          return item && item.value === priceId;
+        });
+        selectedPayment = listPayments.find(item => {
+          return item && item.value === paymentId;
+        });
+        selectedProvince = listProvinces.find(item => {
+          return item && item.value === provinceId;
+        });
+
+      }
       this.setState({
         contentHTML: markdown.contentHTML,
         contentMarkdown: markdown.contentMarkdown,
         description: markdown.description,
         hasOldData: true,
+        addressClinic: addressClinic,
+        nameClinic: nameClinic,
+        note: note,
+        selectedPrice: selectedPrice,
+        selectedPayment: selectedPayment,
+        selectedProvince: selectedProvince,
+        
       });
     } else {
       this.setState({
@@ -167,6 +203,13 @@ class ManageDoctor extends Component {
         contentMarkdown: "",
         description: "",
         hasOldData: false,
+        addressClinic: '',
+        nameClinic: '',
+        note: '',
+        selectedPrice: '',
+        selectedPayment: '',
+        selectedProvince: '',
+
       });
     }
   };
