@@ -75,7 +75,13 @@
       "select-doctor": "Chọn bác sĩ",
       "intro": "Thông tin giới thiệu",
       "create": "Lưu thông tin",
-      "update": "Cập nhật thông tin"
+      "update": "Cập nhật thông tin",
+      "price":"Giá khám bệnh",
+      "payment":"Phương thức thanh toán",
+      "province":"Tỉnh thành",
+      "nameClinic":"Tên phòng khám",
+      "addressClinic":"Địa chỉ phòng khám",
+      "note":"Ghi chú"
     }
   }
 }
