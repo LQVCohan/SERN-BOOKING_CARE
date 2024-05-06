@@ -67,6 +67,13 @@
       "book": "đặt",
       "free": "(miễn phí)",
       "and": "và"
+    },
+    "extra-info-doctor": {
+      "label-address": "Địa chỉ phòng khám",
+      "label-cost": "Giá khám: ",
+      "hide": "Ẩn chi tiết",
+      "detail": "Xem chi tiết",
+      "payment": "Phương thức thanh toán: "
     }
   },
   "admin": {
@@ -76,12 +83,12 @@
       "intro": "Thông tin giới thiệu",
       "create": "Lưu thông tin",
       "update": "Cập nhật thông tin",
-      "price":"Giá khám bệnh",
-      "payment":"Phương thức thanh toán",
-      "province":"Tỉnh thành",
-      "nameClinic":"Tên phòng khám",
-      "addressClinic":"Địa chỉ phòng khám",
-      "note":"Ghi chú"
+      "price": "Giá khám bệnh",
+      "payment": "Phương thức thanh toán",
+      "province": "Tỉnh thành",
+      "nameClinic": "Tên phòng khám",
+      "addressClinic": "Địa chỉ phòng khám",
+      "note": "Ghi chú"
     }
   }
 }

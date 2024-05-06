@@ -5,6 +5,7 @@ import "./DoctorExtraInfor.scss";
 import {
   getDetailInfoDoctor,
   getScheduleByDateAndDoctor,
+  getExtraInfoDoctorById,
 } from "../../../services/userService";
 import { lang } from "moment";
 import { LANGUAGES } from "../../../utils";
@@ -12,86 +13,139 @@ import Select from "react-select";
 import moment from "moment";
 import localization from "moment/locale/vi";
 import { FormattedMessage } from "react-intl";
+import NumberFormat from "react-number-format";
 
 class DoctorExtraInfor extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isShowDetailInfor:false
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShowDetailInfor: false,
+      extraInfo: {},
+    };
+  }
+  async componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.language !== prevProps.language) {
     }
-    async componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.language !== prevProps.language) {
-        }
-    }
-    async componentDidMount() {
-        }
-        
-    showHideDetailInfor = (status) => {
+    if (this.props.doctorIdFromParent !== prevProps.doctorIdFromParent) {
+      let res = await getExtraInfoDoctorById(this.props.doctorIdFromParent);
+      if (res && res.errCode === 0) {
         this.setState({
-            isShowDetailInfor: status,
-        })
+          extraInfo: res.data,
+        });
+      }
     }
-    render() {
-        let { isShowDetailInfor } = this.state;
+  }
+  async componentDidMount() {}
 
+  showHideDetailInfor = (status) => {
+    this.setState({
+      isShowDetailInfor: status,
+    });
+  };
+  render() {
+    let { isShowDetailInfor, extraInfo } = this.state;
+    let { language } = this.props;
     return (
-        <div className="doctor-extra-infor-container">
-            <div className="content-up">
-                <div className="text-address">
-                    ĐỊA CHỈ KHÁM
-                </div>
-                <div className="name-clinic">
-                    Phòng khám Hư hại
-                </div>
-                <div className="detail-address">
-                    Quận 9 - TPHCM
-                </div>
-                
-            </div>
-            <div className="content-down">
-                {isShowDetailInfor === false && 
-                    <div className="shot-infor">
-                        GIÁ KHÁM: 500.000đ. 
-                        <span onClick={() => this.showHideDetailInfor(true)}>
-                            Xem chi tiết
-                        </span>
-                    </div>
-                }
-                {isShowDetailInfor === true &&
-                <>
-                    <div className="title-price">
-                        GIÁ KHÁM: 
-                    </div>
-                    <div className="detail-infor">
-                        <div className="price">
-                            <span className="left">
-                                Giá khám
-                            </span>
-                            <span className="right">
-                                250.000đ
-                            </span>
-                        </div>
-                        <div className="note">
-                            Cúng vườn trước khi khám nha con
-                        </div>
-                    </div>
-                        <div className="payment">
-                            Bệnh nhân có thể thanh toán chi phí bằng phẳng
-                        </div>
-                    <div className="hide-price">
-                        <span onClick={() => this.showHideDetailInfor(false)}>
-                            Ẩn bảng giá
-                        </span>
-                    </div>
-                </>
-
-                }
-
-            </div>
+      <div className="doctor-extra-infor-container">
+        <div className="content-up">
+          <div className="text-address">
+            <FormattedMessage id={"patient.extra-info-doctor.label-address"} />
+          </div>
+          <div className="name-clinic">
+            {extraInfo && extraInfo.nameClinic ? extraInfo.nameClinic : ""}
+          </div>
+          <div className="detail-address">
+            {extraInfo && extraInfo.addressClinic
+              ? extraInfo.addressClinic
+              : ""}
+          </div>
         </div>
+        <div className="content-down">
+          {isShowDetailInfor === false && (
+            <div className="shot-infor">
+              <FormattedMessage id={"patient.extra-info-doctor.label-cost"} />
+              {extraInfo &&
+                extraInfo.priceData &&
+                language === LANGUAGES.VI && (
+                  <NumberFormat
+                    className="currency"
+                    value={extraInfo.priceData.valueVi}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    suffix="VND"
+                  />
+                )}
+              {extraInfo &&
+                extraInfo.priceData &&
+                language === LANGUAGES.EN && (
+                  <NumberFormat
+                    className="currency"
+                    value={extraInfo.priceData.valueEn}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    suffix="$"
+                  />
+                )}
+              <span
+                className="detail"
+                onClick={() => this.showHideDetailInfor(true)}
+              >
+                <FormattedMessage id={"patient.extra-info-doctor.detail"} />
+              </span>
+            </div>
+          )}
+          {isShowDetailInfor === true && (
+            <>
+              <div className="title-price">
+                <FormattedMessage id={"patient.extra-info-doctor.label-cost"} />
+              </div>
+              <div className="detail-infor">
+                <div className="price">
+                  <span className="left">
+                    {" "}
+                    <FormattedMessage
+                      id={"patient.extra-info-doctor.label-cost"}
+                    />
+                  </span>
+                  <span className="right">
+                    {extraInfo &&
+                      extraInfo.priceData &&
+                      language === LANGUAGES.EN && (
+                        <NumberFormat
+                          className="currency"
+                          value={extraInfo.priceData.valueEn}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          suffix="$"
+                        />
+                      )}
+                  </span>
+                </div>
+                <div className="note">
+                  {extraInfo && extraInfo.note ? extraInfo.note : ""}
+                </div>
+              </div>
+              <div className="payment">
+                <FormattedMessage id={"patient.extra-info-doctor.payment"} />
+
+                {extraInfo && extraInfo.paymentData && language === LANGUAGES.VI
+                  ? extraInfo.paymentData.valueVi
+                  : ""}
+                {extraInfo && extraInfo.paymentData && language === LANGUAGES.EN
+                  ? extraInfo.paymentData.valueEn
+                  : ""}
+              </div>
+              <div className="hide-price">
+                <span onClick={() => this.showHideDetailInfor(false)}>
+                  <FormattedMessage id={"patient.extra-info-doctor.hide"} />
+                </span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     );
-    }
+  }
 }
 const mapStateToProps = (state) => {
   return {
