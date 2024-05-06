@@ -66,6 +66,13 @@
       "book": "book",
       "free": "(free)",
       "and": "and"
+    },
+    "extra-info-doctor": {
+      "label-address": "WORKPLACE",
+      "label-cost": "price:",
+      "hide": "Show less",
+      "detail": "Show more",
+      "payment": "Payment method: "
     }
   },
   "admin": {
@@ -75,12 +82,12 @@
       "intro": "Introduction",
       "create": "Save",
       "update": "Update",
-      "price":"Price",
-      "payment":"Payment",
-      "province":"Province",
-      "nameClinic":"Clinic's name",
-      "addressClinic":"Clinic's address",
-      "note":"Note"
+      "price": "Price",
+      "payment": "Payment",
+      "province": "Province",
+      "nameClinic": "Clinic's name",
+      "addressClinic": "Clinic's address",
+      "note": "Note"
     }
   }
 }
