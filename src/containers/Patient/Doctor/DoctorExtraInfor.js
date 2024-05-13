@@ -27,7 +27,11 @@ class DoctorExtraInfor extends Component {
     if (this.props.language !== prevProps.language) {
     }
     if (this.props.doctorIdFromParent !== prevProps.doctorIdFromParent) {
+      console.log("check preProps: yessss ");
+
       let res = await getExtraInfoDoctorById(this.props.doctorIdFromParent);
+      console.log("check res: ", res);
+
       if (res && res.errCode === 0) {
         this.setState({
           extraInfo: res.data,
@@ -35,7 +39,9 @@ class DoctorExtraInfor extends Component {
       }
     }
   }
-  async componentDidMount() {}
+  async componentDidMount() {
+    console.log("check id: mount ", this.props.doctorIdFromParent);
+  }
 
   showHideDetailInfor = (status) => {
     this.setState({
@@ -72,7 +78,7 @@ class DoctorExtraInfor extends Component {
                     value={extraInfo.priceData.valueVi}
                     displayType={"text"}
                     thousandSeparator={true}
-                    suffix="VND"
+                    suffix=" VND"
                   />
                 )}
               {extraInfo &&
@@ -117,6 +123,17 @@ class DoctorExtraInfor extends Component {
                           displayType={"text"}
                           thousandSeparator={true}
                           suffix="$"
+                        />
+                      )}
+                    {extraInfo &&
+                      extraInfo.priceData &&
+                      language === LANGUAGES.VI && (
+                        <NumberFormat
+                          className="currency"
+                          value={extraInfo.priceData.valueVi}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          suffix=" VND"
                         />
                       )}
                   </span>

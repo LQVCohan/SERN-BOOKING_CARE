@@ -7,7 +7,7 @@ import { lang } from "moment";
 import { LANGUAGES } from "../../../utils";
 import Select from "react-select";
 import DoctorSchedule from "./DoctorSchedule";
-import DoctorExtraInfor from './DoctorExtraInfor';
+import DoctorExtraInfor from "./DoctorExtraInfor";
 
 class DetailDoctor extends Component {
   constructor(props) {
@@ -76,7 +76,9 @@ class DetailDoctor extends Component {
               <DoctorSchedule doctorIdFromParent={this.state.currentDoctorId} />{" "}
             </div>
             <div className="content-right">
-              <DoctorExtraInfor doctorIdFromParent={this.state.currentDoctorId}/>
+              <DoctorExtraInfor
+                doctorIdFromParent={this.state.currentDoctorId}
+              />
             </div>
           </div>
           <div className="detail-info-doctor">
