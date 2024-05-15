@@ -73,6 +73,17 @@
       "hide": "Show less",
       "detail": "Show more",
       "payment": "Payment method: "
+    },
+    "booking-modal": {
+      "label": "Medical appointment booking information",
+      "name": "Full name",
+      "phoneNumber": "Phone number",
+      "address": "Address",
+      "reason": "Booking reason",
+      "dateOfBirth": "Date of birth",
+      "gender": "Gender",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
     }
   },
   "admin": {

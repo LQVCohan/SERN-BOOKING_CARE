@@ -77,7 +77,7 @@ class HomeHeader extends Component {
             </div>
             <div className="right-content">
               <div className="support">
-                <i class="fa fa-question"></i>{" "}
+                <i className="fa fa-question"></i>{" "}
                 <FormattedMessage id="home-header.support" />
               </div>
               <div
