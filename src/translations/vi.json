@@ -74,6 +74,17 @@
       "hide": "Ẩn chi tiết",
       "detail": "Xem chi tiết",
       "payment": "Phương thức thanh toán: "
+    },
+    "booking-modal": {
+      "label": "Thông tin đặt lịch khám bệnh",
+      "name": "Họ và tên",
+      "phoneNumber": "Số điện thoại",
+      "address": "Địa chỉ",
+      "reason": "Lý do khám",
+      "dateOfBirth": "Ngày sinh",
+      "gender": "Giới tính",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy bỏ"
     }
   },
   "admin": {
