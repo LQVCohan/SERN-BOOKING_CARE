@@ -55,10 +55,17 @@
         background-size: cover;
         background-color: #eee;
         &.section-specialty {
-          background-image: url("../../assets/specialty/demo.jpg");
+          // background-image: url("../../assets/specialty/demo.jpg");
         }
         &.section-medical-facility {
           background-image: url("../../assets/medical-facility/benhvien.jpg");
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          -ms-border-radius: 50%;
+          -o-border-radius: 50%;
         }
         &.section-outstanding-doctor {
           //background-image: url("../../assets/outstanding-doctor/doctor.jpg");
@@ -87,7 +94,7 @@
     .section-header {
       height: 60px;
       margin-top: 40px;
-      margin-bottom: 20px;
+
       .title-section {
         font-weight: 600;
         font-size: 22px;

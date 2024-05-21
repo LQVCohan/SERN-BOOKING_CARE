@@ -98,16 +98,13 @@ class UserRedux extends Component {
   handleOnchangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
-    console.log("what is in data", data);
     if (file) {
       let base64 = await CommonUtils.getBase64(file);
-      console.log("base 64 pic", base64);
       let objectUrl = URL.createObjectURL(file);
       this.setState({
         previewImgURL: objectUrl,
         avatar: base64,
       });
-      console.log("what is in avatar", this.state.avatar);
     }
   };
   openPreviewImage = () => {
