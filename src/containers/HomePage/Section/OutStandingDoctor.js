@@ -30,6 +30,7 @@ class OutStandingDoctor extends Component {
     console.log("Cohan check view info: ", doctor);
     this.props.history.push(`/detail-doctor/${doctor.id}`);
   };
+
   render() {
     let { language } = this.props;
     console.log("topDoctorsRedux: ", this.props.topDoctorsRedux);
