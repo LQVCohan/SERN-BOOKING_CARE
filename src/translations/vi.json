@@ -29,7 +29,8 @@
       "manage-handbook": "Quản lý cẩm nang"
     },
     "doctor": {
-      "manage-schedule": "Quản lý kế hoạch"
+      "manage-schedule": "Quản lý kế hoạch",
+      "manage-patient": "Quản lý bệnh nhân"
     }
   },
   "manage-user": {

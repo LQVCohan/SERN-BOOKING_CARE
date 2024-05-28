@@ -41,7 +41,7 @@ class Specialty extends Component {
               <FormattedMessage id={"homepage.more-info"} />
             </button>
           </div>
-          <div className="section-body">
+          <div className="section-body ">
             <Slider {...this.props.settings}>
               {dataSpecialty &&
                 dataSpecialty.length > 0 &&
@@ -53,7 +53,7 @@ class Specialty extends Component {
                       onClick={() => this.handleViewDetailDoctor(item)}
                     >
                       <div
-                        className="bg-image"
+                        className="bg-image section-specialty"
                         style={{
                           backgroundImage: `url(${item.image})`,
                         }}

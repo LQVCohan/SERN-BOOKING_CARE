@@ -41,6 +41,7 @@ class ManageDoctor extends Component {
       note: "",
       clinicId: "",
       specialtyId: "",
+      resClinic: "",
     };
   }
   async componentDidMount() {
@@ -90,6 +91,14 @@ class ManageDoctor extends Component {
           result.push(object);
         });
       }
+      if (type === "CLINIC") {
+        inputData.map((item, index) => {
+          let object = {};
+          object.label = item.name;
+          object.value = item.id;
+          result.push(object);
+        });
+      }
       return result;
     }
   };
@@ -104,7 +113,7 @@ class ManageDoctor extends Component {
       });
     }
     if (prevProps.allRequiredDoctorInfo !== this.props.allRequiredDoctorInfo) {
-      let { resSpecialty, resPayment, resPrice, resProvince } =
+      let { resClinic, resSpecialty, resPayment, resPrice, resProvince } =
         this.props.allRequiredDoctorInfo;
       let dataSelectPrice = this.buildDataInputSelect(resPrice, "PRICE");
       let dataSelectPayment = this.buildDataInputSelect(resPayment, "PAYMENT");
@@ -116,11 +125,13 @@ class ManageDoctor extends Component {
         resSpecialty,
         "SPECIALTY"
       );
+      let dataSelectClinic = this.buildDataInputSelect(resClinic, "CLINIC");
       this.setState({
         listPrices: dataSelectPrice,
         listPayments: dataSelectPayment,
         listProvinces: dataSelectProvince,
         listSpecialty: dataSelectSpecialty,
+        listClinic: dataSelectClinic,
       });
     }
     if (prevProps.language !== this.props.language) {
