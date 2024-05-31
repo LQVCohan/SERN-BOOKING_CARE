@@ -17,6 +17,9 @@ class HomeHeader extends Component {
       this.props.history.push(`/home`);
     }
   };
+  handleSearchComponent = () => {
+    this.props.history.push(`/search`);
+  };
   render() {
     let language = this.props.language;
     console.log("check user", this.props.userInfo);
@@ -114,10 +117,10 @@ class HomeHeader extends Component {
               <div className="title2">
                 <FormattedMessage id="home-header.title2" />
               </div>
-              <div className="search">
+              <div className="search" onClick={this.handleSearchComponent}>
                 <i className="fas fa-search"></i>
 
-                <input type="text" placeholder={placeholdertest} />
+                <input type="search" placeholder={"search something"} />
               </div>
             </div>
             <div className="content-down">

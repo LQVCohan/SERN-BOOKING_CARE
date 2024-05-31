@@ -84,8 +84,11 @@ const getListPatient = (data) => {
 const postSendRemedy = (data) => {
   return axios.post("/api/send-remedy", data);
 };
-
+const searchInfoByAnyThing = (data) => {
+  return axios.get(`/api/search?term=${data.term}&type=${data.type}`);
+};
 export {
+  searchInfoByAnyThing,
   postSendRemedy,
   getListPatient,
   getDetailClinicById,

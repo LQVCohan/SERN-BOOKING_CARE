@@ -61,6 +61,11 @@
     "save": "Save"
   },
   "patient": {
+    "search": {
+      "doctor-label": "Doctors",
+      "specialty-label": "Specialities",
+      "clinic-label": "Clinics"
+    },
     "detail-doctor": {
       "schedule": "Doctor's schedule",
       "no-schedule": "No schedule available today, please choose another day",
