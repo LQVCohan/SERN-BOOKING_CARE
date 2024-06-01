@@ -83,14 +83,19 @@
     },
     "booking-modal": {
       "label": "Medical appointment booking information",
-      "name": "Full name",
+      "first-name": "First name",
+      "last-name": "Last name",
       "phoneNumber": "Phone number",
       "address": "Address",
       "reason": "Booking reason",
       "dateOfBirth": "Date of birth",
       "gender": "Gender",
       "confirm": "Confirm",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "invalid-first-name": "Invalid first name",
+      "invalid-last-name": "Invalid last name",
+      "invalid-phone-number": "Invalid phone number",
+      "invalid-email": "Invalid email"
     }
   },
   "admin": {

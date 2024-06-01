@@ -73,7 +73,10 @@ class DetailDoctor extends Component {
           </div>
           <div className="schedule-doctor">
             <div className="content-left">
-              <DoctorSchedule doctorIdFromParent={this.state.currentDoctorId} />{" "}
+              <DoctorSchedule
+                language={this.props.language}
+                doctorIdFromParent={this.state.currentDoctorId}
+              />{" "}
             </div>
             <div className="content-right">
               <DoctorExtraInfor

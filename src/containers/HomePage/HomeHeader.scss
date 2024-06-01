@@ -29,6 +29,20 @@
         width: 100%;
         cursor: pointer;
       }
+      .dropdown-toggle::after {
+        display: none;
+      }
+
+      .icon {
+        display: flex;
+        flex-direction: row;
+        .fb {
+          padding: 10px 10px;
+        }
+        .mail {
+          padding: 10px 10px;
+        }
+      }
     }
     .center-content {
       width: 50%;

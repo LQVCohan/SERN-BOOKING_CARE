@@ -9,6 +9,7 @@
         font-size: 15px;
         font-weight: 600;
         color: #666;
+        text-transform: uppercase;
       }
       .header-right {
         float: right;
@@ -18,6 +19,14 @@
     .booking-modal-body {
       height: 100%;
       padding: 15px;
+    }
+    .is-error {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: left;
+      gap: 3px;
+      padding: 5px 5px;
     }
     .booking-modal-footer {
       padding: 10px;
