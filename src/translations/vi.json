@@ -96,7 +96,8 @@
       "invalid-first-name": "Họ và tên đệm không hợp lệ",
       "invalid-last-name": "Tên không hợp lệ",
       "invalid-phone-number": "Số điện thoại không hợp lệ",
-      "invalid-email": "email không hợp lệ"
+      "invalid-email": "email không hợp lệ",
+      "payment": "Phương thức thanh toán"
     }
   },
   "admin": {

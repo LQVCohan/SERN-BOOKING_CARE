@@ -20,6 +20,8 @@ import moment from "moment";
 import RingLoader from "react-spinners/RingLoader";
 import { MdErrorOutline } from "react-icons/md";
 import validator from "validator";
+import DatePicker from "../../../../components/Input/DatePicker";
+
 class BookingModal extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +42,8 @@ class BookingModal extends Component {
       isValidFirstNameInput: true,
       isValidLastNameInput: true,
       isValidPhoneNumberInput: true,
+      listPayments: [],
+      selectedPayment: "",
     };
   }
   buildDataGender = (data) => {
@@ -59,6 +63,9 @@ class BookingModal extends Component {
     if (prevProps.language !== this.props.language) {
       this.setState({
         genders: this.buildDataGender(this.props.genders),
+        //   listPayments: this.buildDataInputSelectPayment(
+        //     this.props.doctorExtraInforFromGrandParent
+        //   ),
       });
     }
     if (prevProps.genders !== this.props.genders) {
@@ -66,6 +73,17 @@ class BookingModal extends Component {
         genders: this.buildDataGender(this.props.genders),
       });
     }
+    if (
+      prevProps.doctorExtraInforFromGrandParent !==
+      this.props.doctorExtraInforFromGrandParent
+    ) {
+      this.setState({
+        listPayments: this.buildDataInputSelectPayment(
+          this.props.doctorExtraInforFromGrandParent
+        ),
+      });
+    }
+
     if (this.props.dataTime !== prevProps.dataTime) {
       if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
         let doctorId = this.props.dataTime.doctorId;
@@ -79,11 +97,34 @@ class BookingModal extends Component {
   }
   async componentDidMount() {
     this.props.getGenderStart();
+    // this.setState({
+    //   genders: this.buildDataGender(this.props.genders),
+    //   listPayments: this.buildDataInputSelectPayment(
+    //     this.props.doctorExtraInforFromGrandParent
+    //   ),
+    // });
   }
+  buildDataInputSelectPayment = (inputData) => {
+    console.log("check inoutdata: ", inputData);
+    let result = [];
+    let language = this.props.language;
+
+    if (inputData) {
+      let object = {};
+      let labelVi = `${inputData.paymentData.valueVi}`;
+      let labelEn = `${inputData.paymentData.valueEn}`;
+      object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+      object.value = inputData.paymentId;
+      result.push(object);
+    }
+
+    return result;
+  };
   handleOnChangeInput = (event, id) => {
     let emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{3}/;
-    let nameRegex = /^[a-zA-Z ]*$/;
-
+    // let nameRegex = /^[a-zA-Z ]*$/;
+    let nameRegex =
+      /^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\ ]+$/;
     let valueInput = event.target.value;
     let stateCopy = { ...this.state };
     stateCopy[id] = valueInput;
@@ -140,8 +181,11 @@ class BookingModal extends Component {
       birth: date[0],
     });
   };
-  handleChangeSelect = (selectedGender) => {
+  handleChangeSelectGender = (selectedGender) => {
     this.setState({ selectedGender: selectedGender });
+  };
+  handleChangeSelectPayment = (selectedPayment) => {
+    this.setState({ selectedPayment: selectedPayment });
   };
   handleConfirmBooking = async () => {
     let timeString = this.buildTimeBooking(this.props.dataTime);
@@ -185,6 +229,7 @@ class BookingModal extends Component {
         language: this.props.language,
         timeString: timeString,
         doctorName: doctorName,
+        paymentMethod: this.state.selectedPayment.value,
       });
       if (res && res.errCode === 0) {
         toast.success("OK");
@@ -252,19 +297,32 @@ class BookingModal extends Component {
 
   render() {
     console.log("Check state inside modal: ", this.state);
-    let { dataTime, isOpenModal, closeBookingModal } = this.props;
     let {
+      dataTime,
+      isOpenModal,
+      closeBookingModal,
+      doctorExtraInforFromGrandParent,
+    } = this.props;
+    let {
+      listPayments,
       isSending,
       isValidEmailInput,
       isValidFirstNameInput,
       isValidLastNameInput,
       isValidPhoneNumberInput,
     } = this.state;
+    console.log(
+      "check doctorExtraInforFromGrandParent ",
+      doctorExtraInforFromGrandParent
+    );
+
+    console.log("check listPayments ", listPayments);
 
     let doctorId = "";
     if (dataTime && !_.isEmpty(dataTime)) {
       doctorId = dataTime.doctorId;
     }
+    let today = new Date();
 
     return (
       <div>
@@ -406,20 +464,30 @@ class BookingModal extends Component {
                     }
                   />
                 </div>
-                <div className="col-6 form-group">
+                <div className="col-3 form-group">
                   <label>
                     {" "}
                     <FormattedMessage
                       id={"patient.booking-modal.dateOfBirth"}
                     />
                   </label>
-                  {/* <DatePicker
-                    className="form-control"
+                  <DatePicker
+                    className="form-control form-control-sm"
                     onChange={this.handleOnChangeDatePicker}
                     value={this.state.birth}
-                    maxDate={getMinAndMaxDateForDob().maxDate}
-                    minDate={getMinAndMaxDateForDob().minDate}
-                  />{" "} */}
+                    maxDate={today}
+                  />{" "}
+                </div>
+                <div className="col-3 form-group">
+                  <label>
+                    {" "}
+                    <FormattedMessage id={"patient.booking-modal.payment"} />
+                  </label>
+                  <Select
+                    value={this.state.selectedPayment}
+                    onChange={this.handleChangeSelectPayment}
+                    options={this.state.listPayments}
+                  />{" "}
                 </div>
                 <div className="col-6 form-group">
                   <label>
@@ -428,7 +496,7 @@ class BookingModal extends Component {
                   </label>
                   <Select
                     value={this.state.selectedGender}
-                    onChange={this.handleChangeSelect}
+                    onChange={this.handleChangeSelectGender}
                     options={this.state.genders}
                   />{" "}
                 </div>
@@ -449,7 +517,12 @@ class BookingModal extends Component {
 
               <button
                 className="btn-booking-cancel"
-                onClick={closeBookingModal}
+                onClick={() => {
+                  this.setState({
+                    isSending: false,
+                  });
+                  closeBookingModal();
+                }}
               >
                 <FormattedMessage id={"patient.booking-modal.cancel"} />
               </button>
@@ -470,6 +543,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getGenderStart: () => dispatch(actions.fetchGenderStart()),
+    getRequiredDoctorInfo: () => dispatch(actions.getRequiredDoctorInfo()),
   };
 };
 

@@ -95,7 +95,8 @@
       "invalid-first-name": "Invalid first name",
       "invalid-last-name": "Invalid last name",
       "invalid-phone-number": "Invalid phone number",
-      "invalid-email": "Invalid email"
+      "invalid-email": "Invalid email",
+      "payment": "Payment method"
     }
   },
   "admin": {

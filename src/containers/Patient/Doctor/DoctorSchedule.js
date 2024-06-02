@@ -122,7 +122,12 @@ class DoctorSchedule extends Component {
   render() {
     let { dataScheduleTimeModal, allDays, allAvalTime, isOpenModalBooking } =
       this.state;
-    let { language } = this.props;
+    let { language, doctorIdFromParent, doctorExtraInforFromParent } =
+      this.props;
+    console.log(
+      "check DoctorExtraInforFromParent: ",
+      doctorExtraInforFromParent
+    );
     return (
       <>
         <div className="doctor-schedule-container">
@@ -191,6 +196,7 @@ class DoctorSchedule extends Component {
           reloadSheduleModal={this.reloadSheduleModal}
           closeBookingModal={this.closeBookingModal}
           dataTime={dataScheduleTimeModal}
+          doctorExtraInforFromGrandParent={doctorExtraInforFromParent}
         />
       </>
     );
