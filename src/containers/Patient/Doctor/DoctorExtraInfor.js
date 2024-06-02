@@ -27,8 +27,6 @@ class DoctorExtraInfor extends Component {
     if (this.props.language !== prevProps.language) {
     }
     if (this.props.doctorIdFromParent !== prevProps.doctorIdFromParent) {
-      console.log("check preProps: yessss ");
-
       let res = await getExtraInfoDoctorById(this.props.doctorIdFromParent);
       console.log("check res: ", res);
 

@@ -55,7 +55,9 @@ class ManagePatient extends Component {
       patientId: item.patientId,
       email: item.patientData.email,
       timeType: item.timeType,
-      patientName: item.patientData.firstName,
+      firstName: item.patientData.firstName,
+      lastName: item.patientData.lastName,
+      paymentId: item.payment,
     };
     this.setState({
       isOpenRemedyModal: true,
@@ -67,6 +69,8 @@ class ManagePatient extends Component {
     this.setState({
       isLoading: true,
     });
+    console.log("check data", data);
+    console.log("check dataModal", dataModal);
 
     let res = await postSendRemedy({
       email: data.email,
@@ -75,7 +79,9 @@ class ManagePatient extends Component {
       patientId: dataModal.patientId,
       timeType: dataModal.timeType,
       language: this.props.language,
-      patientName: dataModal.patientName,
+      patientFirstName: dataModal.firstName,
+      patientLastName: dataModal.lastName,
+      paymentId: dataModal.paymentId,
     });
     console.log("res ", res);
     if (res && res.errCode === 0) {
@@ -94,9 +100,11 @@ class ManagePatient extends Component {
     });
   };
   render() {
-    console.log("check props paitent: ", this.state);
+    console.log("check props paitent: ", this.state.dataPatient);
     let { isLoading, dataPatient, isOpenRemedyModal, dataModal } = this.state;
     let { language } = this.props;
+    console.log("check data modal: ", dataModal);
+
     return (
       <div>
         <LoadingOverlay active={isLoading} spinner text="Loading...">
@@ -118,9 +126,12 @@ class ManagePatient extends Component {
                   <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Thời gian</th>
-                    <th scope="col">Họ và tên</th>
+                    <th scope="col">Họ và tên đệm</th>
+                    <th scope="col">Tên</th>
+
                     <th scope="col">Địa chỉ</th>
                     <th scope="col">Giới tính</th>
+                    <th scope="col">Phương thức thanh toán</th>
                     <th scope="col">Thao tác</th>
                   </tr>
                 </thead>
@@ -137,13 +148,19 @@ class ManagePatient extends Component {
                         language === LANGUAGES.VI
                           ? item.patientData.genderData.valueVi
                           : item.patientData.genderData.valueEn;
+                      let payment =
+                        language === LANGUAGES.VI
+                          ? item.paymentDataPatient.valueVi
+                          : item.paymentDataPatient.valueEn;
                       return (
                         <tr key={index}>
                           <th scope="row">{index + 1}</th>
                           <td>{time}</td>
                           <td>{item.patientData.firstName}</td>
+                          <td>{item.patientData.lastName}</td>
                           <td>{item.patientData.address}</td>
                           <td>{gender}</td>
+                          <td>{payment}</td>
                           <td>
                             <button
                               className="btn-confirm"

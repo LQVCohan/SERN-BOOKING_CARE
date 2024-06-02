@@ -2,12 +2,16 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import HomeHeader from "../../HomePage/HomeHeader";
 import "./DetailDoctor.scss";
-import { getDetailInfoDoctor } from "../../../services/userService";
+import {
+  getDetailInfoDoctor,
+  getExtraInfoDoctorById,
+} from "../../../services/userService";
 import { lang } from "moment";
 import { LANGUAGES } from "../../../utils";
 import Select from "react-select";
 import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtraInfor from "./DoctorExtraInfor";
+import * as actions from "../../../store/actions";
 
 class DetailDoctor extends Component {
   constructor(props) {
@@ -15,9 +19,19 @@ class DetailDoctor extends Component {
     this.state = {
       detailDoctor: [],
       currentDoctorId: -1,
+      extraInfo: {},
+      listPayments: [],
     };
   }
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.allRequiredDoctorInfo !== this.props.allRequiredDoctorInfo) {
+      let { resPayment } = this.props.allRequiredDoctorInfo;
+      let dataSelectPayment = this.buildDataInputSelect(resPayment, "PAYMENT");
+      this.setState({
+        listPayments: dataSelectPayment,
+      });
+    }
+  }
   async componentDidMount() {
     if (
       this.props.match &&
@@ -34,12 +48,38 @@ class DetailDoctor extends Component {
           detailDoctor: res.data,
         });
       }
-      console.log("Cohan check res: ", res.data);
+      let extraRes = await getExtraInfoDoctorById(id);
+      console.log("check extraRes: ", extraRes);
+
+      if (extraRes && extraRes.errCode === 0) {
+        this.setState({
+          extraInfo: extraRes.data,
+        });
+      }
     }
   }
+  buildDataInputSelect = (inputData, type) => {
+    let result = [];
+    let language = this.props.language;
+    if (inputData && inputData.length > 0) {
+      if (type === "PAYMENT") {
+        inputData.map((item, index) => {
+          let object = {};
+          let labelVi = `${item.valueVi}`;
+          let labelEn = `${item.valueEn}`;
+          object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+          object.value = item.keyMap;
+          result.push(object);
+        });
+      }
+
+      return result;
+    }
+  };
   render() {
-    let { detailDoctor } = this.state;
+    let { detailDoctor, extraInfo } = this.state;
     let { language } = this.props;
+    console.log("check extrainfo: ", extraInfo);
     let nameVi = "",
       nameEn = "";
     if (detailDoctor && detailDoctor.positionData) {
@@ -73,7 +113,11 @@ class DetailDoctor extends Component {
           </div>
           <div className="schedule-doctor">
             <div className="content-left">
-              <DoctorSchedule doctorIdFromParent={this.state.currentDoctorId} />{" "}
+              <DoctorSchedule
+                language={this.props.language}
+                doctorIdFromParent={this.state.currentDoctorId}
+                doctorExtraInforFromParent={extraInfo}
+              />
             </div>
             <div className="content-right">
               <DoctorExtraInfor

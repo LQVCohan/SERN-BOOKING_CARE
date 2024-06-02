@@ -84,8 +84,21 @@ const getListPatient = (data) => {
 const postSendRemedy = (data) => {
   return axios.post("/api/send-remedy", data);
 };
-
+const searchInfoByAnyThing = (data) => {
+  return axios.get(`/api/search?term=${data.term}&type=${data.type}`);
+};
+const deleteScheduleDoctorByTime = (data) => {
+  return axios.delete(`/api/delete-schedule-by-time`, {
+    data: {
+      doctorId: data.doctorId,
+      date: data.date,
+      timeType: data.timeType,
+    },
+  });
+};
 export {
+  deleteScheduleDoctorByTime,
+  searchInfoByAnyThing,
   postSendRemedy,
   getListPatient,
   getDetailClinicById,

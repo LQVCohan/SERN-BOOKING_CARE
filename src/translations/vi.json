@@ -62,6 +62,11 @@
     "save": "Lưu thông tin"
   },
   "patient": {
+    "search": {
+      "doctor-label": "Bác sĩ",
+      "specialty-label": "Chuyên khoa",
+      "clinic-label": "Cơ sở y tế"
+    },
     "detail-doctor": {
       "schedule": "Lịch khám",
       "no-schedule": "Hiện không có lịch hẹn nào của bác sĩ này trong hôm nay, vui lòng chọn hôm khác",
@@ -79,14 +84,20 @@
     },
     "booking-modal": {
       "label": "Thông tin đặt lịch khám bệnh",
-      "name": "Họ và tên",
+      "first-name": "Họ và tên đệm",
+      "last-name": "Tên",
       "phoneNumber": "Số điện thoại",
       "address": "Địa chỉ",
       "reason": "Lý do khám",
       "dateOfBirth": "Ngày sinh",
       "gender": "Giới tính",
       "confirm": "Xác nhận",
-      "cancel": "Hủy bỏ"
+      "cancel": "Hủy bỏ",
+      "invalid-first-name": "Họ và tên đệm không hợp lệ",
+      "invalid-last-name": "Tên không hợp lệ",
+      "invalid-phone-number": "Số điện thoại không hợp lệ",
+      "invalid-email": "email không hợp lệ",
+      "payment": "Phương thức thanh toán"
     }
   },
   "admin": {
