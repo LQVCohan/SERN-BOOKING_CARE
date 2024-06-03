@@ -16,6 +16,7 @@
     "connected-react-router": "^6.9.1",
     "lodash": "^4.17.21",
     "markdown-it": "^12.3.2",
+    "mdb-react-ui-kit": "^8.0.0",
     "moment": "^2.29.0",
     "node-sass": "^6.0.0",
     "react": "^17.0.2",

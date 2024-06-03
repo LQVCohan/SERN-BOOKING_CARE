@@ -64,13 +64,30 @@ export const adminMenu = [
 ];
 export const doctorMenu = [
   {
-    name: "menu.admin.manage-user",
+    name: "menu.doctor.manage-patient",
     menus: [
       {
         //Quan ly kế hoạch khám bệnh
 
         name: "menu.doctor.manage-schedule",
         link: "/doctor/manage-schedule",
+      },
+      {
+        //Quan ly bệnh nhân khám bệnh
+
+        name: "menu.doctor.manage-patient",
+        link: "/doctor/manage-patient",
+      },
+    ],
+  },
+  {
+    name: "menu.doctor.manage-doctor-info",
+    menus: [
+      {
+        //Quan ly thong tin ca nhan
+
+        name: "menu.doctor.doctor-info",
+        link: "/doctor/manage-doctor-info",
       },
       {
         //Quan ly bệnh nhân khám bệnh

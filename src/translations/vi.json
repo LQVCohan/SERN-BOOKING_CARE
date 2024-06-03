@@ -30,7 +30,9 @@
     },
     "doctor": {
       "manage-schedule": "Quản lý kế hoạch",
-      "manage-patient": "Quản lý bệnh nhân"
+      "manage-patient": "Quản lý bệnh nhân",
+      "manage-doctor-info": "Quản lý thông tin cá nhân",
+      "doctor-info": "Thông tin cá nhân"
     }
   },
   "manage-user": {

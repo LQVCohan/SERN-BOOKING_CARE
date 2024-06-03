@@ -282,13 +282,12 @@ export const getRequiredDoctorInfo = () => {
       dispatch({
         type: actionTypes.FETCH_REQUIRED_DOCTOR_INFO_START,
       });
-
+      let resStatus = await getAllCodeService("DOCTOR_STATUS");
       let resPrice = await getAllCodeService("PRICE");
       let resPayment = await getAllCodeService("PAYMENT");
       let resProvince = await getAllCodeService("PROVINCE");
       let resSpecialty = await getAllSpecialty();
       let resClinic = await getAllClinic();
-      console.log("check res required: ", resPayment, resPrice, resProvince);
       if (
         resPrice &&
         resPrice.errCode === 0 &&
@@ -299,7 +298,9 @@ export const getRequiredDoctorInfo = () => {
         resSpecialty &&
         resSpecialty.errCode === 0 &&
         resClinic &&
-        resClinic.errCode === 0
+        resClinic.errCode === 0 &&
+        resStatus &&
+        resStatus.errCode === 0
       ) {
         let data = {
           resPrice: resPrice.data,
@@ -307,6 +308,7 @@ export const getRequiredDoctorInfo = () => {
           resProvince: resProvince.data,
           resSpecialty: resSpecialty.data,
           resClinic: resClinic.data,
+          resStatus: resStatus.data,
         };
         console.log("what data is it: ", data);
         dispatch(fetchRequiredDoctorInfoSuccess(data));
