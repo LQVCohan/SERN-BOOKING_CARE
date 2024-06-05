@@ -256,10 +256,17 @@ class BookingModal extends Component {
             isSending: false,
           });
         } else {
-          toast.error("Error!");
-          this.setState({
-            isSending: false,
-          });
+          if (res && res.errCode === 5) {
+            toast.error("Please confirm your last appointment");
+            this.setState({
+              isSending: false,
+            });
+          } else {
+            toast.error("Error!");
+            this.setState({
+              isSending: false,
+            });
+          }
         }
       }
     }

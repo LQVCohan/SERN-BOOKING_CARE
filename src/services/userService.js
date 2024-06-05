@@ -1,4 +1,5 @@
 import axios from "../axios";
+var qs = require("qs");
 const handleLoginApi = (userEmail, userPassword) => {
   return axios.post("/api/login", { email: userEmail, password: userPassword });
 };
@@ -96,7 +97,16 @@ const deleteScheduleDoctorByTime = (data) => {
     },
   });
 };
+const getDataChartById = (data) => {
+  return axios.get(`/api/get-data-chart-by-id`, {
+    params: { doctorId: data.doctorId, arrDate: data.arrDate },
+    paramsSerializer: (params) => {
+      return qs.stringify(params);
+    },
+  });
+};
 export {
+  getDataChartById,
   deleteScheduleDoctorByTime,
   searchInfoByAnyThing,
   postSendRemedy,
