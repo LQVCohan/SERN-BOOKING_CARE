@@ -52,6 +52,20 @@
     "cut": "Di chuyển",
     "edit": "Lưu thay đổi"
   },
+  "doctor": {
+    "doctor-profile-label": "Trang cá nhân",
+    "save": "Lưu thay đổi",
+    "id": "Mã: ",
+    "change-password": "Đổi mật khẩu",
+    "upload": "Tải ảnh đại diện",
+    "first-name": "Họ và tên đệm",
+    "last-name": "Tên",
+    "contact-label": "Thông tin liên hệ",
+    "chart-label": "Biểu đồ",
+    "phone-number": "Số điện thoại",
+    "status": "Trạng thái",
+    "invalid-password": "Mật khẩu không hợp lệ"
+  },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
     "more-info": "Xem thêm",

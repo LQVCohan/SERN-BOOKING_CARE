@@ -36,6 +36,20 @@
       "doctor-info": "Doctor's information"
     }
   },
+  "doctor": {
+    "doctor-profile-label": "Doctor's profile",
+    "save": "Save change",
+    "id": "ID: ",
+    "change-password": "Change password",
+    "upload": "Upload your picture",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "contact-label": "Doctor's contact",
+    "chart-label": "Charts",
+    "phone-number": "Phone number",
+    "status": "Status",
+    "invalid-password": "Invalid password"
+  },
   "manage-user": {
     "add": "Add a new user",
     "email": "Email",

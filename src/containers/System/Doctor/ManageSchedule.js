@@ -26,8 +26,22 @@ class ManageSchedule extends Component {
   componentDidMount() {
     this.props.fetchAllDoctors();
     this.props.fetchAllScheduleTime();
+    let { user, language } = this.props;
+    if (user && user.roleId === "R2") {
+      let object = {};
+      let labelVi = `${user.lastName} ${user.firstName}`;
+      let labelEn = `${user.firstName} ${user.lastName}`;
+
+      object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+      object.value = user.id;
+      this.setState({
+        selectedDoctor: object,
+      });
+    }
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
+    let { user, language } = this.props;
+
     if (prevProps.allDoctors !== this.props.allDoctors) {
       let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
       this.setState({
@@ -43,12 +57,19 @@ class ManageSchedule extends Component {
         rangeTime: data,
       });
     }
-    // if (prevProps.language !== this.props.language) {
-    //   let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
-    //   this.setState({
-    //     listDoctors: dataSelect,
-    //   });
-    // }
+    if (prevProps.language !== this.props.language) {
+      if (user && user.roleId === "R2") {
+        let object = {};
+        let labelVi = `${user.lastName} ${user.firstName}`;
+        let labelEn = `${user.firstName} ${user.lastName}`;
+
+        object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+        object.value = user.id;
+        this.setState({
+          selectedDoctor: object,
+        });
+      }
+    }
   }
   buildDataInputSelect = (inputData) => {
     let result = [];
@@ -130,7 +151,8 @@ class ManageSchedule extends Component {
   render() {
     console.log("check state", this.state);
     let { rangeTime } = this.state;
-    let { language } = this.props;
+    let { language, user } = this.props;
+
     let yesterday = new Date(new Date().setDate(new Date().getDate()) - 1);
     return (
       <div className="manage-schedule-container">
@@ -147,6 +169,7 @@ class ManageSchedule extends Component {
                 value={this.state.selectedDoctor}
                 onChange={this.handleChangeSelect}
                 options={this.state.listDoctors}
+                isDisabled={user && user.roleId === "R2" ? true : false}
               />
             </div>
             <div className="col-6 form-group">
@@ -201,6 +224,7 @@ const mapStateToProps = (state) => {
     allDoctors: state.admin.allDoctors,
     allScheduleTime: state.admin.allScheduleTime,
     language: state.app.language,
+    user: state.user.userInfo,
   };
 };
 

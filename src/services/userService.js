@@ -105,7 +105,20 @@ const getDataChartById = (data) => {
     },
   });
 };
+const getPasswordById = (data) => {
+  console.log("check id, pass: ", data.id, data.password);
+  return axios.get(
+    `/api/get-password-by-id?id=${data.id}&password=${data.password}`
+  );
+};
+const postChangePassword = (data) => {
+  return axios.post(
+    `/api/change-password?id=${data.id}&password=${data.password}`
+  );
+};
 export {
+  postChangePassword,
+  getPasswordById,
   getDataChartById,
   deleteScheduleDoctorByTime,
   searchInfoByAnyThing,

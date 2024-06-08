@@ -163,16 +163,16 @@ class BookingModal extends Component {
           isValidEmailInput: false,
         });
       }
-      if (id === "phoneNumber" && validator.isMobilePhone(valueInput)) {
+    }
+    if (id === "phoneNumber" && validator.isMobilePhone(valueInput)) {
+      this.setState({
+        isValidPhoneNumberInput: true,
+      });
+    } else {
+      if (id === "phoneNumber" && !validator.isMobilePhone(valueInput)) {
         this.setState({
-          isValidPhoneNumberInput: true,
+          isValidPhoneNumberInput: false,
         });
-      } else {
-        if (id === "phoneNumber" && !validator.isMobilePhone(valueInput)) {
-          this.setState({
-            isValidPhoneNumberInput: false,
-          });
-        }
       }
     }
   };
