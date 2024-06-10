@@ -90,10 +90,10 @@ export const doctorMenu = [
         link: "/doctor/manage-doctor-info",
       },
       {
-        //Quan ly bệnh nhân khám bệnh
+        //Nop don ngung hoat dong
 
-        name: "menu.doctor.manage-patient",
-        link: "/doctor/manage-patient",
+        name: "menu.doctor.terminate",
+        link: "/doctor/manage-doctor-info",
       },
     ],
   },

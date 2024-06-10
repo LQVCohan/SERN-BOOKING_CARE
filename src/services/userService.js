@@ -88,6 +88,16 @@ const postSendRemedy = (data) => {
 const searchInfoByAnyThing = (data) => {
   return axios.get(`/api/search?term=${data.term}&type=${data.type}`);
 };
+const getTotalSheduleOfDoctor = (data) => {
+  return axios.get(
+    `/api/get-total-schedule-of-doctor?doctorId=${data.doctorId}`
+  );
+};
+const getStatusByPatientId = (data) => {
+  return axios.get(
+    `/api/get-status-by-patient-id?doctorId=${data.doctorId}&patientId=${data.patientId}&date=${data.date}&timeType=${data.timeType}`
+  );
+};
 const deleteScheduleDoctorByTime = (data) => {
   return axios.delete(`/api/delete-schedule-by-time`, {
     data: {
@@ -96,6 +106,9 @@ const deleteScheduleDoctorByTime = (data) => {
       timeType: data.timeType,
     },
   });
+};
+const UpdateStatusPatientByRequest = (data) => {
+  return axios.put("/api/edit-status-patient-by-request", data);
 };
 const getDataChartById = (data) => {
   return axios.get(`/api/get-data-chart-by-id`, {
@@ -117,6 +130,9 @@ const postChangePassword = (data) => {
   );
 };
 export {
+  getTotalSheduleOfDoctor,
+  getStatusByPatientId,
+  UpdateStatusPatientByRequest,
   postChangePassword,
   getPasswordById,
   getDataChartById,

@@ -33,7 +33,8 @@
       "manage-schedule": "Manage schedule",
       "manage-patient": "Manage patient",
       "manage-doctor-info": "Manage doctor's information",
-      "doctor-info": "Doctor's information"
+      "doctor-info": "Doctor's information",
+      "terminate": "Cancel coporation"
     }
   },
   "doctor": {
@@ -48,7 +49,18 @@
     "chart-label": "Charts",
     "phone-number": "Phone number",
     "status": "Status",
-    "invalid-password": "Invalid password"
+    "invalid-password": "Invalid password",
+    "manage-patient-label": "Manage patient",
+    "choose-date": "Choose a date",
+    "time": "Time",
+    "on": "ON",
+    "address": "Address",
+    "gender": "Gender",
+    "payment": "Payment method",
+    "action": "Action",
+    "depos": "Deposited",
+    "comfirm": "Done",
+    "status-patient": "Status"
   },
   "manage-user": {
     "add": "Add a new user",

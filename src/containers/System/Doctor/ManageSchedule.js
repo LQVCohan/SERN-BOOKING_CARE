@@ -10,7 +10,10 @@ import moment, { lang } from "moment";
 import DatePicker from "../../../components/Input/DatePicker";
 import _ from "lodash";
 import { toast } from "react-toastify";
-import { saveBulkScheduleDoctor } from "../../../services/userService";
+import {
+  saveBulkScheduleDoctor,
+  getTotalSheduleOfDoctor,
+} from "../../../services/userService";
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -136,15 +139,21 @@ class ManageSchedule extends Component {
           return;
         }
       }
+
       let res = await saveBulkScheduleDoctor({
         arrSchedule: result,
         doctorId: selectedDoctor.value,
         date: formatedDate,
       });
+
       if (res && res.errCode === 0) {
         toast.success("Save info succesfully");
       } else {
-        toast.warn("Those schedule already exists!");
+        if (res && res.errCode === 2) {
+          toast.warn("Full schedule");
+        } else {
+          toast.warn("Those schedule already exists!");
+        }
       }
     }
   };

@@ -32,7 +32,8 @@
       "manage-schedule": "Quản lý kế hoạch",
       "manage-patient": "Quản lý bệnh nhân",
       "manage-doctor-info": "Quản lý thông tin cá nhân",
-      "doctor-info": "Thông tin cá nhân"
+      "doctor-info": "Thông tin cá nhân",
+      "terminate": "Nộp đơn hủy hợp tác"
     }
   },
   "manage-user": {
@@ -64,7 +65,18 @@
     "chart-label": "Biểu đồ",
     "phone-number": "Số điện thoại",
     "status": "Trạng thái",
-    "invalid-password": "Mật khẩu không hợp lệ"
+    "invalid-password": "Mật khẩu không hợp lệ",
+    "manage-patient-label": "QUẢN LÝ BỆNH NHÂN KHÁM BỆNH",
+    "choose-date": "Chọn ngày khám",
+    "time": "Thời gian",
+    "on": "STT",
+    "address": "Địa chỉ",
+    "gender": "Giới tính",
+    "payment": "Phương thức thanh toán",
+    "action": "Thao tác",
+    "depos": "Đã nhận cọc",
+    "comfirm": "Xác nhận hoàn tất",
+    "status-patient": "Tình trạng"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
