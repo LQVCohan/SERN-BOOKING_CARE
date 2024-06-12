@@ -55,21 +55,27 @@ class SearchBar extends Component {
   };
 
   async componentDidMount() {
-    let res = await searchInfoByAnyThing({
-      term: this.state.term,
-      type: "All",
-    });
-    if (res && res.errCode === 0) {
-      this.setState(
-        {
-          searchedData: res.data,
-          isSearching: false,
-          dataSelect: this.buildDataSelect(),
-        },
-        () => {
-          this.render();
-        }
-      );
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.type
+    ) {
+      let res = await searchInfoByAnyThing({
+        term: this.state.term,
+        type: this.props.match.params.type,
+      });
+      if (res && res.errCode === 0) {
+        this.setState(
+          {
+            searchedData: res.data,
+            isSearching: false,
+            dataSelect: this.buildDataSelect(),
+          },
+          () => {
+            this.render();
+          }
+        );
+      }
     }
   }
 

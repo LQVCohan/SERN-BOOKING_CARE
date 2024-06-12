@@ -12,7 +12,8 @@
     "title1": "Medical foundation",
     "title2": "Holistic health care",
     "placeholderInput": "Find a medical specialty",
-    "welcome": "Welcome, "
+    "welcome": "Welcome, ",
+    "login": "Login"
   },
 
   "menu": {
@@ -60,7 +61,9 @@
     "action": "Action",
     "depos": "Deposited",
     "comfirm": "Done",
-    "status-patient": "Status"
+    "status-patient": "Status",
+    "birth": "Birthday",
+    "reason": "Booking reason"
   },
   "manage-user": {
     "add": "Add a new user",
@@ -80,7 +83,8 @@
   "homepage": {
     "outstanding-doctor": "Last week's featured doctor",
     "more-info": "More info",
-    "specialty-label": "Popular specialties"
+    "specialty-label": "Popular specialties",
+    "clinic-label": "Medical facilities"
   },
   "manage-schedule": {
     "title": "Manage doctor's medical examination plans",

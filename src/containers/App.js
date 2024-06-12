@@ -16,11 +16,18 @@ import { CustomToastCloseButton } from "../components/CustomToast";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
+import MoreDoctor from "./Patient/Doctor/MoreDoctor";
+
 import Doctor from "../routes/Doctor";
 import VerifyEmail from "./Patient/VerifyEmail";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
 import DetailClinic from "./Patient/Clinic/DetailClinic";
 import SearchBar from "./HomePage/SearchBar";
+import MoreSpecialty from "./Patient/Doctor/MoreSpecialty";
+import MoreClinic from "./Patient/Doctor/MoreClinic";
+import ProfilePatient from "./Patient/Profile/ProfilePatient";
+import AppointmentPatient from "./Patient/Profile/AppointmentPatient";
+import Rule from "./HomePage/Section/Rule";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -75,6 +82,18 @@ class App extends Component {
                     component={VerifyEmail}
                   />
                   <Route path={path.SEARCH} component={SearchBar} />
+                  <Route path={"/more-doctor/"} component={MoreDoctor} />
+                  <Route path={"/more-specialty/"} component={MoreSpecialty} />
+                  <Route path={"/more-clinic/"} component={MoreClinic} />
+                  <Route
+                    path={"/patient-profile/"}
+                    component={ProfilePatient}
+                  />
+                  <Route
+                    path={"/patient-booking/:id"}
+                    component={AppointmentPatient}
+                  />
+                  <Route path={"/rule/"} component={Rule} />
                 </Switch>
               </CustomScrollbars>
             </div>

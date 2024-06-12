@@ -53,7 +53,9 @@ const getProfileDoctorById = (doctorId) => {
 const postPatientBookAppointment = (data) => {
   return axios.post("/api/patient-booking", data);
 };
-
+const getProfilePatientById = (patientId) => {
+  return axios.get(`/api/get-profile-patient-by-id?patientId=${patientId}`);
+};
 const postVerifyBooking = (data) => {
   return axios.post("/api/verify-booking", data);
 };
@@ -98,6 +100,9 @@ const getStatusByPatientId = (data) => {
     `/api/get-status-by-patient-id?doctorId=${data.doctorId}&patientId=${data.patientId}&date=${data.date}&timeType=${data.timeType}`
   );
 };
+const getAllBookingById = (patientId) => {
+  return axios.get(`/api/get-all-booking-by-id?patientId=${patientId}`);
+};
 const deleteScheduleDoctorByTime = (data) => {
   return axios.delete(`/api/delete-schedule-by-time`, {
     data: {
@@ -130,6 +135,8 @@ const postChangePassword = (data) => {
   );
 };
 export {
+  getAllBookingById,
+  getProfilePatientById,
   getTotalSheduleOfDoctor,
   getStatusByPatientId,
   UpdateStatusPatientByRequest,

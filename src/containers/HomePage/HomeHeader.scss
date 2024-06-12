@@ -74,6 +74,41 @@
         align-items: center;
         cursor: pointer;
       }
+      .profile {
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+        .dropdown-toggle::after {
+          display: none;
+        }
+        .image {
+          background-size: cover;
+          background-image: url("../../assets/medical-facility/benhvien.jpg");
+          height: 40px;
+          width: 40px;
+          border: 1px solid black;
+          border-radius: 20px;
+          -webkit-border-radius: 20px;
+          -moz-border-radius: 20px;
+          -ms-border-radius: 20px;
+          -o-border-radius: 20px;
+        }
+      }
+      .login {
+        i {
+          font-size: 15px;
+          margin-right: 5px;
+        }
+        .login-label {
+          text-transform: uppercase;
+        }
+        padding-right: 50px;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        cursor: pointer;
+      }
       .language-vi {
         cursor: pointer;
         opacity: 0.3;
@@ -107,7 +142,7 @@
   }
 }
 .home-header-banner {
-  background-image: url("../../assets/background.png");
+  background-image: url("../../assets/background.jpg");
 
   height: 485px;
   background-repeat: no-repeat;
@@ -127,7 +162,7 @@
       font-size: 30px;
       text-shadow: 1px 1px 1px #333;
       margin-bottom: 5px;
-      color: white;
+      color: black;
       padding-top: 30px;
     }
     .title2 {
@@ -135,7 +170,7 @@
       font-size: 30px;
       text-shadow: 1px 1px 1px #333;
       margin-bottom: 15px;
-      color: white;
+      color: black;
     }
     .search {
       width: fit-content;

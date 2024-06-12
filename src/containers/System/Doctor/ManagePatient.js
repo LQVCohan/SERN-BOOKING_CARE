@@ -276,6 +276,9 @@ class ManagePatient extends Component {
                       <FormattedMessage id={"doctor.status"} />
                     </th>
                     <th scope="col">
+                      <FormattedMessage id={"doctor.reason"} />
+                    </th>
+                    <th scope="col">
                       <FormattedMessage id={"doctor.action"} />
                     </th>
                   </tr>
@@ -311,6 +314,8 @@ class ManagePatient extends Component {
                           <td>{gender}</td>
                           <td>{payment}</td>
                           <td>{status}</td>
+                          <td>{item.reason}</td>
+
                           <td className="">
                             <button
                               className="btn-confirm btn btn-info ml-3"

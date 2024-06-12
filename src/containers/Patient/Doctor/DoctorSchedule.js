@@ -21,6 +21,7 @@ class DoctorSchedule extends Component {
       allAvalTime: [],
       isOpenModalBooking: false,
       dataScheduleTimeModal: [],
+      user: {},
     };
   }
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -105,9 +106,11 @@ class DoctorSchedule extends Component {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   handleClickScheduleTime = (time) => {
+    let { userInfo } = this.props;
     this.setState({
       isOpenModalBooking: true,
       dataScheduleTimeModal: time,
+      user: userInfo,
     });
   };
   closeBookingModal = () => {
@@ -120,8 +123,13 @@ class DoctorSchedule extends Component {
   };
 
   render() {
-    let { dataScheduleTimeModal, allDays, allAvalTime, isOpenModalBooking } =
-      this.state;
+    let {
+      dataScheduleTimeModal,
+      allDays,
+      allAvalTime,
+      isOpenModalBooking,
+      user,
+    } = this.state;
     let { language, doctorIdFromParent, doctorExtraInforFromParent } =
       this.props;
     console.log(
@@ -197,6 +205,7 @@ class DoctorSchedule extends Component {
           closeBookingModal={this.closeBookingModal}
           dataTime={dataScheduleTimeModal}
           doctorExtraInforFromGrandParent={doctorExtraInforFromParent}
+          userInfo={user}
         />
       </>
     );
@@ -207,6 +216,7 @@ const mapStateToProps = (state) => {
     systemMenuPath: state.app.systemMenuPath,
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
+    userInfo: state.user.userInfo,
   };
 };
 

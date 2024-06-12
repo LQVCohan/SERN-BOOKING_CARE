@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import HomeHeader from "../../HomePage/HomeHeader";
+import HomeFooter from "../../HomePage/HomeFooter";
+
 import "./DetailDoctor.scss";
 import {
   getDetailInfoDoctor,
@@ -138,6 +140,7 @@ class DetailDoctor extends Component {
           </div>
           <div className="comment-doctor"> </div>
         </div>
+        <HomeFooter />
       </>
     );
   }

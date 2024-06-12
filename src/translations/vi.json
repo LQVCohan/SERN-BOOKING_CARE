@@ -12,7 +12,8 @@
     "title1": "Nền tảng y tế",
     "title2": "Chăm sóc sức khỏe toàn diện",
     "placeholderInput": "Tìm chuyên khoa khám bệnh",
-    "welcome": "Xin chào, "
+    "welcome": "Xin chào, ",
+    "login": "Đăng nhập "
   },
   "menu": {
     "admin": {
@@ -76,12 +77,15 @@
     "action": "Thao tác",
     "depos": "Đã nhận cọc",
     "comfirm": "Xác nhận hoàn tất",
-    "status-patient": "Tình trạng"
+    "status-patient": "Tình trạng",
+    "birth": "Ngày sinh",
+    "reason": "Lý do khám"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
     "more-info": "Xem thêm",
-    "specialty-label": "Chuyên khoa phổ biến"
+    "specialty-label": "Chuyên khoa phổ biến",
+    "clinic-label": "Cơ sở y tế nỗi bật"
   },
   "manage-schedule": {
     "title": "Quản lý kế hoạch khám bệnh của bác sĩ",

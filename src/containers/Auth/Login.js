@@ -121,13 +121,13 @@ class Login extends Component {
               <div className="col-12">
                 <span className="forgot-password">Forgot your password? </span>
               </div>
-              <div className="col-12 text-center">
+              {/* <div className="col-12 text-center">
                 <span className="text-other-login">Or Login with: </span>
               </div>
               <div className="col-12 social-login">
                 <i class="fa-brands fa-google-plus google"></i>
                 <i class="far fa-facebook facebook"></i>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

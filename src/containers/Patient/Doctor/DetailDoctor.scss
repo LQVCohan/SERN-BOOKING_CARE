@@ -1,5 +1,5 @@
 .doctor-detail-container {
-  height: 500px;
+  height: fit-content;
 
   // margin: 0 100px;
   .schedule-doctor {
@@ -50,6 +50,7 @@
     }
   }
   .detail-info-doctor {
+    height: fit-content;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     background-color: #f9f9f9;

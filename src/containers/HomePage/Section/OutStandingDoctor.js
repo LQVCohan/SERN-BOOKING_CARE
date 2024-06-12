@@ -30,7 +30,10 @@ class OutStandingDoctor extends Component {
     console.log("Cohan check view info: ", doctor);
     this.props.history.push(`/detail-doctor/${doctor.id}`);
   };
-
+  handleViewMoreDoctor = (doctor) => {
+    console.log("Cohan check view info: ", doctor);
+    this.props.history.push(`/more-doctor/`);
+  };
   render() {
     let { language } = this.props;
     console.log("topDoctorsRedux: ", this.props.topDoctorsRedux);
@@ -42,7 +45,10 @@ class OutStandingDoctor extends Component {
             <span className="title-section">
               <FormattedMessage id="homepage.outstanding-doctor" />
             </span>
-            <button className="btn-section">
+            <button
+              className="btn-section"
+              onClick={() => this.handleViewMoreDoctor()}
+            >
               <FormattedMessage id="homepage.more-info" />
             </button>
           </div>
@@ -77,7 +83,11 @@ class OutStandingDoctor extends Component {
                           <div>
                             {language === LANGUAGES.VI ? nameVi : nameEn}
                           </div>
-                          <div>Cơ xương khớp</div>
+                          <div className="specialty">
+                            {item.Doctor_Info.specialtyData.name
+                              ? item.Doctor_Info.specialtyData.name
+                              : "Freelance"}
+                          </div>
                         </div>
                       </div>
                     </div>

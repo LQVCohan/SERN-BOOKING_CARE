@@ -33,7 +33,7 @@ class BookingModal extends Component {
       address: "",
       reason: "",
       birth: "",
-      genders: "",
+      gender: [],
       doctorId: "",
       selectedGender: "",
       timeType: "",
@@ -60,17 +60,51 @@ class BookingModal extends Component {
     return result;
   };
   async componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.isOpenModal !== this.props.isOpenModal) {
+      let { userInfo } = this.props;
+      console.log("check user", userInfo);
+      let { gender } = this.state;
+      let selectedGender = gender.find((item) => {
+        return item && item.value === userInfo.gender;
+      });
+
+      this.setState({
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        phoneNumber: userInfo.phoneNumber,
+        email: userInfo.email,
+        address: userInfo.address,
+        selectedGender: selectedGender,
+        birth: moment.unix(+userInfo.birth / 1000).valueOf(),
+      });
+    }
     if (prevProps.language !== this.props.language) {
       this.setState({
-        genders: this.buildDataGender(this.props.genders),
+        gender: this.buildDataGender(this.props.genders),
         //   listPayments: this.buildDataInputSelectPayment(
         //     this.props.doctorExtraInforFromGrandParent
         //   ),
       });
+      let { userInfo } = this.props;
+      console.log("check user", userInfo);
+      let { gender } = this.state;
+      let selectedGender = gender.find((item) => {
+        return item && item.value === userInfo.gender;
+      });
+
+      this.setState({
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        phoneNumber: userInfo.phoneNumber,
+        email: userInfo.email,
+        address: userInfo.address,
+        selectedGender: selectedGender,
+        birth: moment.unix(+userInfo.birth / 1000).valueOf(),
+      });
     }
     if (prevProps.genders !== this.props.genders) {
       this.setState({
-        genders: this.buildDataGender(this.props.genders),
+        gender: this.buildDataGender(this.props.genders),
       });
     }
     if (
@@ -96,7 +130,22 @@ class BookingModal extends Component {
     }
   }
   async componentDidMount() {
-    this.props.getGenderStart();
+    await this.props.getGenderStart();
+    // let { gender } = this.state;
+    // let selectedGender = gender.find((item) => {
+    //   return item && item.value === userInfo.gender;
+    // });
+    // let { userInfo } = this.props;
+    // console.log("check user", userInfo);
+    // this.setState({
+    //   firstName: userInfo.firstName,
+    //   lastName: userInfo.lastName,
+    //   phoneNumber: userInfo.phoneNumber,
+    //   email: userInfo.email,
+    //   address: userInfo.address,
+    //   selectedGender: selectedGender,
+    //   birth: userInfo.birth,
+    // });
     // this.setState({
     //   genders: this.buildDataGender(this.props.genders),
     //   listPayments: this.buildDataInputSelectPayment(
@@ -205,7 +254,8 @@ class BookingModal extends Component {
       isValidEmailInput === false ||
       isValidFirstNameInput === false ||
       isValidLastNameInput === false ||
-      isValidPhoneNumberInput === false
+      isValidPhoneNumberInput === false ||
+      this.state.reason === ""
     ) {
       language === LANGUAGES.EN
         ? toast.error("Invalid informations")
@@ -309,7 +359,9 @@ class BookingModal extends Component {
       isOpenModal,
       closeBookingModal,
       doctorExtraInforFromGrandParent,
+      userInfo,
     } = this.props;
+    console.log("Check props inside modal: ", this.props);
     let {
       listPayments,
       isSending,
@@ -504,7 +556,7 @@ class BookingModal extends Component {
                   <Select
                     value={this.state.selectedGender}
                     onChange={this.handleChangeSelectGender}
-                    options={this.state.genders}
+                    options={this.state.gender}
                   />{" "}
                 </div>
               </div>

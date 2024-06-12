@@ -17,10 +17,9 @@ import {
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
+
     this.state = {
-      currentDate: "",
+      currentDate: new Date(),
       listDoctors: [],
       selectedDoctor: {},
       rangeTime: [],
@@ -157,12 +156,20 @@ class ManageSchedule extends Component {
       }
     }
   };
+  isDateInNextWeekOrLater = (date) => {
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    return date >= nextWeek;
+  };
   render() {
     console.log("check state", this.state);
     let { rangeTime } = this.state;
     let { language, user } = this.props;
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     let yesterday = new Date(new Date().setDate(new Date().getDate()) - 1);
+
     return (
       <div className="manage-schedule-container">
         <div className="manage-schedule-title">
@@ -189,7 +196,25 @@ class ManageSchedule extends Component {
                 className="form-control"
                 onChange={this.handleOnChangeDatePicker}
                 minDate={yesterday}
+                maxDate={nextWeek}
                 value={this.state.currentDate}
+                calendarProps={{
+                  children: ({ date }) => {
+                    const disabled =
+                      this.isDateInNextWeekOrLater(date) &&
+                      date.getTime() !== nextWeek.getTime();
+                    return (
+                      <button
+                        className={`react-calendar__tile ${
+                          disabled ? "react-calendar__tile--disabled" : ""
+                        }`}
+                        disabled={disabled}
+                      >
+                        {date.getDate()}
+                      </button>
+                    );
+                  },
+                }}
               />
             </div>
             <div className="col-12 pick-hour-container">
