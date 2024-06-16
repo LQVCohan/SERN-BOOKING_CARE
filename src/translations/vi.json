@@ -34,7 +34,8 @@
       "manage-patient": "Quản lý bệnh nhân",
       "manage-doctor-info": "Quản lý thông tin cá nhân",
       "doctor-info": "Thông tin cá nhân",
-      "terminate": "Nộp đơn hủy hợp tác"
+      "terminate": "Nộp đơn hủy hợp tác",
+      "history": "Lịch sử khám bệnh"
     }
   },
   "manage-user": {
@@ -80,6 +81,16 @@
     "status-patient": "Tình trạng",
     "birth": "Ngày sinh",
     "reason": "Lý do khám"
+  },
+  "history": {
+    "title": "Lịch sử khám bệnh",
+    "patientId": "Mã bệnh nhân",
+    "patientName": "Tên bệnh nhân",
+    "reason": "Lý do khám",
+    "location": "Nơi khám",
+    "phoneNumber": "Số điện thoại",
+    "price": "Số tiền",
+    "status": "Trạng thái"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",

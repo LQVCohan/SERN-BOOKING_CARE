@@ -259,7 +259,10 @@ class HomeHeader extends Component {
               <div className="title2">
                 <FormattedMessage id="home-header.title2" />
               </div>
-              <div className="search" onClick={this.handleSearchComponent}>
+              <div
+                className="search"
+                onClick={() => this.handleSearchComponent("All")}
+              >
                 <i className="fas fa-search"></i>
 
                 <input type="search" placeholder={"search something"} />
@@ -329,7 +332,6 @@ class HomeHeader extends Component {
                 </div>
               </div>
             </div>
-            ); }
           </div>
         )}
       </React.Fragment>

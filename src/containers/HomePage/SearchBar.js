@@ -143,14 +143,12 @@ class SearchBar extends Component {
     console.log("Cohan check view info: ", info);
     if (type === "Doctor") {
       this.props.history.push(`/detail-doctor/${info.id}`);
-    } else {
-      if (type === "Specialty") {
-        this.props.history.push(`/detail-specialty/${info.id}`);
-      } else {
-        if (type === "Clinic") {
-          this.props.history.push(`/detail-clinic/${info.id}`);
-        }
-      }
+    }
+    if (type === "Specialty") {
+      this.props.history.push(`/detail-specialty/${info.id}`);
+    }
+    if (type === "Clinic") {
+      this.props.history.push(`/detail-clinic/${info.id}`);
     }
   };
   render() {
@@ -181,7 +179,7 @@ class SearchBar extends Component {
               (isSearching === false && (
                 <i
                   className="fas fa-search"
-                  onClick={this.handleSearchItem}
+                  onClick={this.handleSearchItem()}
                 ></i>
               ))}
 

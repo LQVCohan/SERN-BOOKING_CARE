@@ -65,61 +65,45 @@ class ManageDoctorInfo extends Component {
       isOpenModal: false,
     };
   }
+  regexPatterns = {
+    emailRegex: /[a-z0-9]+@[a-z]+\.[a-z]{3}/,
+    nameRegex:
+      /^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\ ]+$/,
+  };
   handleOnChangeInput = (event, id) => {
-    let emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{3}/;
-    // let nameRegex = /^[a-zA-Z ]*$/;
-    let nameRegex =
-      /^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\ ]+$/;
-    let valueInput = event.target.value;
-    let stateCopy = { ...this.state };
-    stateCopy[id] = valueInput;
-    this.setState({
-      ...stateCopy,
-    });
-    if (id === "firstName" && nameRegex.test(valueInput)) {
-      this.setState({
-        isValidFirstNameInput: true,
-      });
-    } else {
-      if (id === "firstName" && !nameRegex.test(valueInput)) {
-        this.setState({
-          isValidFirstNameInput: false,
-        });
-      }
+    const { value } = event.target;
+    const {
+      isValidFirstNameInput,
+      isValidLastNameInput,
+      isValidEmailInput,
+      isValidPhoneNumberInput,
+    } = this.state;
+    const { emailRegex, nameRegex } = this.regexPatterns;
+
+    let isValid = true;
+
+    switch (id) {
+      case "firstName":
+        isValid = nameRegex.test(value);
+        this.setState({ isValidFirstNameInput: isValid });
+        break;
+      case "lastName":
+        isValid = nameRegex.test(value);
+        this.setState({ isValidLastNameInput: isValid });
+        break;
+      case "email":
+        isValid = emailRegex.test(value);
+        this.setState({ isValidEmailInput: isValid });
+        break;
+      case "phoneNumber":
+        isValid = validator.isMobilePhone(value);
+        this.setState({ isValidPhoneNumberInput: isValid });
+        break;
+      default:
+        break;
     }
-    if (id === "lastName" && nameRegex.test(valueInput)) {
-      this.setState({
-        isValidLastNameInput: true,
-      });
-    } else {
-      if (id === "lastName" && !nameRegex.test(valueInput)) {
-        this.setState({
-          isValidLastNameInput: false,
-        });
-      }
-    }
-    if (id === "email" && emailRegex.test(valueInput)) {
-      this.setState({
-        isValidEmailInput: true,
-      });
-    } else {
-      if (id === "email" && !emailRegex.test(valueInput)) {
-        this.setState({
-          isValidEmailInput: false,
-        });
-      }
-    }
-    if (id === "phoneNumber" && validator.isMobilePhone(valueInput)) {
-      this.setState({
-        isValidPhoneNumberInput: true,
-      });
-    } else {
-      if (id === "phoneNumber" && !validator.isMobilePhone(valueInput)) {
-        this.setState({
-          isValidPhoneNumberInput: false,
-        });
-      }
-    }
+
+    this.setState({ [id]: value });
   };
   buildFrameChart = () => {
     let { language } = this.props;
@@ -252,110 +236,106 @@ class ManageDoctorInfo extends Component {
   }
 
   async componentDidMount() {
-    let { user } = this.props;
+    const { user } = this.props;
 
-    let dataChart = await this.buildDataChart();
-    this.setState({
-      isLoading: true,
-      dataChart: dataChart,
-      frameChart: this.buildFrameChart(),
-    });
-
-    await this.props.getRequiredDoctorInfo();
-
-    this.buildDataSelect();
-    let addressClinic = "",
-      email = "",
-      phoneNumber = "",
-      nameClinic = "",
-      paymentId = "",
-      priceId = "",
-      provinceId = "",
-      selectedPrice = "",
-      selectedPayment = "",
-      selectedProvince = "",
-      selectedSpecialty = "",
-      selectedClinic = "",
-      selectedStatus = "",
-      clinicId = "",
-      specialtyId = "",
-      positionId = "",
-      statusId = "",
-      imageBase64 = "",
-      doctorId = "";
-
-    let {
-      listPrices,
-      listPayments,
-      listProvinces,
-      listSpecialty,
-      listClinic,
-      listStatus,
-    } = this.state;
-
-    let res = await getDetailInfoDoctor(user.id);
-    console.log("check res from get data info doctor: ", res);
-    if (res.data.Doctor_Info) {
-      addressClinic = res.data.Doctor_Info.addressClinic;
-      nameClinic = res.data.Doctor_Info.nameClinic;
-      clinicId = res.data.Doctor_Info.clinicId;
-      priceId = res.data.Doctor_Info.priceId;
-      paymentId = res.data.Doctor_Info.paymentId;
-      provinceId = res.data.Doctor_Info.provinceId;
-      specialtyId = res.data.Doctor_Info.specialtyId;
-      positionId = res.data.Doctor_Info.positionId;
-      doctorId = res.data.id;
-      email = res.data.email;
-      imageBase64 = res.data.image;
-      statusId = res.data.Doctor_Info.statusId;
-
-      phoneNumber = res.data.phoneNumber;
-      selectedPrice = listPrices.find((item) => {
-        return item && item.value === priceId;
-      });
-      selectedPayment = listPayments.find((item) => {
-        return item && item.value === paymentId;
-      });
-      selectedProvince = listProvinces.find((item) => {
-        return item && item.value === provinceId;
-      });
-      selectedSpecialty = listSpecialty.find((item) => {
-        return item && item.value === specialtyId;
-      });
-      selectedClinic = listClinic.find((item) => {
-        return item && item.value === clinicId;
-      });
-      selectedStatus = listStatus.find((item) => {
-        return item && item.value === statusId;
-      });
+    try {
       this.setState({
-        firstName: res.data.firstName,
-        lastName: res.data.lastName,
-
-        addressClinic: addressClinic,
-        priceId: res.data.Doctor_Info.priceId,
-        paymentId: res.data.Doctor_Info.paymentId,
-        provinceId: res.data.Doctor_Info.provinceId,
-        specialtyId: res.data.Doctor_Info.specialtyId,
-
-        nameClinic: nameClinic,
-        positionId: positionId,
-        selectedPrice: selectedPrice,
-        selectedPayment: selectedPayment,
-        selectedProvince: selectedProvince,
-        selectedSpecialty: selectedSpecialty,
-        selectedClinic: selectedClinic,
-        selectedStatus: selectedStatus,
-        positionData: res.data.positionData,
-        doctorId: doctorId,
-        email: email,
-        phoneNumber: phoneNumber,
-        statusId: statusId,
-        imageBase64: imageBase64,
-        isLoading: false,
+        isLoading: true,
       });
+      // Sử dụng Promise.all để gọi các hàm lấy dữ liệu song song
+      const [dataChart, detailInfo] = await Promise.all([
+        this.buildDataChart(),
+        getDetailInfoDoctor(user.id),
+        this.props.getRequiredDoctorInfo(),
+      ]);
+
+      // Destructure dữ liệu từ detailInfo
+      const {
+        Doctor_Info,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        image,
+        positionData,
+      } = detailInfo.data;
+
+      // Khởi tạo các biến cần thiết
+      let {
+        listPrices,
+        listPayments,
+        listProvinces,
+        listSpecialty,
+        listClinic,
+        listStatus,
+      } = this.state;
+
+      // Gán các giá trị từ Doctor_Info vào các biến
+      let {
+        addressClinic,
+        nameClinic,
+        clinicId,
+        priceId,
+        paymentId,
+        provinceId,
+        specialtyId,
+        positionId,
+        statusId,
+      } = Doctor_Info || {};
+
+      // Tìm các giá trị tương ứng từ listPrices, listPayments, ...
+      let selectedPrice = listPrices.find(
+        (item) => item && item.value === priceId
+      );
+      let selectedPayment = listPayments.find(
+        (item) => item && item.value === paymentId
+      );
+      let selectedProvince = listProvinces.find(
+        (item) => item && item.value === provinceId
+      );
+      let selectedSpecialty = listSpecialty.find(
+        (item) => item && item.value === specialtyId
+      );
+      let selectedClinic = listClinic.find(
+        (item) => item && item.value === clinicId
+      );
+      let selectedStatus = listStatus.find(
+        (item) => item && item.value === statusId
+      );
+
+      // Cập nhật state một cách rõ ràng và gọn gàng
+      this.setState({
+        isLoading: false,
+        dataChart,
+        frameChart: this.buildFrameChart(),
+        firstName,
+        lastName,
+        addressClinic,
+        priceId,
+        paymentId,
+        provinceId,
+        specialtyId,
+        nameClinic,
+        positionId,
+        selectedPrice,
+        selectedPayment,
+        selectedProvince,
+        selectedSpecialty,
+        selectedClinic,
+        selectedStatus,
+        positionData: positionData,
+        doctorId: detailInfo.data.id,
+        email,
+        phoneNumber,
+        statusId,
+        imageBase64: image,
+      });
+    } catch (error) {
+      console.error("Error in componentDidMount:", error);
+      // Xử lý lỗi tại đây nếu cần thiết
     }
   }
+
   buildDataInputSelect = (inputData, type) => {
     let result = [];
     let language = this.props.language;

@@ -1,0 +1,56 @@
+.history-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  .history-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    .history-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 1fr 1fr;
+      background-color: #f8f8f8;
+      font-weight: bold;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+
+      div {
+        padding: 8px;
+        text-align: center;
+      }
+    }
+
+    .history-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 1fr 1fr;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+
+      div {
+        padding: 8px;
+        text-align: center;
+      }
+
+      .status-icon {
+        font-size: 18px;
+        color: green; /* Màu sắc tương ứng với trạng thái */
+      }
+    }
+  }
+}

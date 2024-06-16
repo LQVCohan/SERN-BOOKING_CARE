@@ -90,10 +90,8 @@ const postSendRemedy = (data) => {
 const searchInfoByAnyThing = (data) => {
   return axios.get(`/api/search?term=${data.term}&type=${data.type}`);
 };
-const getTotalSheduleOfDoctor = (data) => {
-  return axios.get(
-    `/api/get-total-schedule-of-doctor?doctorId=${data.doctorId}`
-  );
+const getTotalSheduleOfDoctor = (doctorId) => {
+  return axios.get(`/api/get-total-schedule-of-doctor?doctorId=${doctorId}`);
 };
 const getStatusByPatientId = (data) => {
   return axios.get(

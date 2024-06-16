@@ -35,7 +35,8 @@
       "manage-patient": "Manage patient",
       "manage-doctor-info": "Manage doctor's information",
       "doctor-info": "Doctor's information",
-      "terminate": "Cancel coporation"
+      "terminate": "Cancel coporation",
+      "history": "History"
     }
   },
   "doctor": {
@@ -64,6 +65,16 @@
     "status-patient": "Status",
     "birth": "Birthday",
     "reason": "Booking reason"
+  },
+  "history": {
+    "title": "booking history",
+    "patientId": "Patient ID",
+    "patientName": "Patient Name",
+    "reason": "Reason for Visit",
+    "location": "Location",
+    "phoneNumber": "Phone Number",
+    "price": "Price",
+    "status": "Status"
   },
   "manage-user": {
     "add": "Add a new user",

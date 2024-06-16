@@ -93,7 +93,13 @@ export const doctorMenu = [
         //Nop don ngung hoat dong
 
         name: "menu.doctor.terminate",
-        link: "/doctor/manage-doctor-info",
+        link: "/doctor/manage-doctor-terminate",
+      },
+      {
+        //history
+
+        name: "menu.doctor.history",
+        link: "/doctor/manage-doctor-history",
       },
     ],
   },
