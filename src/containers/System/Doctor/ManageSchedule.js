@@ -14,7 +14,7 @@ import { FaCheckCircle, FaTrash } from "react-icons/fa";
 import {
   saveBulkScheduleDoctor,
   getTotalSheduleOfDoctor,
-  deleteScheduleDoctorByTime,
+  changeStatusScheduleDoctorByTime,
 } from "../../../services/userService";
 
 class ManageSchedule extends Component {
@@ -167,6 +167,7 @@ class ManageSchedule extends Component {
             object.date = formatedDate;
             object.timeType = time.keyMap;
             object.maxNumber = 10;
+            object.statusId = "SS1";
             return result.push(object);
           });
         } else {
@@ -211,19 +212,28 @@ class ManageSchedule extends Component {
 
   handleDeleteSchedule = async (timeType, formattedDate) => {
     let { markedSlots, selectedDoctor } = this.state;
-    // Xóa slot từ markedSlots
-    if (markedSlots[timeType] && markedSlots[timeType][formattedDate]) {
-      delete markedSlots[timeType][formattedDate];
-      if (Object.keys(markedSlots[timeType]).length === 0) {
-        delete markedSlots[timeType];
-      }
-    }
-    // Gọi API để xóa lịch từ server nếu cần
     let doctorId = selectedDoctor.value;
     let date = moment(formattedDate, "DD/MM/YYYY").valueOf();
-    await deleteScheduleDoctorByTime({ doctorId, timeType, date });
-    this.setState({ markedSlots });
-    toast.success("Deleted schedule successfully");
+    let statusId = "SS3";
+    let res = await changeStatusScheduleDoctorByTime({
+      doctorId,
+      timeType,
+      date,
+      statusId,
+    });
+    if (res && res.errCode === 0) {
+      if (markedSlots[timeType] && markedSlots[timeType][formattedDate]) {
+        delete markedSlots[timeType][formattedDate];
+        if (Object.keys(markedSlots[timeType]).length === 0) {
+          delete markedSlots[timeType];
+        }
+      }
+      this.setState({ markedSlots });
+      toast.success("Deleted schedule successfully");
+    }
+    if (res && res.errCode === 3) {
+      toast.error("This schedule was booked");
+    }
   };
 
   render() {

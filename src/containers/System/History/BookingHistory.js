@@ -1,42 +1,33 @@
 import React, { Component } from "react";
 import "./BookingHistory.scss";
 import { connect } from "react-redux";
+import { getAllHistoryByDoctorId } from "../../../services/userService";
 import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
-import { FormattedMessage } from "react-intl"; // Import FormattedMessage từ react-intl
+import { FormattedMessage } from "react-intl";
+import { LANGUAGES } from "../../../utils";
 
-class HistoryComponent extends Component {
+class BookingHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      medicalHistory: [
-        {
-          id: 1,
-          doctorId: 101,
-          patientId: 201,
-          date: "2024-06-13",
-          location: "Hospital A",
-          time: "10:00 AM",
-          price: "$50",
-          status: "completed",
-        },
-        {
-          id: 2,
-          doctorId: 102,
-          patientId: 202,
-          date: "2024-06-14",
-          location: "Clinic B",
-          time: "11:30 AM",
-          price: "$70",
-          status: "cancelled",
-        },
-        // Thêm các dữ liệu khác nếu cần
-      ],
+      historyData: [],
     };
   }
 
+  async componentDidMount() {
+    let { userInfo } = this.props;
+    let res = await getAllHistoryByDoctorId(userInfo.id);
+    console.log("check res his: ", res);
+    if (res && res.errCode === 0) {
+      this.setState({
+        historyData: res.res,
+      });
+    }
+  }
+
   render() {
-    const { medicalHistory } = this.state;
-    const { language } = this.props; // Lấy ngôn ngữ từ global state
+    const { historyData } = this.state;
+    const { language } = this.props;
 
     return (
       <div className="history-container">
@@ -53,7 +44,16 @@ class HistoryComponent extends Component {
               <FormattedMessage id="history.patientName" />
             </div>
             <div>
+              <FormattedMessage id="history.doctorName" />
+            </div>
+            <div>
               <FormattedMessage id="history.reason" />
+            </div>
+            <div>
+              <FormattedMessage id="history.time" />
+            </div>
+            <div>
+              <FormattedMessage id="history.date" />
             </div>
             <div>
               <FormattedMessage id="history.location" />
@@ -68,26 +68,47 @@ class HistoryComponent extends Component {
               <FormattedMessage id="history.status" />
             </div>
           </div>
-          {medicalHistory.map((historyItem) => (
-            <div key={historyItem.id} className="history-item">
-              <div>{historyItem.id}</div>
-              <div>{historyItem.patientId}</div>
-              <div>{historyItem.patientName}</div>
-              <div>{historyItem.reason}</div>
-              <div>{historyItem.location}</div>
-              <div>{historyItem.phoneNumber}</div>
-              <div>{historyItem.price}</div>
-              <div className="status-icon">
-                {historyItem.status === "completed" && (
-                  <FaCheckCircle color="green" />
-                )}
-                {historyItem.status === "cancelled" && (
-                  <FaTimesCircle color="red" />
-                )}
-                {historyItem.status === "pending" && <FaClock color="orange" />}
+          {historyData.map((historyItem, index) => {
+            let nameDoctorVi = `${historyItem.historyData.lastName} ${historyItem.historyData.firstName}`;
+            let nameDoctorEn = `${historyItem.historyData.firstName} ${historyItem.historyData.lastName}`;
+            let namePatientVi = `${historyItem.historyPatientData.lastName} ${historyItem.historyPatientData.firstName}`;
+            let namePatientEn = `${historyItem.historyPatientData.firstName} ${historyItem.historyPatientData.lastName}`;
+
+            return (
+              <div key={historyItem.id} className="history-item">
+                <div>{index + 1}</div>
+                <div>{historyItem.patientId}</div>
+                <div>
+                  {language === LANGUAGES.VI ? namePatientVi : namePatientEn}
+                </div>
+                <div>
+                  {language === LANGUAGES.VI ? nameDoctorVi : nameDoctorEn}
+                </div>
+                <div>{historyItem.reason}</div>
+                <div>{historyItem.timeType}</div>
+
+                <div>{historyItem.date}</div>
+                <div>{historyItem.address}</div>
+                <div>{historyItem.phoneNumber}</div>
+                <div>
+                  {language === LANGUAGES.VI
+                    ? `${historyItem.historyData.Doctor_Info.priceData.valueVi}đ`
+                    : `${historyItem.historyData.Doctor_Info.priceData.valueEn}$`}
+                </div>
+                <div className="status-icon">
+                  {historyItem.statusId === "completed" && (
+                    <FaCheckCircle color="green" />
+                  )}
+                  {historyItem.statusId === "cancelled" && (
+                    <FaTimesCircle color="red" />
+                  )}
+                  {historyItem.statusId === "processing" && (
+                    <FaClock color="orange" />
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );
@@ -96,8 +117,9 @@ class HistoryComponent extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.app.language, // Lấy giá trị ngôn ngữ từ global state
+    language: state.app.language,
+    userInfo: state.user.userInfo,
   };
 };
 
-export default connect(mapStateToProps)(HistoryComponent);
+export default connect(mapStateToProps)(BookingHistory);

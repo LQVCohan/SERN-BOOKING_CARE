@@ -12,7 +12,7 @@ import { lang } from "moment";
 import { LANGUAGES } from "../../../../utils";
 import {
   postPatientBookAppointment,
-  deleteScheduleDoctorByTime,
+  changeStatusScheduleDoctorByTime,
 } from "../../../../services/userService";
 import { toast } from "react-toastify";
 import { FormattedMessage } from "react-intl";
@@ -280,14 +280,16 @@ class BookingModal extends Component {
         timeString: timeString,
         doctorName: doctorName,
         paymentMethod: this.state.selectedPayment.value,
+        priceId: this.props.doctorExtraInforFromGrandParent.priceId,
       });
       if (res && res.errCode === 0) {
         toast.success("OK");
 
-        let resdelete = await deleteScheduleDoctorByTime({
+        let resdelete = await changeStatusScheduleDoctorByTime({
           timeType: this.state.timeType,
           date: this.props.dataTime.date,
           doctorId: this.state.doctorId,
+          statusId: "SS2",
         });
         if (resdelete && resdelete.errCode === 0) {
           this.props.closeBookingModal();
@@ -359,7 +361,6 @@ class BookingModal extends Component {
       isOpenModal,
       closeBookingModal,
       doctorExtraInforFromGrandParent,
-      userInfo,
     } = this.props;
     console.log("Check props inside modal: ", this.props);
     let {

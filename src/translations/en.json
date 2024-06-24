@@ -70,11 +70,14 @@
     "title": "booking history",
     "patientId": "Patient ID",
     "patientName": "Patient Name",
+    "doctorName": "Doctor Name",
     "reason": "Reason for Visit",
-    "location": "Location",
+    "location": "Address",
     "phoneNumber": "Phone Number",
     "price": "Price",
-    "status": "Status"
+    "status": "Status",
+    "time": "Time",
+    "date": "Date"
   },
   "manage-user": {
     "add": "Add a new user",
