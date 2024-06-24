@@ -86,11 +86,14 @@
     "title": "Lịch sử khám bệnh",
     "patientId": "Mã bệnh nhân",
     "patientName": "Tên bệnh nhân",
+    "doctorName": "Tên bác sĩ",
     "reason": "Lý do khám",
-    "location": "Nơi khám",
+    "location": "Địa chỉ",
     "phoneNumber": "Số điện thoại",
     "price": "Số tiền",
-    "status": "Trạng thái"
+    "status": "Trạng thái",
+    "time": "Thời gian",
+    "date": "Ngày khám"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",

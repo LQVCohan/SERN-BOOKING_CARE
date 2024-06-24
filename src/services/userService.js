@@ -62,6 +62,13 @@ const postVerifyBooking = (data) => {
 const createSpecialty = (data) => {
   return axios.post("/api/create-new-specialty", data);
 };
+const deleteSpecialty = (id) => {
+  return axios.delete(`/api/delete-specialty/${id}`);
+};
+const updateSpecialty = (data) => {
+  return axios.put("/api/update-specialty", data);
+};
+
 const getAllSpecialty = () => {
   return axios.get("/api/get-specialty");
 };
@@ -76,6 +83,13 @@ const createClinic = (data) => {
 const getAllClinic = () => {
   return axios.get("/api/get-clinic");
 };
+const updateClinic = (clinicData) => {
+  return axios.put(`/api/update-clinic`, clinicData);
+};
+const deleteClinic = (clinicId) => {
+  return axios.delete(`/api/delete-clinic/${clinicId}`);
+};
+
 const getDetailClinicById = (data) => {
   return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`);
 };
@@ -101,12 +115,13 @@ const getStatusByPatientId = (data) => {
 const getAllBookingById = (patientId) => {
   return axios.get(`/api/get-all-booking-by-id?patientId=${patientId}`);
 };
-const deleteScheduleDoctorByTime = (data) => {
-  return axios.delete(`/api/delete-schedule-by-time`, {
+const changeStatusScheduleDoctorByTime = (data) => {
+  return axios.put(`/api/change-status-schedule-by-time`, {
     data: {
       doctorId: data.doctorId,
       date: data.date,
       timeType: data.timeType,
+      statusId: data.statusId,
     },
   });
 };
@@ -132,7 +147,15 @@ const postChangePassword = (data) => {
     `/api/change-password?id=${data.id}&password=${data.password}`
   );
 };
+const getAllHistoryByDoctorId = (doctorId) => {
+  return axios.get(`/api/get-all-history-by-doctor-id?doctorId=${doctorId}`);
+};
 export {
+  deleteClinic,
+  updateClinic,
+  updateSpecialty,
+  deleteSpecialty,
+  getAllHistoryByDoctorId,
   getAllBookingById,
   getProfilePatientById,
   getTotalSheduleOfDoctor,
@@ -141,7 +164,7 @@ export {
   postChangePassword,
   getPasswordById,
   getDataChartById,
-  deleteScheduleDoctorByTime,
+  changeStatusScheduleDoctorByTime,
   searchInfoByAnyThing,
   postSendRemedy,
   getListPatient,

@@ -13,11 +13,6 @@ class HomeFooter extends Component {
   render() {
     return (
       <footer className="home-footer">
-        <div className="footer-call-to-action">
-          <h2>Ready for a next project?</h2>
-          <p>Let's get started!</p>
-          <button className="cta-button">Contact us</button>
-        </div>
         <div className="footer-main">
           <div className="footer-column">
             <h3>Bookingcare - Uy tín - Chất lượng</h3>
