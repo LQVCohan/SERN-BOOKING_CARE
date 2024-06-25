@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./AppointmentPatient.scss";
 import HomeFooter from "../../HomePage/HomeFooter";
@@ -23,6 +23,7 @@ import { add } from "lodash";
 import DatePicker from "react-flatpickr";
 import { toast } from "react-toastify";
 import ConfirmModal from "./ConfirmModal";
+
 class AppointmentPatient extends Component {
   constructor(props) {
     super(props);
@@ -33,17 +34,20 @@ class AppointmentPatient extends Component {
       dataModal: {},
     };
   }
+
   closeConfirmModal = () => {
     this.setState({
       isOpenConfirmModal: false,
     });
   };
+
   openModalConfirmCancel = (item) => {
     this.setState({
       isOpenConfirmModal: true,
       dataModal: item,
     });
   };
+
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.language !== this.props.language) {
       try {
@@ -65,11 +69,12 @@ class AppointmentPatient extends Component {
             });
           }
         }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.error("Error in componentDidUpdate:", error);
       }
     }
   }
+
   async componentDidMount() {
     try {
       if (
@@ -90,20 +95,18 @@ class AppointmentPatient extends Component {
           });
         }
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error("Error in componentDidMount:", error);
     }
   }
+
   acceptCancel = async (item) => {
     try {
       let { patientId, doctorId, date, timeType } = item;
       console.log("cehck date: ", date);
 
-      //   this.saveStatusBefore(item);
-
       let res = await UpdateStatusPatientByRequest({
         patientId: patientId,
-
         statusId: "S5",
         doctorId: doctorId,
         date: date,
@@ -115,9 +118,10 @@ class AppointmentPatient extends Component {
         toast.error("Error!");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error in acceptCancel:", error);
     }
   };
+
   render() {
     console.log("check state: ", this.state);
     let { listBooking, isOpenConfirmModal, dataModal } = this.state;
@@ -202,7 +206,6 @@ class AppointmentPatient extends Component {
                               <div className="payment">{payment}</div>
                               <div className="status">
                                 {status}
-
                                 <div
                                   className="cancel"
                                   onClick={() =>
@@ -239,6 +242,7 @@ class AppointmentPatient extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,

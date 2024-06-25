@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect, Route, Switch } from "react-router-dom";
-import "./ManageSchedule.scss";
 import { FormattedMessage } from "react-intl";
 import Select from "react-select";
 import * as actions from "../../../store/actions";
@@ -35,8 +33,7 @@ class ManageSchedule extends Component {
 
   markSlot = (timeType, unixDate) => {
     const { markedSlots } = this.state;
-    // Chuyển đổi UNIX timestamp từ milliseconds
-    const date = new Date(parseInt(unixDate, 10)); // Đảm bảo rằng unixDate là số nguyên
+    const date = new Date(parseInt(unixDate, 10));
     const formattedDate = moment(date).format("DD/MM/YYYY");
 
     if (!markedSlots[timeType]) {
@@ -47,78 +44,92 @@ class ManageSchedule extends Component {
   };
 
   async componentDidMount() {
-    this.props.fetchAllDoctors();
-    this.props.fetchAllScheduleTime();
+    try {
+      await this.props.fetchAllDoctors();
+      await this.props.fetchAllScheduleTime();
 
-    let { user } = this.props;
-    let res = await getTotalSheduleOfDoctor(user.id);
-    res.res.rows.forEach((item) => {
-      this.markSlot(item.timeType, item.date);
-    });
-    if (user && user.roleId === "R2") {
-      let object = {};
-      let labelVi = `${user.lastName} ${user.firstName}`;
-      let labelEn = `${user.firstName} ${user.lastName}`;
-
-      object.label = this.props.language === LANGUAGES.VI ? labelVi : labelEn;
-      object.value = user.id;
-      this.setState({
-        selectedDoctor: object,
-      });
-    }
-  }
-
-  async componentDidUpdate(prevProps, prevState, snapshot) {
-    let { user, language } = this.props;
-    let { selectedDoctor } = this.state;
-
-    if (prevProps.allDoctors !== this.props.allDoctors) {
-      let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
-      this.setState({
-        listDoctors: dataSelect,
-      });
-    }
-    if (prevState.selectedDoctor !== this.state.selectedDoctor) {
-      let res = await getTotalSheduleOfDoctor(selectedDoctor.value);
+      const { user } = this.props;
+      const res = await getTotalSheduleOfDoctor(user.id);
       res.res.rows.forEach((item) => {
         this.markSlot(item.timeType, item.date);
       });
-    }
-    if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
-      let data = this.props.allScheduleTime;
-      if (data && data.length > 0) {
-        data = data.map((item) => ({ ...item, isSelected: false }));
-      }
-      let res = await getTotalSheduleOfDoctor(user.id);
 
-      this.setState({
-        rangeTime: data,
-        totalSchedule: res,
-      });
-    }
-    if (prevProps.language !== this.props.language) {
       if (user && user.roleId === "R2") {
-        let object = {};
-        let labelVi = `${user.lastName} ${user.firstName}`;
-        let labelEn = `${user.firstName} ${user.lastName}`;
+        const object = {};
+        const labelVi = `${user.lastName} ${user.firstName}`;
+        const labelEn = `${user.firstName} ${user.lastName}`;
 
-        object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+        object.label = this.props.language === LANGUAGES.VI ? labelVi : labelEn;
         object.value = user.id;
         this.setState({
           selectedDoctor: object,
         });
       }
+    } catch (error) {
+      console.error("Error in componentDidMount:", error);
+      // Handle error appropriately, e.g., show toast or log out user
+    }
+  }
+
+  async componentDidUpdate(prevProps, prevState, snapshot) {
+    try {
+      const { user, language } = this.props;
+      const { selectedDoctor } = this.state;
+
+      if (prevProps.allDoctors !== this.props.allDoctors) {
+        const dataSelect = this.buildDataInputSelect(this.props.allDoctors);
+        this.setState({
+          listDoctors: dataSelect,
+        });
+      }
+
+      if (prevState.selectedDoctor !== this.state.selectedDoctor) {
+        const res = await getTotalSheduleOfDoctor(selectedDoctor.value);
+        res.res.rows.forEach((item) => {
+          this.markSlot(item.timeType, item.date);
+        });
+      }
+
+      if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
+        let data = this.props.allScheduleTime;
+        if (data && data.length > 0) {
+          data = data.map((item) => ({ ...item, isSelected: false }));
+        }
+        const res = await getTotalSheduleOfDoctor(user.id);
+
+        this.setState({
+          rangeTime: data,
+          totalSchedule: res,
+        });
+      }
+
+      if (prevProps.language !== this.props.language) {
+        if (user && user.roleId === "R2") {
+          const object = {};
+          const labelVi = `${user.lastName} ${user.firstName}`;
+          const labelEn = `${user.firstName} ${user.lastName}`;
+
+          object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+          object.value = user.id;
+          this.setState({
+            selectedDoctor: object,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error in componentDidUpdate:", error);
+      // Handle error appropriately, e.g., show toast or log out user
     }
   }
 
   buildDataInputSelect = (inputData) => {
-    let result = [];
-    let language = this.props.language;
+    const result = [];
+    const language = this.props.language;
     if (inputData && inputData.length > 0) {
-      inputData.map((item, index) => {
-        let object = {};
-        let labelVi = `${item.lastName} ${item.firstName}`;
-        let labelEn = `${item.firstName} ${item.lastName} `;
+      inputData.forEach((item, index) => {
+        const object = {};
+        const labelVi = `${item.lastName} ${item.firstName}`;
+        const labelEn = `${item.firstName} ${item.lastName} `;
 
         object.label = language === LANGUAGES.VI ? labelVi : labelEn;
         object.value = item.id;
@@ -150,54 +161,61 @@ class ManageSchedule extends Component {
   };
 
   handleSaveSchedule = async () => {
-    let { rangeTime, selectedDoctor, currentDate } = this.state;
-    let result = [];
-    if (!currentDate) {
-      toast.error("Missing Date");
-    } else if (selectedDoctor && _.isEmpty(selectedDoctor)) {
-      toast.error("Missing Doctor");
-    } else {
-      let formatedDate = new Date(currentDate).getTime();
-      if (rangeTime && rangeTime.length > 0) {
-        let selectedTime = rangeTime.filter((item) => item.isSelected === true);
-        if (selectedTime && selectedTime.length > 0) {
-          selectedTime = selectedTime.map((time) => {
-            let object = {};
-            object.doctorId = selectedDoctor.value;
-            object.date = formatedDate;
-            object.timeType = time.keyMap;
-            object.maxNumber = 10;
-            object.statusId = "SS1";
-            return result.push(object);
-          });
-        } else {
-          toast.error("Invalid Selected Time!");
-          return;
-        }
-      }
-
-      let res = await saveBulkScheduleDoctor({
-        arrSchedule: result,
-        doctorId: selectedDoctor.value,
-        date: formatedDate,
-      });
-
-      if (res && res.errCode === 0) {
-        toast.success("Save info successfully");
+    try {
+      let { rangeTime, selectedDoctor, currentDate } = this.state;
+      let result = [];
+      if (!currentDate) {
+        toast.error("Missing Date");
+      } else if (selectedDoctor && _.isEmpty(selectedDoctor)) {
+        toast.error("Missing Doctor");
       } else {
-        if (res && res.errCode === 2) {
-          toast.warn("Full schedule");
+        const formatedDate = new Date(currentDate).getTime();
+        if (rangeTime && rangeTime.length > 0) {
+          let selectedTime = rangeTime.filter(
+            (item) => item.isSelected === true
+          );
+          if (selectedTime && selectedTime.length > 0) {
+            selectedTime = selectedTime.map((time) => {
+              const object = {};
+              object.doctorId = selectedDoctor.value;
+              object.date = formatedDate;
+              object.timeType = time.keyMap;
+              object.maxNumber = 10;
+              object.statusId = "SS1";
+              return result.push(object);
+            });
+          } else {
+            toast.error("Invalid Selected Time!");
+            return;
+          }
+        }
+
+        const res = await saveBulkScheduleDoctor({
+          arrSchedule: result,
+          doctorId: selectedDoctor.value,
+          date: formatedDate,
+        });
+
+        if (res && res.errCode === 0) {
+          toast.success("Save info successfully");
         } else {
-          toast.warn("Those schedules already exist!");
+          if (res && res.errCode === 2) {
+            toast.warn("Full schedule");
+          } else {
+            toast.warn("Those schedules already exist!");
+          }
         }
       }
+    } catch (error) {
+      console.error("Error in handleSaveSchedule:", error);
+      // Handle error appropriately, e.g., show toast or log out user
     }
   };
 
   generateDays(startDate, numDays) {
     const days = [];
     for (let i = 0; i < numDays; i++) {
-      let date = new Date(startDate);
+      const date = new Date(startDate);
       date.setDate(date.getDate() + i);
       days.push(date);
     }
@@ -211,28 +229,33 @@ class ManageSchedule extends Component {
   };
 
   handleDeleteSchedule = async (timeType, formattedDate) => {
-    let { markedSlots, selectedDoctor } = this.state;
-    let doctorId = selectedDoctor.value;
-    let date = moment(formattedDate, "DD/MM/YYYY").valueOf();
-    let statusId = "SS3";
-    let res = await changeStatusScheduleDoctorByTime({
-      doctorId,
-      timeType,
-      date,
-      statusId,
-    });
-    if (res && res.errCode === 0) {
-      if (markedSlots[timeType] && markedSlots[timeType][formattedDate]) {
-        delete markedSlots[timeType][formattedDate];
-        if (Object.keys(markedSlots[timeType]).length === 0) {
-          delete markedSlots[timeType];
+    try {
+      let { markedSlots, selectedDoctor } = this.state;
+      let doctorId = selectedDoctor.value;
+      let date = moment(formattedDate, "DD/MM/YYYY").valueOf();
+      let statusId = "SS3";
+      let res = await changeStatusScheduleDoctorByTime({
+        doctorId,
+        timeType,
+        date,
+        statusId,
+      });
+      if (res && res.errCode === 0) {
+        if (markedSlots[timeType] && markedSlots[timeType][formattedDate]) {
+          delete markedSlots[timeType][formattedDate];
+          if (Object.keys(markedSlots[timeType]).length === 0) {
+            delete markedSlots[timeType];
+          }
         }
+        this.setState({ markedSlots });
+        toast.success("Deleted schedule successfully");
       }
-      this.setState({ markedSlots });
-      toast.success("Deleted schedule successfully");
-    }
-    if (res && res.errCode === 3) {
-      toast.error("This schedule was booked");
+      if (res && res.errCode === 3) {
+        toast.error("This schedule was booked");
+      }
+    } catch (error) {
+      console.error("Error in handleDeleteSchedule:", error);
+      // Handle error appropriately, e.g., show toast or log out user
     }
   };
 

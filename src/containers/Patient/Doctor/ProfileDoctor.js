@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./ProfileDoctor.scss";
 import { getProfileDoctorById } from "../../../services/userService";
@@ -7,6 +7,7 @@ import NumberFormat from "react-number-format";
 import _ from "lodash";
 import moment from "moment";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
 class ProfileDoctor extends Component {
   constructor(props) {
     super(props);
@@ -14,30 +15,39 @@ class ProfileDoctor extends Component {
       dataProfile: {},
     };
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.doctorId !== prevProps.doctorId) {
-      //  this.getInfoDoctor(this.props.doctorId);
+      this.getInfoDoctor(this.props.doctorId);
     }
   }
+
   async componentDidMount() {
-    let data = await this.getInfoDoctor(this.props.doctorId);
-    console.log("Data: ", data);
-    this.setState({
-      dataProfile: data,
-    });
+    this.getInfoDoctor(this.props.doctorId);
   }
+
   getInfoDoctor = async (id) => {
-    let result = {};
-    if (id) {
-      let res = await getProfileDoctorById(id);
-      if (res && res.errCode === 0) {
-        console.log("OK: ", res);
-        result = res.data;
+    try {
+      let result = {};
+      if (id) {
+        let res = await getProfileDoctorById(id);
+        if (res && res.errCode === 0) {
+          result = res.data;
+          console.log("Doctor profile data:", result);
+        } else {
+          console.error("Error fetching doctor profile:", res.errMessage);
+        }
       }
-      console.log("check data: ", result);
+      this.setState({
+        dataProfile: result,
+      });
+      return result;
+    } catch (error) {
+      console.error("Error fetching doctor profile:", error);
+      return {};
     }
-    return result;
   };
+
   renderTimeBooking = (dataTime) => {
     let { language } = this.props;
     let time =
@@ -56,13 +66,13 @@ class ProfileDoctor extends Component {
         <>
           <div>Ngày: {date}</div>
           <div>Thời gian: {time}</div>
-
           <div>Miễn phí đặt lịch</div>
         </>
       );
     }
-    return "";
+    return null;
   };
+
   render() {
     let { dataProfile } = this.state;
     let {
@@ -143,6 +153,7 @@ class ProfileDoctor extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,

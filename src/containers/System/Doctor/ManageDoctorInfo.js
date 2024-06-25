@@ -402,56 +402,64 @@ class ManageDoctorInfo extends Component {
     }
   };
   handleSaveInfoDoctor = async () => {
-    this.setState({
-      isLoading: true,
-    });
-    await this.props.saveDetailDoctor({
-      action: "EDIT",
-      id: this.state.doctorId,
-      email: this.state.email,
-      phoneNumber: this.state.phoneNumber,
-      selectedPrice:
-        this.state.selectedPrice && this.state.selectedPrice.value
-          ? this.state.selectedPrice.value
-          : "",
-      selectedPayment:
-        this.state.selectedPayment && this.state.selectedPayment.value
-          ? this.state.selectedPayment.value
-          : "",
-      selectedProvince:
-        this.state.selectedProvince && this.state.selectedProvince.value
-          ? this.state.selectedProvince.value
-          : "",
+    try {
+      this.setState({
+        isLoading: true,
+      });
+      await this.props.saveDetailDoctor({
+        action: "EDIT",
+        id: this.state.doctorId,
+        email: this.state.email,
+        phoneNumber: this.state.phoneNumber,
+        selectedPrice:
+          this.state.selectedPrice && this.state.selectedPrice.value
+            ? this.state.selectedPrice.value
+            : "",
+        selectedPayment:
+          this.state.selectedPayment && this.state.selectedPayment.value
+            ? this.state.selectedPayment.value
+            : "",
+        selectedProvince:
+          this.state.selectedProvince && this.state.selectedProvince.value
+            ? this.state.selectedProvince.value
+            : "",
 
-      addressClinic: this.state.addressClinic ? this.state.addressClinic : "",
+        addressClinic: this.state.addressClinic ? this.state.addressClinic : "",
 
-      clinicId:
-        this.state.selectedClinic && this.state.selectedClinic.value
-          ? this.state.selectedClinic.value
-          : "",
-      specialtyId:
-        this.state.selectedSpecialty && this.state.selectedSpecialty.value
-          ? this.state.selectedSpecialty.value
-          : "",
-      statusId:
-        this.state.selectedStatus && this.state.selectedStatus.value
-          ? this.state.selectedStatus.value
-          : "",
-      imageBase64: this.state.imageBase64,
-    });
-    this.setState({
-      isLoading: false,
-    });
+        clinicId:
+          this.state.selectedClinic && this.state.selectedClinic.value
+            ? this.state.selectedClinic.value
+            : "",
+        specialtyId:
+          this.state.selectedSpecialty && this.state.selectedSpecialty.value
+            ? this.state.selectedSpecialty.value
+            : "",
+        statusId:
+          this.state.selectedStatus && this.state.selectedStatus.value
+            ? this.state.selectedStatus.value
+            : "",
+        imageBase64: this.state.imageBase64,
+      });
+      this.setState({
+        isLoading: false,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   handleOnchangeImage = async (event) => {
-    let data = event.target.files;
-    let file = data[0];
-    if (file) {
-      let base64 = await CommonUtils.getBase64(file);
-      console.log("cehck base64", base64);
-      this.setState({
-        imageBase64: base64,
-      });
+    try {
+      let data = event.target.files;
+      let file = data[0];
+      if (file) {
+        let base64 = await CommonUtils.getBase64(file);
+        console.log("cehck base64", base64);
+        this.setState({
+          imageBase64: base64,
+        });
+      }
+    } catch (error) {
+      return;
     }
   };
   handleOpenChangePasswordModal = () => {

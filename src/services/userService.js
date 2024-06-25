@@ -150,7 +150,16 @@ const postChangePassword = (data) => {
 const getAllHistoryByDoctorId = (doctorId) => {
   return axios.get(`/api/get-all-history-by-doctor-id?doctorId=${doctorId}`);
 };
+const postForgotPassword = async (email) => {
+  try {
+    const response = await axios.post("/api/forgot-password", { email });
+    return response.data;
+  } catch (error) {
+    throw error.response || error;
+  }
+};
 export {
+  postForgotPassword,
   deleteClinic,
   updateClinic,
   updateSpecialty,

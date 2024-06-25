@@ -28,6 +28,7 @@ import MoreClinic from "./Patient/Doctor/MoreClinic";
 import ProfilePatient from "./Patient/Profile/ProfilePatient";
 import AppointmentPatient from "./Patient/Profile/AppointmentPatient";
 import Rule from "./HomePage/Section/Rule";
+import ForgotPassword from "./Patient/Profile/ForgotPassword";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -58,7 +59,11 @@ class App extends Component {
                 <Switch>
                   <Route path={path.HOME} exact component={Home} />
                   <Route path={path.HOMEPAGE} component={HomePage} />
-
+                  <Route
+                    exact
+                    path="/forgot-password"
+                    component={ForgotPassword}
+                  />
                   <Route
                     path={path.LOGIN}
                     component={userIsNotAuthenticated(Login)}

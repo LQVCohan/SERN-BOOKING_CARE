@@ -8,7 +8,6 @@ import {
   getDetailInfoDoctor,
   getExtraInfoDoctorById,
 } from "../../../services/userService";
-import { lang } from "moment";
 import { LANGUAGES } from "../../../utils";
 import Select from "react-select";
 import DoctorSchedule from "./DoctorSchedule";
@@ -25,6 +24,7 @@ class DetailDoctor extends Component {
       listPayments: [],
     };
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.allRequiredDoctorInfo !== this.props.allRequiredDoctorInfo) {
       let { resPayment } = this.props.allRequiredDoctorInfo;
@@ -34,50 +34,62 @@ class DetailDoctor extends Component {
       });
     }
   }
-  async componentDidMount() {
-    if (
-      this.props.match &&
-      this.props.match.params &&
-      this.props.match.params.id
-    ) {
-      let id = this.props.match.params.id;
-      this.setState({
-        currentDoctorId: id,
-      });
-      let res = await getDetailInfoDoctor(id);
-      if (res && res.errCode === 0) {
-        this.setState({
-          detailDoctor: res.data,
-        });
-      }
-      let extraRes = await getExtraInfoDoctorById(id);
-      console.log("check extraRes: ", extraRes);
 
-      if (extraRes && extraRes.errCode === 0) {
+  async componentDidMount() {
+    try {
+      if (
+        this.props.match &&
+        this.props.match.params &&
+        this.props.match.params.id
+      ) {
+        let id = this.props.match.params.id;
         this.setState({
-          extraInfo: extraRes.data,
+          currentDoctorId: id,
         });
+
+        let res = await getDetailInfoDoctor(id);
+        if (res && res.errCode === 0) {
+          this.setState({
+            detailDoctor: res.data,
+          });
+        }
+
+        let extraRes = await getExtraInfoDoctorById(id);
+        console.log("check extraRes: ", extraRes);
+
+        if (extraRes && extraRes.errCode === 0) {
+          this.setState({
+            extraInfo: extraRes.data,
+          });
+        }
       }
+    } catch (error) {
+      console.error("Error in componentDidMount:", error);
     }
   }
+
   buildDataInputSelect = (inputData, type) => {
     let result = [];
     let language = this.props.language;
-    if (inputData && inputData.length > 0) {
-      if (type === "PAYMENT") {
-        inputData.map((item, index) => {
-          let object = {};
-          let labelVi = `${item.valueVi}`;
-          let labelEn = `${item.valueEn}`;
-          object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-          object.value = item.keyMap;
-          result.push(object);
-        });
+    try {
+      if (inputData && inputData.length > 0) {
+        if (type === "PAYMENT") {
+          inputData.map((item, index) => {
+            let object = {};
+            let labelVi = `${item.valueVi}`;
+            let labelEn = `${item.valueEn}`;
+            object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+            object.value = item.keyMap;
+            result.push(object);
+          });
+        }
       }
-
-      return result;
+    } catch (error) {
+      console.error("Error in buildDataInputSelect:", error);
     }
+    return result;
   };
+
   render() {
     let { detailDoctor, extraInfo } = this.state;
     let { language } = this.props;

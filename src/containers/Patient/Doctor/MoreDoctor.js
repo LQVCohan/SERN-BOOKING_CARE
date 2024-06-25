@@ -6,6 +6,7 @@ import { LANGUAGES } from "../../../utils";
 import { FormattedMessage } from "react-intl";
 import { searchInfoByAnyThing } from "../../../services/userService";
 import HomeFooter from "../../HomePage/HomeFooter";
+
 class MoreDoctor extends Component {
   constructor(props) {
     super(props);
@@ -16,31 +17,34 @@ class MoreDoctor extends Component {
       term: "",
     };
   }
+
   handleViewDetailInfo = (info, type) => {
     console.log("Cohan check view info: ", info);
     if (type === "Doctor") {
       this.props.history.push(`/detail-doctor/${info.id}`);
-    } else {
-      if (type === "Specialty") {
-        this.props.history.push(`/detail-specialty/${info.id}`);
-      } else {
-        if (type === "Clinic") {
-          this.props.history.push(`/detail-clinic/${info.id}`);
-        }
-      }
+    } else if (type === "Specialty") {
+      this.props.history.push(`/detail-specialty/${info.id}`);
+    } else if (type === "Clinic") {
+      this.props.history.push(`/detail-clinic/${info.id}`);
     }
   };
+
   async componentDidUpdate(prevProps, prevState, snapshot) {}
+
   async componentDidMount() {
-    let res = await searchInfoByAnyThing({
-      term: this.state.term,
-      type: "All",
-    });
-    if (res && res.errCode === 0) {
-      this.setState({
-        searchedData: res.data,
-        isSearching: false,
+    try {
+      let res = await searchInfoByAnyThing({
+        term: this.state.term,
+        type: "All",
       });
+      if (res && res.errCode === 0) {
+        this.setState({
+          searchedData: res.data,
+          isSearching: false,
+        });
+      }
+    } catch (error) {
+      console.error("Error in componentDidMount:", error);
     }
   }
 
@@ -102,6 +106,7 @@ class MoreDoctor extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
