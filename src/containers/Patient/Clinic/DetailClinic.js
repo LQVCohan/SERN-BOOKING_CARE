@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import "./DetailClinic.scss";
 import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from "../../../utils";
 import HomeHeader from "../../HomePage/HomeHeader";
+import HomeFooter from "../../HomePage/HomeFooter";
+
 import { withRouter } from "react-router";
 import DoctorSchedule from "../Doctor/DoctorSchedule";
 import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
@@ -97,6 +99,7 @@ class DetailClinic extends Component {
               );
             })}
         </div>
+        <HomeFooter />
       </div>
     );
   }

@@ -55,21 +55,27 @@ class SearchBar extends Component {
   };
 
   async componentDidMount() {
-    let res = await searchInfoByAnyThing({
-      term: this.state.term,
-      type: "All",
-    });
-    if (res && res.errCode === 0) {
-      this.setState(
-        {
-          searchedData: res.data,
-          isSearching: false,
-          dataSelect: this.buildDataSelect(),
-        },
-        () => {
-          this.render();
-        }
-      );
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.type
+    ) {
+      let res = await searchInfoByAnyThing({
+        term: this.state.term,
+        type: this.props.match.params.type,
+      });
+      if (res && res.errCode === 0) {
+        this.setState(
+          {
+            searchedData: res.data,
+            isSearching: false,
+            dataSelect: this.buildDataSelect(),
+          },
+          () => {
+            this.render();
+          }
+        );
+      }
     }
   }
 
@@ -137,14 +143,12 @@ class SearchBar extends Component {
     console.log("Cohan check view info: ", info);
     if (type === "Doctor") {
       this.props.history.push(`/detail-doctor/${info.id}`);
-    } else {
-      if (type === "Specialty") {
-        this.props.history.push(`/detail-specialty/${info.id}`);
-      } else {
-        if (type === "Clinic") {
-          this.props.history.push(`/detail-clinic/${info.id}`);
-        }
-      }
+    }
+    if (type === "Specialty") {
+      this.props.history.push(`/detail-specialty/${info.id}`);
+    }
+    if (type === "Clinic") {
+      this.props.history.push(`/detail-clinic/${info.id}`);
     }
   };
   render() {
@@ -175,7 +179,7 @@ class SearchBar extends Component {
               (isSearching === false && (
                 <i
                   className="fas fa-search"
-                  onClick={this.handleSearchItem}
+                  onClick={this.handleSearchItem()}
                 ></i>
               ))}
 

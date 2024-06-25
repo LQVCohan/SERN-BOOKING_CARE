@@ -1,17 +1,13 @@
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./TableManageUser.scss";
 import * as actions from "../../../store/actions";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
-import { text } from "@fortawesome/fontawesome-svg-core";
 
 const mdParser = new MarkdownIt();
-function handleEditorChange({ html, text }) {
-  console.log("handleEditorChange", html, text);
-}
+
 class TableManageUser extends Component {
   constructor(props) {
     super(props);
@@ -19,70 +15,112 @@ class TableManageUser extends Component {
       usersRedux: [],
     };
   }
+
   componentDidMount() {
-    this.props.fetchUserRedux();
-  }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.listUsers !== this.props.listUsers) {
-      this.setState({
-        usersRedux: this.props.listUsers,
-      });
+    try {
+      this.props.fetchUserRedux();
+    } catch (error) {
+      console.error("Error in componentDidMount:", error);
+      // Handle error as per your application's requirements
     }
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    try {
+      if (prevProps.listUsers !== this.props.listUsers) {
+        this.setState({
+          usersRedux: this.props.listUsers,
+        });
+      }
+    } catch (error) {
+      console.error("Error in componentDidUpdate:", error);
+      // Handle error as per your application's requirements
+    }
+  }
+
   handleDeleteUser = (user) => {
-    this.props.deleteAUserRedux(user.id);
+    try {
+      this.props.deleteAUserRedux(user.id);
+    } catch (error) {
+      console.error("Error in handleDeleteUser:", error);
+      // Handle error as per your application's requirements
+    }
   };
+
   handleEditUser = (user) => {
-    this.props.handleEditUserFromParentKey(user);
+    try {
+      this.props.handleEditUserFromParentKey(user);
+    } catch (error) {
+      console.error("Error in handleEditUser:", error);
+      // Handle error as per your application's requirements
+    }
   };
+
+  handleEditorChange = ({ html, text }) => {
+    try {
+      console.log("handleEditorChange", html, text);
+      // You can handle the editor change here
+    } catch (error) {
+      console.error("Error in handleEditorChange:", error);
+      // Handle error as per your application's requirements
+    }
+  };
+
   render() {
-    let arrUsers = this.state.usersRedux;
-    return (
-      <React.Fragment>
-        <table>
-          <tbody>
-            <tr>
-              <th>Email</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Address</th>
-              <th>Action</th>
-            </tr>
-            {arrUsers &&
-              arrUsers.length > 0 &&
-              arrUsers.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{item.email}</td>
-                    <td>{item.firstName}</td>
-                    <td>{item.lastName}</td>
-                    <td>{item.address}</td>
-                    <td>
-                      <button
-                        className="btn-edit"
-                        onClick={() => this.handleEditUser(item)}
-                      >
-                        <i className="fa--pencil"></i>
-                      </button>
-                      <button
-                        className="btn-delete"
-                        onClick={() => this.handleDeleteUser(item)}
-                      >
-                        <i className="fa fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-        <MdEditor
-          style={{ height: "500px" }}
-          renderHTML={(text) => mdParser.render(text)}
-          onChange={handleEditorChange}
-        />
-      </React.Fragment>
-    );
+    try {
+      const { listUsers } = this.props;
+
+      return (
+        <React.Fragment>
+          <table>
+            <tbody>
+              <tr>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Action</th>
+              </tr>
+              {listUsers &&
+                listUsers.length > 0 &&
+                listUsers.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.email}</td>
+                      <td>{item.firstName}</td>
+                      <td>{item.lastName}</td>
+                      <td>{item.address}</td>
+                      <td>
+                        <button
+                          className="btn-edit"
+                          onClick={() => this.handleEditUser(item)}
+                        >
+                          <i className="fa--pencil"></i>
+                        </button>
+                        <button
+                          className="btn-delete"
+                          onClick={() => this.handleDeleteUser(item)}
+                        >
+                          <i className="fa fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+          <MdEditor
+            style={{ height: "500px" }}
+            renderHTML={(text) => mdParser.render(text)}
+            onChange={this.handleEditorChange}
+          />
+        </React.Fragment>
+      );
+    } catch (error) {
+      console.error("Error in render:", error);
+      // Handle error as per your application's requirements
+      return null;
+    }
   }
 }
 

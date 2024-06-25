@@ -1,0 +1,113 @@
+/* src/HomeFooter.css */
+.home-footer {
+  background-color: #f8f9fa; /* Màu nền sáng */
+  color: #343a40; /* Màu chữ đậm */
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.footer-call-to-action {
+  background-color: #6c63ff; /* Màu nền của phần gọi đến hành động */
+  color: white; /* Màu chữ trắng */
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-call-to-action h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #fff; /* Màu chữ trắng */
+}
+
+.footer-call-to-action p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.cta-button {
+  background-color: #444; /* Màu nền của nút */
+  color: white; /* Màu chữ trắng */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.footer-column {
+  width: 25%;
+}
+
+.footer-column h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.footer-column p {
+  margin: 5px 0;
+}
+
+.social-icons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons a {
+  color: #6c63ff; /* Màu chữ của biểu tượng xã hội */
+  font-size: 30px; /* Kích thước biểu tượng */
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup-form input {
+  width: 80%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+.signup-form button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #28a745; /* Màu nền của nút */
+  color: white; /* Màu chữ trắng */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.signup-form button:hover {
+  background-color: #218838; /* Màu nền của nút khi di chuột qua */
+}
+
+.footer-bottom {
+  border-top: 1px solid #555;
+  padding-top: 10px;
+  font-size: 14px;
+}
+
+.footer-bottom a {
+  color: #6c63ff; /* Màu chữ của liên kết dưới cùng */
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline; /* Gạch chân cho liên kết khi di chuột qua */
+  color: #444; /* Màu chữ khi di chuột qua */
+}

@@ -7,10 +7,7 @@ export const adminMenu = [
         name: "menu.admin.crud",
         link: "/system/user-manage",
       },
-      {
-        name: "menu.admin.crud-redux",
-        link: "/system/user-redux",
-      },
+
       {
         name: "menu.admin.manage-doctor",
         link: "/system/manage-doctor",
@@ -64,7 +61,7 @@ export const adminMenu = [
 ];
 export const doctorMenu = [
   {
-    name: "menu.admin.manage-user",
+    name: "menu.doctor.manage-patient",
     menus: [
       {
         //Quan ly kế hoạch khám bệnh
@@ -77,6 +74,29 @@ export const doctorMenu = [
 
         name: "menu.doctor.manage-patient",
         link: "/doctor/manage-patient",
+      },
+    ],
+  },
+  {
+    name: "menu.doctor.manage-doctor-info",
+    menus: [
+      {
+        //Quan ly thong tin ca nhan
+
+        name: "menu.doctor.doctor-info",
+        link: "/doctor/manage-doctor-info",
+      },
+      {
+        //Nop don ngung hoat dong
+
+        name: "menu.doctor.terminate",
+        link: "/doctor/manage-doctor-terminate",
+      },
+      {
+        //history
+
+        name: "menu.doctor.history",
+        link: "/doctor/manage-doctor-history",
       },
     ],
   },

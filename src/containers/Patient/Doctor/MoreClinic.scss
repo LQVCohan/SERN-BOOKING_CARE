@@ -1,0 +1,76 @@
+.more-clinic-body {
+  display: flex;
+
+  min-height: 500px;
+
+  box-shadow: 0 1px 6px #20212447;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  margin: 10px 100px;
+
+  flex-direction: column;
+
+  .title {
+    width: auto;
+    height: 40px;
+    align-self: flex-start;
+    justify-self: center;
+    cursor: pointer;
+    margin: 0px 5px 0 0;
+    padding: 0 5px 0 0;
+    font-size: 30px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    background-color: #efefef;
+    font-style: italic;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-color);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+  .title:hover {
+    color: var(--text-color);
+  }
+  .child {
+    box-shadow: 0 1px 6px #20212447;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px 40px;
+
+    align-items: center;
+    .child-image {
+      cursor: pointer;
+      background-size: cover;
+      border: 1px solid #012301;
+      height: 100px;
+      width: 200px;
+    }
+    .child-info {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+
+      .name {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .specialty {
+        font-style: italic;
+      }
+    }
+  }
+}

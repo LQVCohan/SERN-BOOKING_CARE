@@ -8,6 +8,8 @@ import "./Header.scss";
 import { LANGUAGES, USER_ROLE } from "../../utils";
 import { FormattedMessage } from "react-intl";
 import _ from "lodash";
+import { withRouter } from "react-router";
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,11 @@ class Header extends Component {
       menuApp: [],
     };
   }
+  returnToHome = () => {
+    if (this.props.history) {
+      this.props.history.push(`/home`);
+    }
+  };
   handleChangeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
   };
@@ -43,6 +50,9 @@ class Header extends Component {
         {/* thanh navigator */}
         <div className="header-tabs-container">
           <Navigator menus={this.state.menuApp} />
+          <button className="btn btn-info" onClick={this.returnToHome}>
+            Go to booking care
+          </button>
         </div>
         <div className="languages">
           <span className="welcome">
@@ -95,4 +105,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

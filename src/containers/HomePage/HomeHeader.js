@@ -8,7 +8,18 @@ import { last } from "lodash";
 import { lang } from "moment/moment";
 import { withRouter } from "react-router";
 import Dropdown from "react-bootstrap/Dropdown";
+
+import * as actions from "../../store/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHospital,
+  faPhone,
+  faBed,
+  faMicroscope,
+  faUser,
+  faTooth,
+} from "@fortawesome/free-solid-svg-icons";
+
 class HomeHeader extends Component {
   changeLanguage = (language) => {
     this.props.changeLanguageAppRedux(language);
@@ -18,15 +29,29 @@ class HomeHeader extends Component {
       this.props.history.push(`/home`);
     }
   };
-  handleSearchComponent = () => {
-    this.props.history.push(`/search`);
+  handleLogin = () => {
+    if (this.props.history) {
+      this.props.history.push(`/login`);
+    }
+  };
+  handleSearchComponent = (type) => {
+    this.props.history.push(`/search/${type}`);
+  };
+  handleLogout = () => {
+    this.props.processLogout();
+    window.location.reload();
+  };
+  handleViewAllBooking = (patientId) => {
+    this.props.history.push(`/patient-booking/${patientId.id}`);
+  };
+  rule = () => {
+    this.props.history.push(`/rule/`);
   };
   render() {
     let language = this.props.language;
-    console.log("check user", this.props.userInfo);
-    let placeholdertest = (
-      <FormattedMessage id="home-header.placeholderInput" />
-    );
+    let { isLoggedIn, userInfo } = this.props;
+    console.log("check userInfo", userInfo);
+
     return (
       <React.Fragment>
         <div className="home-header-container">
@@ -37,7 +62,9 @@ class HomeHeader extends Component {
                   <i className="fa fa-bars"> </i>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#">Trang chủ</Dropdown.Item>
+                  <Dropdown.Item onClick={this.returnToHome}>
+                    Trang chủ
+                  </Dropdown.Item>
                   <Dropdown.Item href="#">Cẩm nang</Dropdown.Item>
                   <Dropdown.Item href="#">Liên hệ</Dropdown.Item>
                   <Dropdown.Item href="#">Điều khoảng sử dụng</Dropdown.Item>
@@ -80,7 +107,10 @@ class HomeHeader extends Component {
               <div className="header-logo" onClick={this.returnToHome}></div>
             </div>
             <div className="center-content">
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleSearchComponent("Specialty")}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.speciality" />
@@ -90,7 +120,10 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.search-doctor" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleSearchComponent("Clinic")}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.health-facility" />
@@ -100,7 +133,10 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.select-room" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleSearchComponent("Doctor")}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.doctor" />
@@ -110,7 +146,10 @@ class HomeHeader extends Component {
                   <FormattedMessage id="home-header.select-doctor" />
                 </div>
               </div>
-              <div className="child-content">
+              <div
+                className="child-content"
+                onClick={() => this.handleSearchComponent("All")}
+              >
                 <div>
                   <b>
                     <FormattedMessage id="home-header.fee" />
@@ -122,10 +161,70 @@ class HomeHeader extends Component {
               </div>
             </div>
             <div className="right-content">
-              <div className="support">
+              <div className="support" onClick={this.rule}>
                 <i className="fa fa-question"></i>{" "}
                 <FormattedMessage id="home-header.support" />
               </div>
+
+              {isLoggedIn && isLoggedIn === true ? (
+                <div className="profile">
+                  <Dropdown className="d-inline mx-2" autoClose="inside">
+                    <Dropdown.Toggle
+                      id="dropdown-autoclose-inside"
+                      variant="none"
+                    >
+                      <div
+                        className="image"
+                        style={{
+                          backgroundImage: `url(${userInfo.image})`,
+                        }}
+                      ></div>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/patient-profile/">
+                        Profile
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => this.handleViewAllBooking(userInfo)}
+                      >
+                        Appointment
+                      </Dropdown.Item>
+                      <Dropdown.Item href="#">
+                        Health Care Package
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+                  <div
+                    className="btn btn-logout mr-3"
+                    onClick={this.handleLogout}
+                    title="Log out"
+                  >
+                    <i className="fas fa-sign-out-alt"></i>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="btn login"
+                  onClick={this.handleLogin}
+                  // onClick={processLogout}
+                  title="Log out"
+                >
+                  <span className="login-label">
+                    <FormattedMessage id="home-header.login" />
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    class="bi bi-person"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+                  </svg>
+                </div>
+              )}
               <div
                 className={
                   language === LANGUAGES.VI
@@ -160,7 +259,10 @@ class HomeHeader extends Component {
               <div className="title2">
                 <FormattedMessage id="home-header.title2" />
               </div>
-              <div className="search" onClick={this.handleSearchComponent}>
+              <div
+                className="search"
+                onClick={() => this.handleSearchComponent("All")}
+              >
                 <i className="fas fa-search"></i>
 
                 <input type="search" placeholder={"search something"} />
@@ -170,39 +272,63 @@ class HomeHeader extends Component {
               <div className="options">
                 <div className="option-child">
                   <div className="icon-child">
-                    <i class="fa fa-hospital"></i>
+                    <FontAwesomeIcon icon={faHospital} />
                   </div>
-                  <div className="text-child">Khám chuyên khoa</div>
+                  <div className="text-child">
+                    {language === LANGUAGES.VI
+                      ? "Khám chuyên khoa"
+                      : "Specialty Examination"}
+                  </div>
                 </div>
                 <div className="option-child">
                   <div className="icon-child">
-                    <i className="fa fa-phone"></i>
+                    <FontAwesomeIcon icon={faPhone} />
                   </div>
-                  <div className="text-child">Khám từ xa</div>
+                  <div className="text-child">
+                    {language === LANGUAGES.VI
+                      ? "Khám từ xa"
+                      : "Remote Consultation"}
+                  </div>
                 </div>
                 <div className="option-child">
                   <div className="icon-child">
-                    <i className="fa fa-bed-pulse"></i>
+                    <FontAwesomeIcon icon={faBed} />
                   </div>
-                  <div className="text-child">Khám tổng quát</div>
+                  <div className="text-child">
+                    {language === LANGUAGES.VI
+                      ? "Khám tổng quát"
+                      : "General Check-up"}
+                  </div>
                 </div>
                 <div className="option-child">
                   <div className="icon-child">
-                    <i className="fa fa-microscope"></i>
+                    <FontAwesomeIcon icon={faMicroscope} />
                   </div>
-                  <div className="text-child">Xét nghiệm y học</div>
+                  <div className="text-child">
+                    {language === LANGUAGES.VI
+                      ? "Xét nghiệm y học"
+                      : "Medical Testing"}
+                  </div>
                 </div>
                 <div className="option-child">
                   <div className="icon-child">
-                    <i className="fa fa-person"></i>
+                    <FontAwesomeIcon icon={faUser} />
                   </div>
-                  <div className="text-child">Sức khỏe tinh thần</div>
+                  <div className="text-child">
+                    {language === LANGUAGES.VI
+                      ? "Sức khỏe tinh thần"
+                      : "Mental Health"}
+                  </div>
                 </div>
                 <div className="option-child">
                   <div className="icon-child">
-                    <i className="fa fa-tooth"></i>
+                    <FontAwesomeIcon icon={faTooth} />
                   </div>
-                  <div className="text-child">Khám nha khoa</div>
+                  <div className="text-child">
+                    {language === LANGUAGES.VI
+                      ? "Khám nha khoa"
+                      : "Dental Examination"}
+                  </div>
                 </div>
               </div>
             </div>
@@ -224,6 +350,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+    processLogout: () => dispatch(actions.processLogout()),
   };
 };
 

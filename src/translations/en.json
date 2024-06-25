@@ -12,7 +12,8 @@
     "title1": "Medical foundation",
     "title2": "Holistic health care",
     "placeholderInput": "Find a medical specialty",
-    "welcome": "Welcome, "
+    "welcome": "Welcome, ",
+    "login": "Login"
   },
 
   "menu": {
@@ -31,8 +32,52 @@
     },
     "doctor": {
       "manage-schedule": "Manage schedule",
-      "manage-patient": "Manage patient"
+      "manage-patient": "Manage patient",
+      "manage-doctor-info": "Manage doctor's information",
+      "doctor-info": "Doctor's information",
+      "terminate": "Cancel coporation",
+      "history": "History"
     }
+  },
+  "doctor": {
+    "doctor-profile-label": "Doctor's profile",
+    "save": "Save change",
+    "id": "ID: ",
+    "change-password": "Change password",
+    "upload": "Upload your picture",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "contact-label": "Doctor's contact",
+    "chart-label": "Charts",
+    "phone-number": "Phone number",
+    "status": "Status",
+    "invalid-password": "Invalid password",
+    "manage-patient-label": "Manage patient",
+    "choose-date": "Choose a date",
+    "time": "Time",
+    "on": "ON",
+    "address": "Address",
+    "gender": "Gender",
+    "payment": "Payment method",
+    "action": "Action",
+    "depos": "Deposited",
+    "comfirm": "Done",
+    "status-patient": "Status",
+    "birth": "Birthday",
+    "reason": "Booking reason"
+  },
+  "history": {
+    "title": "booking history",
+    "patientId": "Patient ID",
+    "patientName": "Patient Name",
+    "doctorName": "Doctor Name",
+    "reason": "Reason for Visit",
+    "location": "Address",
+    "phoneNumber": "Phone Number",
+    "price": "Price",
+    "status": "Status",
+    "time": "Time",
+    "date": "Date"
   },
   "manage-user": {
     "add": "Add a new user",
@@ -52,7 +97,8 @@
   "homepage": {
     "outstanding-doctor": "Last week's featured doctor",
     "more-info": "More info",
-    "specialty-label": "Popular specialties"
+    "specialty-label": "Popular specialties",
+    "clinic-label": "Medical facilities"
   },
   "manage-schedule": {
     "title": "Manage doctor's medical examination plans",
