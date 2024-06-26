@@ -51,7 +51,7 @@ class Header extends Component {
         <div className="header-tabs-container">
           <Navigator menus={this.state.menuApp} />
           <button className="btn btn-info" onClick={this.returnToHome}>
-            Go to booking care
+            Booking Care
           </button>
         </div>
         <div className="languages">

@@ -57,20 +57,34 @@ class DetailClinic extends Component {
     let { arrDoctorId, dataDetailClinic } = this.state;
     let { language } = this.props;
     console.log("check state arry ", this.state);
+    let imageBase64 = "";
+    if (dataDetailClinic.image) {
+      imageBase64 = new Buffer(dataDetailClinic.image, "base64").toString(
+        "binary"
+      );
+    }
     return (
       <div className="detail-clinic-container">
         <HomeHeader />
-        <div className="description-clinic">
-          {dataDetailClinic && !_.isEmpty(dataDetailClinic) && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: dataDetailClinic.descriptionHTML,
-              }}
-            ></div>
-          )}
+        <div
+          className="description-clinic"
+          style={{
+            backgroundImage: `url(${imageBase64})`,
+          }}
+        ></div>
+        <div className="name-clinic">
+          <span>{dataDetailClinic.name}</span>
         </div>
-
         <div className="detail-clinic-body">
+          <div className="markdown">
+            {dataDetailClinic && !_.isEmpty(dataDetailClinic) && (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: dataDetailClinic.descriptionHTML,
+                }}
+              ></div>
+            )}
+          </div>
           {arrDoctorId &&
             arrDoctorId.length > 0 &&
             arrDoctorId.map((item, index) => {

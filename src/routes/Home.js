@@ -7,7 +7,7 @@ class Home extends Component {
     const { isLoggedIn, userInfo } = this.props;
     let linkToRedirect =
       isLoggedIn && (userInfo.roleId === "R2" || userInfo.roleId === "R1")
-        ? "/system/user-manage"
+        ? "/doctor/manage-doctor-info"
         : "/home";
 
     return <Redirect to={linkToRedirect} />;
