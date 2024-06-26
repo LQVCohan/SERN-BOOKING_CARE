@@ -2,12 +2,18 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import "./ManagePatient.scss";
 import DatePicker from "../../../components/Input/DatePicker";
-import { getListPatient, postSendRemedy } from "../../../services/userService";
+import {
+  getListPatient,
+  postSendRemedy,
+  UpdateStatusPatientByRequest,
+  getStatusByPatientId,
+} from "../../../services/userService";
 import moment from "moment";
 import { LANGUAGES } from "../../../utils";
 import RemedyModal from "./RemedyModal";
 import { toast } from "react-toastify";
 import LoadingOverlay from "react-loading-overlay";
+import { FormattedMessage } from "react-intl";
 class ManagePatient extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +23,7 @@ class ManagePatient extends Component {
       isOpenRemedyModal: false,
       dataModal: {},
       isLoading: false,
+      preStatusId: "",
     };
   }
   async componentDidUpdate(prevProps, prevState, snapshot) {}
@@ -24,18 +31,22 @@ class ManagePatient extends Component {
     this.getDataPatient();
   }
   getDataPatient = async () => {
-    let { user } = this.props;
-    let { currentDate } = this.state;
-    let formattedDate = new Date(currentDate).getTime();
+    try {
+      let { user } = this.props;
+      let { currentDate } = this.state;
+      let formattedDate = new Date(currentDate).getTime();
 
-    let res = await getListPatient({
-      doctorId: user.id,
-      date: formattedDate,
-    });
-    if (res && res.errCode === 0) {
-      this.setState({
-        dataPatient: res.data,
+      let res = await getListPatient({
+        doctorId: user.id,
+        date: formattedDate,
       });
+      if (res && res.errCode === 0) {
+        this.setState({
+          dataPatient: res.data,
+        });
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   handleOnChangeDatePicker = (date) => {
@@ -48,50 +59,134 @@ class ManagePatient extends Component {
       }
     );
   };
-  handleBtnConfirm = (item) => {
-    console.log("check item", item);
-    let data = {
-      doctorId: item.doctorId,
-      patientId: item.patientId,
-      email: item.patientData.email,
-      timeType: item.timeType,
-      firstName: item.patientData.firstName,
-      lastName: item.patientData.lastName,
-      paymentId: item.payment,
-    };
-    this.setState({
-      isOpenRemedyModal: true,
-      dataModal: data,
-    });
+  // saveStatusBefore = async (item) => {
+  //   let { patientId } = item;
+  //   let { user } = this.props;
+  //   let { currentDate } = this.state;
+  //   let formattedDate = new Date(currentDate).getTime();
+
+  //   let statusIdNow = await getStatusByPatientId({
+  //     patientId: patientId,
+  //     doctorId: user.id,
+  //     date: formattedDate,
+  //     timeType: item.timeType,
+  //   });
+
+  //   this.setState({
+  //     preStatusId: statusIdNow.statusId,
+  //   });
+  //   console.log("check pre status Id: ", this.state.preStatusId);
+  // };
+  handleBtnConfirmComplete = (item) => {
+    //    this.saveStatusBefore(item.statusId);
+    try {
+      let data = {
+        doctorId: item.doctorId,
+        patientId: item.patientId,
+        email: item.patientData.email,
+        timeType: item.timeType,
+        firstName: item.patientData.firstName,
+        lastName: item.patientData.lastName,
+        paymentId: item.payment,
+      };
+
+      this.setState({
+        isOpenRemedyModal: true,
+        dataModal: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  handleBtnConfirmDeposit = async (item) => {
+    try {
+      let { patientId } = item;
+      let { user } = this.props;
+      let { currentDate } = this.state;
+      let formattedDate = new Date(currentDate).getTime();
+
+      //   this.saveStatusBefore(item);
+
+      let res = await UpdateStatusPatientByRequest({
+        patientId: patientId,
+
+        statusId: "S3",
+        doctorId: user.id,
+        date: formattedDate,
+        timeType: item.timeType,
+      });
+      if (res && res.errCode === 0) {
+        toast.success("Deposited");
+        this.setState({ preStatusId: "S3" });
+      } else {
+        toast.error("Error!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  handleBtnConfirmCancel = async (item) => {
+    try {
+      let { user } = this.props;
+      let { currentDate } = this.state;
+      let formattedDate = new Date(currentDate).getTime();
+
+      let { patientId } = item;
+      console.log("check patient Id: ", patientId);
+      let res = await UpdateStatusPatientByRequest({
+        patientId: patientId,
+
+        statusId: "S5",
+        doctorId: user.id,
+        date: formattedDate,
+        timeType: item.timeType,
+      });
+      if (res && res.errCode === 0) {
+        toast.success("Canceled");
+        this.setState({ preStatusId: "S5" });
+      } else {
+        toast.error("Error!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // this.saveStatusBefore(item);
   };
   sendRemedy = async (data) => {
-    let { dataModal } = this.state;
-    this.setState({
-      isLoading: true,
-    });
-    console.log("check data", data);
-    console.log("check dataModal", dataModal);
+    try {
+      let { dataModal } = this.state;
+      this.setState({
+        isLoading: true,
+      });
+      console.log("check data", data);
+      console.log("check dataModal", dataModal);
+      let { currentDate } = this.state;
+      let formattedDate = new Date(currentDate).getTime();
 
-    let res = await postSendRemedy({
-      email: data.email,
-      imgBase64: data.imgBase64,
-      doctorId: dataModal.doctorId,
-      patientId: dataModal.patientId,
-      timeType: dataModal.timeType,
-      language: this.props.language,
-      patientFirstName: dataModal.firstName,
-      patientLastName: dataModal.lastName,
-      paymentId: dataModal.paymentId,
-    });
-    console.log("res ", res);
-    if (res && res.errCode === 0) {
-      this.setState({ isLoading: false });
-      toast.success("Sent");
-      this.closeRemedyModal();
-      await this.getDataPatient();
-    } else {
-      this.setState({ isLoading: false });
-      toast.error("Error!");
+      let res = await postSendRemedy({
+        email: data.email,
+        imgBase64: data.imgBase64,
+        doctorId: dataModal.doctorId,
+        patientId: dataModal.patientId,
+        timeType: dataModal.timeType,
+        language: this.props.language,
+        patientFirstName: dataModal.firstName,
+        patientLastName: dataModal.lastName,
+        paymentId: dataModal.paymentId,
+        date: formattedDate,
+      });
+      console.log("res ", res);
+      if (res && res.errCode === 0) {
+        this.setState({ isLoading: false });
+        toast.success("Sent");
+        this.closeRemedyModal();
+        await this.getDataPatient();
+      } else {
+        this.setState({ isLoading: false });
+        toast.error("Error!");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   closeRemedyModal = () => {
@@ -99,6 +194,36 @@ class ManagePatient extends Component {
       isOpenRemedyModal: false,
     });
   };
+  // handleBtnRollBack = async (item) => {
+  //   let { patientId } = item;
+  //   let { preStatusId } = this.state;
+  //   let { user } = this.props;
+  //   let { currentDate } = this.state;
+  //   let formattedDate = new Date(currentDate).getTime();
+
+  //   console.log("check status pre Id: ", preStatusId);
+  //   let statusIdNow = await getStatusByPatientId({
+  //     patientId: patientId,
+  //     doctorId: user.id,
+  //     date: formattedDate,
+  //     timeType: item.timeType,
+  //   });
+  //   console.log("check now: ", statusIdNow);
+  //   let res = await UpdateStatusPatientByRequest({
+  //     patientId: patientId,
+  //     statusIdFirst: statusIdNow.statusId,
+  //     statusIdSecond: preStatusId,
+  //     doctorId: user.id,
+
+  //     date: formattedDate,
+  //     timeType: item.timeType,
+  //   });
+  //   if (res && res.errCode === 0) {
+  //     //     window.location.reload();
+  //   } else {
+  //     toast.error("Error!");
+  //   }
+  // };
   render() {
     console.log("check props paitent: ", this.state.dataPatient);
     let { isLoading, dataPatient, isOpenRemedyModal, dataModal } = this.state;
@@ -109,10 +234,14 @@ class ManagePatient extends Component {
       <div>
         <LoadingOverlay active={isLoading} spinner text="Loading...">
           <div className="manage-patient-container">
-            <div className="m-p-title">Quản lý bệnh nhân khám bệnh</div>
+            <div className="m-p-title">
+              <FormattedMessage id={"doctor.manage-patient-label"} />
+            </div>
             <div className="m-p-body row">
               <div className="col-3 form-group">
-                <label className="">Chọn ngày khám</label>
+                <label className="">
+                  <FormattedMessage id={"doctor.choose-date"} />
+                </label>
                 <DatePicker
                   className="form-control"
                   onChange={this.handleOnChangeDatePicker}
@@ -124,15 +253,37 @@ class ManagePatient extends Component {
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Thời gian</th>
-                    <th scope="col">Họ và tên đệm</th>
-                    <th scope="col">Tên</th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.on"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.time"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.first-name"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.last-name"} />
+                    </th>
 
-                    <th scope="col">Địa chỉ</th>
-                    <th scope="col">Giới tính</th>
-                    <th scope="col">Phương thức thanh toán</th>
-                    <th scope="col">Thao tác</th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.address"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.gender"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.payment"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.status"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.reason"} />
+                    </th>
+                    <th scope="col">
+                      <FormattedMessage id={"doctor.action"} />
+                    </th>
                   </tr>
                 </thead>
 
@@ -152,6 +303,10 @@ class ManagePatient extends Component {
                         language === LANGUAGES.VI
                           ? item.paymentDataPatient.valueVi
                           : item.paymentDataPatient.valueEn;
+                      let status =
+                        language === LANGUAGES.VI
+                          ? item.statusDataPatient.valueVi
+                          : item.statusDataPatient.valueEn;
                       return (
                         <tr key={index}>
                           <th scope="row">{index + 1}</th>
@@ -161,12 +316,29 @@ class ManagePatient extends Component {
                           <td>{item.patientData.address}</td>
                           <td>{gender}</td>
                           <td>{payment}</td>
-                          <td>
+                          <td>{status}</td>
+                          <td>{item.reason}</td>
+
+                          <td className="">
                             <button
-                              className="btn-confirm"
-                              onClick={() => this.handleBtnConfirm(item)}
+                              className="btn-confirm btn btn-info ml-3"
+                              onClick={() => this.handleBtnConfirmDeposit(item)}
                             >
-                              Xác nhận
+                              Đã nhận cọc
+                            </button>
+                            <button
+                              className="btn-confirm btn btn-success ml-3"
+                              onClick={() =>
+                                this.handleBtnConfirmComplete(item)
+                              }
+                            >
+                              Xác nhận hoàn tất
+                            </button>
+                            <button
+                              className="btn-confirm btn btn-danger ml-3"
+                              onClick={() => this.handleBtnConfirmCancel(item)}
+                            >
+                              Hủy
                             </button>
                           </td>
                         </tr>

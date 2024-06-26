@@ -1,0 +1,76 @@
+.history-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.history-container h2 {
+  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #444;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.history-header {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1.5fr 1.5fr 2.5fr 2fr 2fr 2fr 1.5fr 1fr 1fr; /* Adjusted column widths */
+  background-color: #007bff;
+  color: #fff;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.history-header div {
+  text-align: center;
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1.5fr 1.5fr 2.5fr 2fr 2fr 2fr 1.5fr 1fr 1fr; /* Adjusted column widths */
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.history-item:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.history-item:nth-child(odd) {
+  background-color: #fff;
+}
+
+.history-item div {
+  text-align: center;
+  font-size: 16px;
+}
+
+.status-icon {
+  font-size: 24px;
+}
+
+.status-icon.completed {
+  color: green;
+}
+
+.status-icon.cancelled {
+  color: red;
+}
+
+.status-icon.pending {
+  color: orange;
+}

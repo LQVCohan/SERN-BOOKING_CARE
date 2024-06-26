@@ -12,7 +12,8 @@
     "title1": "Nền tảng y tế",
     "title2": "Chăm sóc sức khỏe toàn diện",
     "placeholderInput": "Tìm chuyên khoa khám bệnh",
-    "welcome": "Xin chào, "
+    "welcome": "Xin chào, ",
+    "login": "Đăng nhập "
   },
   "menu": {
     "admin": {
@@ -30,7 +31,11 @@
     },
     "doctor": {
       "manage-schedule": "Quản lý kế hoạch",
-      "manage-patient": "Quản lý bệnh nhân"
+      "manage-patient": "Quản lý bệnh nhân",
+      "manage-doctor-info": "Quản lý thông tin cá nhân",
+      "doctor-info": "Thông tin cá nhân",
+      "terminate": "Nộp đơn hủy hợp tác",
+      "history": "Lịch sử khám bệnh"
     }
   },
   "manage-user": {
@@ -50,10 +55,51 @@
     "cut": "Di chuyển",
     "edit": "Lưu thay đổi"
   },
+  "doctor": {
+    "doctor-profile-label": "Trang cá nhân",
+    "save": "Lưu thay đổi",
+    "id": "Mã: ",
+    "change-password": "Đổi mật khẩu",
+    "upload": "Tải ảnh đại diện",
+    "first-name": "Họ và tên đệm",
+    "last-name": "Tên",
+    "contact-label": "Thông tin liên hệ",
+    "chart-label": "Biểu đồ",
+    "phone-number": "Số điện thoại",
+    "status": "Trạng thái",
+    "invalid-password": "Mật khẩu không hợp lệ",
+    "manage-patient-label": "QUẢN LÝ BỆNH NHÂN KHÁM BỆNH",
+    "choose-date": "Chọn ngày khám",
+    "time": "Thời gian",
+    "on": "STT",
+    "address": "Địa chỉ",
+    "gender": "Giới tính",
+    "payment": "Phương thức thanh toán",
+    "action": "Thao tác",
+    "depos": "Đã nhận cọc",
+    "comfirm": "Xác nhận hoàn tất",
+    "status-patient": "Tình trạng",
+    "birth": "Ngày sinh",
+    "reason": "Lý do khám"
+  },
+  "history": {
+    "title": "Lịch sử khám bệnh",
+    "patientId": "Mã bệnh nhân",
+    "patientName": "Tên bệnh nhân",
+    "doctorName": "Tên bác sĩ",
+    "reason": "Lý do khám",
+    "location": "Địa chỉ",
+    "phoneNumber": "Số điện thoại",
+    "price": "Số tiền",
+    "status": "Trạng thái",
+    "time": "Thời gian",
+    "date": "Ngày khám"
+  },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
     "more-info": "Xem thêm",
-    "specialty-label": "Chuyên khoa phổ biến"
+    "specialty-label": "Chuyên khoa phổ biến",
+    "clinic-label": "Cơ sở y tế nỗi bật"
   },
   "manage-schedule": {
     "title": "Quản lý kế hoạch khám bệnh của bác sĩ",

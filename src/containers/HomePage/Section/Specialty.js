@@ -27,16 +27,22 @@ class Specialty extends Component {
   handleViewDetailDoctor = (item) => {
     this.props.history.push(`/detail-specialty/${item.id}`);
   };
+  handleViewMoreSpecialty = (item) => {
+    this.props.history.push(`/more-specialty/`);
+  };
   render() {
     let { dataSpecialty } = this.state;
     return (
-      <div className="section-share section-specialty">
+      <div className="section-share section-specialty ">
         <div className="section-container">
           <div className="section-header">
             <span className="title-section">
               <FormattedMessage id={"homepage.specialty-label"} />
             </span>
-            <button className="btn-section">
+            <button
+              className="btn-section"
+              onClick={() => this.handleViewMoreSpecialty()}
+            >
               {" "}
               <FormattedMessage id={"homepage.more-info"} />
             </button>

@@ -2,44 +2,36 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { FormattedMessage } from "react-intl";
+import "./About.scss";
 
 class About extends Component {
   render() {
     return (
       <div className="section-share section-about">
-        About us
-        <div className="section-about-header">Truyền thông nói gì về Cohan</div>
+        <div className="section-about-header">
+          Thông tin về Đỗ Quang Lâm và Lê Quốc Việt
+        </div>
         <div className="section-about-content">
           <div className="content-left">
-            <iframe
-              width="100%"
-              height="300px"
-              src="https://www.youtube.com/embed/h6RONxjPBf4?list=RDh6RONxjPBf4"
-              title="NHỮNG LỜI HỨA BỎ QUÊN / VŨ. x DEAR JANE (Official MV)"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+            <div className="person-info">
+              <h2>Đỗ Quang Lâm</h2>
+              <img
+                src="https://scontent.fsgn6-1.fna.fbcdn.net/v/t39.30808-1/426501820_1498590704034500_4089464347755386026_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeESDvj_R4wxAf4sXejvb43ZyGbsZmJAGFDIZuxmYkAYUIaOvfaUpWxT4WHVKz6W2fRJ5GJ13UA2x5gh1kYvyiN2&_nc_ohc=yUmVIWFQmQAQ7kNvgFIpnZy&_nc_ht=scontent.fsgn6-1.fna&oh=00_AYCxXnh0XjyVmQUyujwVkFHZy2Kw2kZZKQ7HMgnp7rgsXw&oe=666FAAB7"
+                alt="Đỗ Quang Lâm"
+              />
+
+              <p>{/* Nội dung về Đỗ Quang Lâm */}</p>
+            </div>
           </div>
           <div className="content-right">
-            <p>
-              Nếu hai ta không quên ngàу ấу, ngàу những đôi môi trao nhau không
-              lời Thì niềm đau cũng đã trôi hết đi qua bao tháng năm anh với em
-              Lúc gặp nhau con tim nói không nên lời và khi thời gian trôi như
-              mâу baу về trời Anh đem theo giấc mơ nàу để rồi mong ngàу ta chung
-              đôi Anh sẽ nhớ mong một người là chính em Sẽ nhớ thương thật nhiều
-              điều vấn vương Đôi mắt xưa còn đượm buồn Theo vệt thời gian đã hóa
-              tan theo làn sương Hai ta có trên đường đời nhìn thấу nhau Trong
-              phút giâу nghẹn ngào thì anh chẳng thể bước tới Chào em như trong
-              giấc mơ, giấc mơ ta được có nhau Thức giấc lúc khi trời mưa Chuуện
-              уêu thương ùa về khiến anh nhận ra Kí ức đón đưa ngàу xưa Chuуện
-              đôi ta nghẹn ngào tình cờ Đợi chờ để được quaу lại giâу phút đầu
-              Anh sẽ nhớ mong một người là chính em Sẽ nhớ thương thật nhiều
-              điều vấn vương Đôi mắt xưa còn đượm buồn Theo vệt thời gian đã hóa
-              tan theo làn sương Hai ta có trên đường đời nhìn thấу nhau Trong
-              phút giâу nghẹn ngào thì anh chẳng thể bước tới Chào em như trong
-              giấc mơ, giấc mơ ta được có nhau
-            </p>
+            <div className="person-info">
+              <h2>Lê Quốc Việt</h2>
+              <img
+                src="https://scontent.fsgn6-1.fna.fbcdn.net/v/t39.30808-1/381459698_1978340599200801_6049860691134298836_n.jpg?stp=dst-jpg_p200x200&_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeH8SK0065JhfCXCPAHQjx973YPSuSnxNtrdg9K5KfE22hY-nt-9Xct3X4zoako828SiLLIQs-HwUQwgswifnQCP&_nc_ohc=OGDhMW_3QokQ7kNvgF5cJIb&_nc_ht=scontent.fsgn6-1.fna&oh=00_AYCyp598_fFO0cImgPdQ6FBGVO-B3j07b9hQZsVYd4Euww&oe=666FBDC6"
+                alt="Lê Quốc Việt"
+              />
+              <p>{/* Nội dung về Lê Quốc Việt */}</p>
+            </div>
           </div>
         </div>
       </div>

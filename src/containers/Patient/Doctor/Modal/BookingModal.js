@@ -12,7 +12,7 @@ import { lang } from "moment";
 import { LANGUAGES } from "../../../../utils";
 import {
   postPatientBookAppointment,
-  deleteScheduleDoctorByTime,
+  changeStatusScheduleDoctorByTime,
 } from "../../../../services/userService";
 import { toast } from "react-toastify";
 import { FormattedMessage } from "react-intl";
@@ -33,7 +33,7 @@ class BookingModal extends Component {
       address: "",
       reason: "",
       birth: "",
-      genders: "",
+      gender: [],
       doctorId: "",
       selectedGender: "",
       timeType: "",
@@ -60,43 +60,101 @@ class BookingModal extends Component {
     return result;
   };
   async componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.language !== this.props.language) {
-      this.setState({
-        genders: this.buildDataGender(this.props.genders),
-        //   listPayments: this.buildDataInputSelectPayment(
-        //     this.props.doctorExtraInforFromGrandParent
-        //   ),
-      });
-    }
-    if (prevProps.genders !== this.props.genders) {
-      this.setState({
-        genders: this.buildDataGender(this.props.genders),
-      });
-    }
-    if (
-      prevProps.doctorExtraInforFromGrandParent !==
-      this.props.doctorExtraInforFromGrandParent
-    ) {
-      this.setState({
-        listPayments: this.buildDataInputSelectPayment(
-          this.props.doctorExtraInforFromGrandParent
-        ),
-      });
-    }
+    try {
+      if (prevProps.isOpenModal !== this.props.isOpenModal) {
+        let { userInfo } = this.props;
+        console.log("check user", userInfo);
+        let { gender } = this.state;
+        let selectedGender = gender.find((item) => {
+          return item && item.value === userInfo.gender;
+        });
 
-    if (this.props.dataTime !== prevProps.dataTime) {
-      if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
-        let doctorId = this.props.dataTime.doctorId;
-        let timeType = this.props.dataTime.timeType;
         this.setState({
-          doctorId: doctorId,
-          timeType: timeType,
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          phoneNumber: userInfo.phoneNumber,
+          email: userInfo.email,
+          address: userInfo.address,
+          selectedGender: selectedGender,
+          birth: moment.unix(+userInfo.birth / 1000).valueOf(),
         });
       }
+      if (prevProps.language !== this.props.language) {
+        this.setState({
+          gender: this.buildDataGender(this.props.genders),
+          //   listPayments: this.buildDataInputSelectPayment(
+          //     this.props.doctorExtraInforFromGrandParent
+          //   ),
+        });
+        let { userInfo } = this.props;
+        console.log("check user", userInfo);
+        let { gender } = this.state;
+        let selectedGender = gender.find((item) => {
+          return item && item.value === userInfo.gender;
+        });
+
+        this.setState({
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          phoneNumber: userInfo.phoneNumber,
+          email: userInfo.email,
+          address: userInfo.address,
+          selectedGender: selectedGender,
+          birth: moment.unix(+userInfo.birth / 1000).valueOf(),
+        });
+      }
+      if (prevProps.genders !== this.props.genders) {
+        this.setState({
+          gender: this.buildDataGender(this.props.genders),
+        });
+      }
+      if (
+        prevProps.doctorExtraInforFromGrandParent !==
+        this.props.doctorExtraInforFromGrandParent
+      ) {
+        this.setState({
+          listPayments: this.buildDataInputSelectPayment(
+            this.props.doctorExtraInforFromGrandParent
+          ),
+        });
+      }
+
+      if (this.props.dataTime !== prevProps.dataTime) {
+        if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
+          let doctorId = this.props.dataTime.doctorId;
+          let timeType = this.props.dataTime.timeType;
+          this.setState({
+            doctorId: doctorId,
+            timeType: timeType,
+          });
+        }
+      }
+    } catch (error) {
+      return;
     }
   }
   async componentDidMount() {
-    this.props.getGenderStart();
+    try {
+      await this.props.getGenderStart();
+    } catch (error) {
+      return;
+    }
+
+    // let { gender } = this.state;
+    // let selectedGender = gender.find((item) => {
+    //   return item && item.value === userInfo.gender;
+    // });
+    // let { userInfo } = this.props;
+    // console.log("check user", userInfo);
+    // this.setState({
+    //   firstName: userInfo.firstName,
+    //   lastName: userInfo.lastName,
+    //   phoneNumber: userInfo.phoneNumber,
+    //   email: userInfo.email,
+    //   address: userInfo.address,
+    //   selectedGender: selectedGender,
+    //   birth: userInfo.birth,
+    // });
     // this.setState({
     //   genders: this.buildDataGender(this.props.genders),
     //   listPayments: this.buildDataInputSelectPayment(
@@ -163,16 +221,16 @@ class BookingModal extends Component {
           isValidEmailInput: false,
         });
       }
-      if (id === "phoneNumber" && validator.isMobilePhone(valueInput)) {
+    }
+    if (id === "phoneNumber" && validator.isMobilePhone(valueInput)) {
+      this.setState({
+        isValidPhoneNumberInput: true,
+      });
+    } else {
+      if (id === "phoneNumber" && !validator.isMobilePhone(valueInput)) {
         this.setState({
-          isValidPhoneNumberInput: true,
+          isValidPhoneNumberInput: false,
         });
-      } else {
-        if (id === "phoneNumber" && !validator.isMobilePhone(valueInput)) {
-          this.setState({
-            isValidPhoneNumberInput: false,
-          });
-        }
       }
     }
   };
@@ -188,80 +246,94 @@ class BookingModal extends Component {
     this.setState({ selectedPayment: selectedPayment });
   };
   handleConfirmBooking = async () => {
-    let timeString = this.buildTimeBooking(this.props.dataTime);
-    let doctorName = this.buildDoctorName(this.props.dataTime);
-    let date = new Date(this.state.birth).getTime();
-    let { language } = this.props;
-    let {
-      isValidEmailInput,
-      isValidFirstNameInput,
-      isValidLastNameInput,
-      isValidPhoneNumberInput,
-    } = this.state;
-    this.setState({
-      isSending: true,
-    });
-    if (
-      isValidEmailInput === false ||
-      isValidFirstNameInput === false ||
-      isValidLastNameInput === false ||
-      isValidPhoneNumberInput === false
-    ) {
-      language === LANGUAGES.EN
-        ? toast.error("Invalid informations")
-        : toast.error("Thông tin không hợp lệ");
+    try {
+      let timeString = this.buildTimeBooking(this.props.dataTime);
+      let doctorName = this.buildDoctorName(this.props.dataTime);
+      let date = new Date(this.state.birth).getTime();
+      let { language } = this.props;
+      let {
+        isValidEmailInput,
+        isValidFirstNameInput,
+        isValidLastNameInput,
+        isValidPhoneNumberInput,
+      } = this.state;
       this.setState({
-        isSending: false,
+        isSending: true,
       });
-    } else {
-      let res = await postPatientBookAppointment({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        phoneNumber: this.state.phoneNumber,
-        email: this.state.email,
-        address: this.state.address,
-        reason: this.state.reason,
-        date: this.props.dataTime.date,
-        birthday: date,
-        doctorId: this.state.doctorId,
-        selectedGender: this.state.selectedGender.value,
-        timeType: this.state.timeType,
-        language: this.props.language,
-        timeString: timeString,
-        doctorName: doctorName,
-        paymentMethod: this.state.selectedPayment.value,
-      });
-      if (res && res.errCode === 0) {
-        toast.success("OK");
-
-        let resdelete = await deleteScheduleDoctorByTime({
-          timeType: this.state.timeType,
-          date: this.props.dataTime.date,
-          doctorId: this.state.doctorId,
-        });
-        if (resdelete && resdelete.errCode === 0) {
-          this.props.closeBookingModal();
-          this.props.reloadSheduleModal();
-        } else {
-          toast.error("Something wrong!");
-        }
-
+      if (
+        isValidEmailInput === false ||
+        isValidFirstNameInput === false ||
+        isValidLastNameInput === false ||
+        isValidPhoneNumberInput === false ||
+        this.state.reason === ""
+      ) {
+        language === LANGUAGES.EN
+          ? toast.error("Invalid informations")
+          : toast.error("Thông tin không hợp lệ");
         this.setState({
           isSending: false,
         });
       } else {
-        if (res && res.errCode === 1) {
-          toast.error("Please fulfill informations");
+        let res = await postPatientBookAppointment({
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          phoneNumber: this.state.phoneNumber,
+          email: this.state.email,
+          address: this.state.address,
+          reason: this.state.reason,
+          date: this.props.dataTime.date,
+          birthday: date,
+          doctorId: this.state.doctorId,
+          selectedGender: this.state.selectedGender.value,
+          timeType: this.state.timeType,
+          language: this.props.language,
+          timeString: timeString,
+          doctorName: doctorName,
+          paymentMethod: this.state.selectedPayment.value,
+          priceId: this.props.doctorExtraInforFromGrandParent.priceId,
+        });
+        if (res && res.errCode === 0) {
+          toast.success("OK");
+
+          let resdelete = await changeStatusScheduleDoctorByTime({
+            timeType: this.state.timeType,
+            date: this.props.dataTime.date,
+            doctorId: this.state.doctorId,
+            statusId: "SS2",
+          });
+          if (resdelete && resdelete.errCode === 0) {
+            this.props.closeBookingModal();
+            this.props.reloadSheduleModal();
+          } else {
+            toast.error("Something wrong!");
+          }
+
           this.setState({
             isSending: false,
           });
         } else {
-          toast.error("Error!");
-          this.setState({
-            isSending: false,
-          });
+          if (res && res.errCode === 1) {
+            toast.error("Please fulfill informations");
+            this.setState({
+              isSending: false,
+            });
+          } else {
+            if (res && res.errCode === 5) {
+              toast.error("Please confirm your last appointment");
+              this.setState({
+                isSending: false,
+              });
+            } else {
+              toast.error("Error!");
+              this.setState({
+                isSending: false,
+              });
+            }
+          }
         }
       }
+    } catch (error) {
+      return;
     }
   };
 
@@ -303,6 +375,7 @@ class BookingModal extends Component {
       closeBookingModal,
       doctorExtraInforFromGrandParent,
     } = this.props;
+    console.log("Check props inside modal: ", this.props);
     let {
       listPayments,
       isSending,
@@ -497,7 +570,7 @@ class BookingModal extends Component {
                   <Select
                     value={this.state.selectedGender}
                     onChange={this.handleChangeSelectGender}
-                    options={this.state.genders}
+                    options={this.state.gender}
                   />{" "}
                 </div>
               </div>

@@ -60,13 +60,17 @@ class RemedyModal extends Component {
     });
   };
   handleOnchangeImage = async (event) => {
-    let data = event.target.files;
-    let file = data[0];
-    if (file) {
-      let base64 = await CommonUtils.getBase64(file);
-      this.setState({
-        imgBase64: base64,
-      });
+    try {
+      let data = event.target.files;
+      let file = data[0];
+      if (file) {
+        let base64 = await CommonUtils.getBase64(file);
+        this.setState({
+          imgBase64: base64,
+        });
+      }
+    } catch (error) {
+      return;
     }
   };
   handleSendRemedy = () => {
