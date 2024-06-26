@@ -1,0 +1,63 @@
+.manage-schedule-container {
+  .manage-schedule-title {
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .pick-hour-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    button {
+      padding: 5px 15px;
+      border: 1px solid yellow;
+      cursor: pointer;
+
+      &.active {
+        background-color: rgb(198, 178, 139);
+      }
+
+      &:hover {
+        background-color: rgba(198, 178, 139, 0.7);
+      }
+    }
+  }
+
+  .btn-schedule {
+    &.active {
+      background-color: rgb(198, 178, 139);
+    }
+  }
+
+  .btn-save-schedule {
+    margin-top: 20px;
+
+    &.active {
+      background-color: rgb(198, 178, 139);
+    }
+  }
+
+  .schedule-table-container {
+    margin-top: 20px;
+
+    .table {
+      width: 100%;
+      .btn-delete-schedule {
+        margin-left: 5px; /* Điều chỉnh khoảng cách bên trái của button */
+      }
+
+      th,
+      td {
+        text-align: center;
+        vertical-align: middle;
+      }
+    }
+  }
+}

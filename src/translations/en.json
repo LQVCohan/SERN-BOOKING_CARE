@@ -12,7 +12,8 @@
     "title1": "Medical foundation",
     "title2": "Holistic health care",
     "placeholderInput": "Find a medical specialty",
-    "welcome": "Welcome, "
+    "welcome": "Welcome, ",
+    "login": "Login"
   },
 
   "menu": {
@@ -28,7 +29,55 @@
       "manage-specialty": "Manage Specialities",
       "handbook": "Handbooks",
       "manage-handbook": "Manage Handbooks"
+    },
+    "doctor": {
+      "manage-schedule": "Manage schedule",
+      "manage-patient": "Manage patient",
+      "manage-doctor-info": "Manage doctor's information",
+      "doctor-info": "Doctor's information",
+      "terminate": "Cancel coporation",
+      "history": "History"
     }
+  },
+  "doctor": {
+    "doctor-profile-label": "Doctor's profile",
+    "save": "Save change",
+    "id": "ID: ",
+    "change-password": "Change password",
+    "upload": "Upload your picture",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "contact-label": "Doctor's contact",
+    "chart-label": "Charts",
+    "phone-number": "Phone number",
+    "status": "Status",
+    "invalid-password": "Invalid password",
+    "manage-patient-label": "Manage patient",
+    "choose-date": "Choose a date",
+    "time": "Time",
+    "on": "ON",
+    "address": "Address",
+    "gender": "Gender",
+    "payment": "Payment method",
+    "action": "Action",
+    "depos": "Deposited",
+    "comfirm": "Done",
+    "status-patient": "Status",
+    "birth": "Birthday",
+    "reason": "Booking reason"
+  },
+  "history": {
+    "title": "booking history",
+    "patientId": "Patient ID",
+    "patientName": "Patient Name",
+    "doctorName": "Doctor Name",
+    "reason": "Reason for Visit",
+    "location": "Address",
+    "phoneNumber": "Phone Number",
+    "price": "Price",
+    "status": "Status",
+    "time": "Time",
+    "date": "Date"
   },
   "manage-user": {
     "add": "Add a new user",
@@ -42,6 +91,75 @@
     "gender": "Gender",
     "img": "Avatar",
     "position": "Position",
-    "save": "Save "
+    "save": "Save user",
+    "edit": "Edit user"
+  },
+  "homepage": {
+    "outstanding-doctor": "Last week's featured doctor",
+    "more-info": "More info",
+    "specialty-label": "Popular specialties",
+    "clinic-label": "Medical facilities"
+  },
+  "manage-schedule": {
+    "title": "Manage doctor's medical examination plans",
+    "choose-doctor": "Choose a doctor",
+    "choose-date": "Choose a date",
+    "save": "Save"
+  },
+  "patient": {
+    "search": {
+      "doctor-label": "Doctors",
+      "specialty-label": "Specialities",
+      "clinic-label": "Clinics"
+    },
+    "detail-doctor": {
+      "schedule": "Doctor's schedule",
+      "no-schedule": "No schedule available today, please choose another day",
+      "choose": "Choose ",
+      "book": "book",
+      "free": "(free)",
+      "and": "and"
+    },
+    "extra-info-doctor": {
+      "label-address": "WORKPLACE",
+      "label-cost": "price:",
+      "hide": "Show less",
+      "detail": "Show more",
+      "payment": "Payment method: "
+    },
+    "booking-modal": {
+      "label": "Medical appointment booking information",
+      "first-name": "First name",
+      "last-name": "Last name",
+      "phoneNumber": "Phone number",
+      "address": "Address",
+      "reason": "Booking reason",
+      "dateOfBirth": "Date of birth",
+      "gender": "Gender",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "invalid-first-name": "Invalid first name",
+      "invalid-last-name": "Invalid last name",
+      "invalid-phone-number": "Invalid phone number",
+      "invalid-email": "Invalid email",
+      "payment": "Payment method"
+    }
+  },
+  "admin": {
+    "manage-doctor": {
+      "title": "CREATE A NEW DOCTOR'S INFORMATION",
+      "select-doctor": "Choose a doctor",
+      "intro": "Introduction",
+      "create": "Save",
+      "update": "Update",
+      "price": "Price",
+      "payment": "Payment",
+      "province": "Province",
+      "nameClinic": "Clinic's name",
+      "addressClinic": "Clinic's address",
+      "note": "Note",
+      "specialty-label": "Choose a specialty",
+      "clinic-label": "Choose a clinic"
+    }
   }
 }

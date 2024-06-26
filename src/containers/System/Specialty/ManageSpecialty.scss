@@ -1,0 +1,149 @@
+.manage-specialty-container {
+  padding: 0 15px;
+
+  .manage-specialty-label {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: large;
+    font-weight: 600;
+    padding: 15px 0;
+  }
+
+  .add-new-specialty {
+    padding-top: 15px;
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .btn-save-specialty {
+      margin-top: 15px;
+      border: none;
+      padding: 8px 15px;
+      min-width: 75px;
+      border-radius: 10px;
+      background: orange;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background: #ff8c00;
+      }
+    }
+
+    .image-preview {
+      width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 10px;
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .col-6 {
+      padding: 0 15px;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: orange;
+        }
+      }
+
+      .form-control-file {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: orange;
+        }
+      }
+    }
+  }
+
+  .specialty-list {
+    margin-top: 30px;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ccc;
+
+      th,
+      td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        color: black;
+      }
+
+      td {
+        img {
+          display: block;
+          width: 80px;
+          height: auto;
+          margin: 0 auto;
+          border-radius: 5px;
+        }
+
+        .column-actions {
+          button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &.btn-primary {
+              background-color: #007bff;
+              color: white;
+
+              &:hover {
+                background-color: #0056b3;
+              }
+            }
+
+            &.btn-danger {
+              background-color: #dc3545;
+              color: white;
+
+              &:hover {
+                background-color: #c82333;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

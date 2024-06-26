@@ -1,0 +1,62 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+td {
+  border: 1px solid white;
+  background-color: #dddddd;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+  border: 1px solid white;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+.btn-edit {
+  width: 50px;
+  height: fit-content;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: orange;
+
+  &:hover {
+    background-color: transparent !important;
+    color: orange;
+  }
+  .fa--pencil {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1536 1536'%3E%3Cpath fill='%23000' d='m363 1408l91-91l-235-235l-91 91v107h128v128zm523-928q0-22-22-22q-10 0-17 7l-542 542q-7 7-7 17q0 22 22 22q10 0 17-7l542-542q7-7 7-17m-54-192l416 416l-832 832H0v-416zm683 96q0 53-37 90l-166 166l-416-416l166-165q36-38 90-38q53 0 91 38l235 234q37 39 37 91'/%3E%3C/svg%3E");
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+}
+.btn-delete {
+  width: 50px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: rgb(235, 15, 15);
+
+  &:hover {
+    background-color: transparent !important;
+    color: rgb(235, 15, 15);
+  }
+}

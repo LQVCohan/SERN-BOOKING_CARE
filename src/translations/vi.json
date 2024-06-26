@@ -12,7 +12,8 @@
     "title1": "Nền tảng y tế",
     "title2": "Chăm sóc sức khỏe toàn diện",
     "placeholderInput": "Tìm chuyên khoa khám bệnh",
-    "welcome": "Xin chào, "
+    "welcome": "Xin chào, ",
+    "login": "Đăng nhập "
   },
   "menu": {
     "admin": {
@@ -27,14 +28,22 @@
       "manage-specialty": "Quản lý chuyên khoa",
       "handbook": "Cẩm nang",
       "manage-handbook": "Quản lý cẩm nang"
+    },
+    "doctor": {
+      "manage-schedule": "Quản lý kế hoạch",
+      "manage-patient": "Quản lý bệnh nhân",
+      "manage-doctor-info": "Quản lý thông tin cá nhân",
+      "doctor-info": "Thông tin cá nhân",
+      "terminate": "Nộp đơn hủy hợp tác",
+      "history": "Lịch sử khám bệnh"
     }
   },
   "manage-user": {
     "add": "Thêm mới người dùng",
     "email": "Email",
     "password": "Mật khẩu",
-    "first-name": "Họ",
-    "last-name": "Tên",
+    "first-name": "Tên",
+    "last-name": "Họ",
     "phone": "Số điện thoại",
     "address": "Địa chỉ",
     "roleId": "Mã vai trò",
@@ -42,6 +51,116 @@
     "img": "Ảnh đại diện",
     "position": "Chức vụ",
     "save": "Lưu thông tin",
-    "cancel": "Hủy bỏ"
+    "cancel": "Hủy bỏ",
+    "cut": "Di chuyển",
+    "edit": "Lưu thay đổi"
+  },
+  "doctor": {
+    "doctor-profile-label": "Trang cá nhân",
+    "save": "Lưu thay đổi",
+    "id": "Mã: ",
+    "change-password": "Đổi mật khẩu",
+    "upload": "Tải ảnh đại diện",
+    "first-name": "Họ và tên đệm",
+    "last-name": "Tên",
+    "contact-label": "Thông tin liên hệ",
+    "chart-label": "Biểu đồ",
+    "phone-number": "Số điện thoại",
+    "status": "Trạng thái",
+    "invalid-password": "Mật khẩu không hợp lệ",
+    "manage-patient-label": "QUẢN LÝ BỆNH NHÂN KHÁM BỆNH",
+    "choose-date": "Chọn ngày khám",
+    "time": "Thời gian",
+    "on": "STT",
+    "address": "Địa chỉ",
+    "gender": "Giới tính",
+    "payment": "Phương thức thanh toán",
+    "action": "Thao tác",
+    "depos": "Đã nhận cọc",
+    "comfirm": "Xác nhận hoàn tất",
+    "status-patient": "Tình trạng",
+    "birth": "Ngày sinh",
+    "reason": "Lý do khám"
+  },
+  "history": {
+    "title": "Lịch sử khám bệnh",
+    "patientId": "Mã bệnh nhân",
+    "patientName": "Tên bệnh nhân",
+    "doctorName": "Tên bác sĩ",
+    "reason": "Lý do khám",
+    "location": "Địa chỉ",
+    "phoneNumber": "Số điện thoại",
+    "price": "Số tiền",
+    "status": "Trạng thái",
+    "time": "Thời gian",
+    "date": "Ngày khám"
+  },
+  "homepage": {
+    "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
+    "more-info": "Xem thêm",
+    "specialty-label": "Chuyên khoa phổ biến",
+    "clinic-label": "Cơ sở y tế nỗi bật"
+  },
+  "manage-schedule": {
+    "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
+    "choose-doctor": "Chọn bác sĩ",
+    "choose-date": "Chọn ngày khám",
+    "save": "Lưu thông tin"
+  },
+  "patient": {
+    "search": {
+      "doctor-label": "Bác sĩ",
+      "specialty-label": "Chuyên khoa",
+      "clinic-label": "Cơ sở y tế"
+    },
+    "detail-doctor": {
+      "schedule": "Lịch khám",
+      "no-schedule": "Hiện không có lịch hẹn nào của bác sĩ này trong hôm nay, vui lòng chọn hôm khác",
+      "choose": "Chọn ",
+      "book": "đặt",
+      "free": "(miễn phí)",
+      "and": "và"
+    },
+    "extra-info-doctor": {
+      "label-address": "Địa chỉ phòng khám",
+      "label-cost": "Giá khám: ",
+      "hide": "Ẩn chi tiết",
+      "detail": "Xem chi tiết",
+      "payment": "Phương thức thanh toán: "
+    },
+    "booking-modal": {
+      "label": "Thông tin đặt lịch khám bệnh",
+      "first-name": "Họ và tên đệm",
+      "last-name": "Tên",
+      "phoneNumber": "Số điện thoại",
+      "address": "Địa chỉ",
+      "reason": "Lý do khám",
+      "dateOfBirth": "Ngày sinh",
+      "gender": "Giới tính",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy bỏ",
+      "invalid-first-name": "Họ và tên đệm không hợp lệ",
+      "invalid-last-name": "Tên không hợp lệ",
+      "invalid-phone-number": "Số điện thoại không hợp lệ",
+      "invalid-email": "email không hợp lệ",
+      "payment": "Phương thức thanh toán"
+    }
+  },
+  "admin": {
+    "manage-doctor": {
+      "title": "TẠO THÔNG TIN BÁC SĨ",
+      "select-doctor": "Chọn bác sĩ",
+      "intro": "Thông tin giới thiệu",
+      "create": "Lưu thông tin",
+      "update": "Cập nhật thông tin",
+      "price": "Giá khám bệnh",
+      "payment": "Phương thức thanh toán",
+      "province": "Tỉnh thành",
+      "nameClinic": "Tên phòng khám",
+      "addressClinic": "Địa chỉ phòng khám",
+      "note": "Ghi chú",
+      "specialty-label": "Chọn chuyên khoa",
+      "clinic-label": "Chọn phòng khám"
+    }
   }
 }

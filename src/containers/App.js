@@ -15,6 +15,21 @@ import System from "../routes/System";
 import { CustomToastCloseButton } from "../components/CustomToast";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
+import DetailDoctor from "./Patient/Doctor/DetailDoctor";
+import MoreDoctor from "./Patient/Doctor/MoreDoctor";
+
+import Doctor from "../routes/Doctor";
+import VerifyEmail from "./Patient/VerifyEmail";
+import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
+import DetailClinic from "./Patient/Clinic/DetailClinic";
+import SearchBar from "./HomePage/SearchBar";
+import MoreSpecialty from "./Patient/Doctor/MoreSpecialty";
+import MoreClinic from "./Patient/Doctor/MoreClinic";
+import ProfilePatient from "./Patient/Profile/ProfilePatient";
+import AppointmentPatient from "./Patient/Profile/AppointmentPatient";
+import Rule from "./HomePage/Section/Rule";
+import ForgotPassword from "./Patient/Profile/ForgotPassword";
+
 class App extends Component {
   handlePersistorState = () => {
     const { persistor } = this.props;
@@ -44,7 +59,11 @@ class App extends Component {
                 <Switch>
                   <Route path={path.HOME} exact component={Home} />
                   <Route path={path.HOMEPAGE} component={HomePage} />
-
+                  <Route
+                    exact
+                    path="/forgot-password"
+                    component={ForgotPassword}
+                  />
                   <Route
                     path={path.LOGIN}
                     component={userIsNotAuthenticated(Login)}
@@ -53,11 +72,38 @@ class App extends Component {
                     path={path.SYSTEM}
                     component={userIsAuthenticated(System)}
                   />
+                  <Route
+                    path={"/doctor/"}
+                    component={userIsAuthenticated(Doctor)}
+                  />
+                  <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                  <Route
+                    path={path.DETAIL_SPECIALTY}
+                    component={DetailSpecialty}
+                  />
+                  <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
+                  <Route
+                    path={path.VERIFY_EMAIL_BOOKING}
+                    component={VerifyEmail}
+                  />
+                  <Route path={path.SEARCH} component={SearchBar} />
+                  <Route path={"/more-doctor/"} component={MoreDoctor} />
+                  <Route path={"/more-specialty/"} component={MoreSpecialty} />
+                  <Route path={"/more-clinic/"} component={MoreClinic} />
+                  <Route
+                    path={"/patient-profile/"}
+                    component={ProfilePatient}
+                  />
+                  <Route
+                    path={"/patient-booking/:id"}
+                    component={AppointmentPatient}
+                  />
+                  <Route path={"/rule/"} component={Rule} />
                 </Switch>
               </CustomScrollbars>
             </div>
 
-            <ToastContainer
+            {/* <ToastContainer
               className="toast-container"
               toastClassName="toast-item"
               bodyClassName="toast-item-body"
@@ -68,6 +114,18 @@ class App extends Component {
               closeOnClick={false}
               draggable={false}
               closeButton={<CustomToastCloseButton />}
+            /> */}
+            <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
             />
           </div>
         </Router>

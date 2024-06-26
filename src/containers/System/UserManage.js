@@ -12,6 +12,13 @@ import {
 import ModalUser from "./ModalUser";
 import ModalEditUser from "./ModalEditUser";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus,
+  faPencilAlt,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+
 class UserManage extends Component {
   constructor(props) {
     super(props);
@@ -128,25 +135,26 @@ class UserManage extends Component {
             className="btn btn-primary px-3"
             onClick={() => this.handleAddNewUser()}
           >
-            <i className="fa fa-plus mx-1"></i>
+            <FontAwesomeIcon icon={faPlus} className="mx-1" />
             Add new user
           </button>
         </div>
         <div className="users-table mt-3 mx-1"></div>
         <table>
-          <tr>
-            <th>Email</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Address</th>
-            <th>Action</th>
-          </tr>
-
-          {arrayUsers &&
-            arrayUsers.map((item, index) => {
-              return (
-                <>
-                  <tr>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {arrayUsers &&
+              arrayUsers.map((item, index) => {
+                return (
+                  <tr key={index}>
                     <td>{item.email}</td>
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
@@ -156,19 +164,19 @@ class UserManage extends Component {
                         className="btn-edit"
                         onClick={() => this.handleEditUser(item)}
                       >
-                        <i className="fa fa-pencil"></i>
+                        <FontAwesomeIcon icon={faPencilAlt} />
                       </button>
                       <button
                         className="btn-delete"
                         onClick={() => this.handleDeleteUser(item)}
                       >
-                        <i className="fa fa-trash"></i>
+                        <FontAwesomeIcon icon={faTrash} />
                       </button>
                     </td>
                   </tr>
-                </>
-              );
-            })}
+                );
+              })}
+          </tbody>
         </table>
       </div>
     );

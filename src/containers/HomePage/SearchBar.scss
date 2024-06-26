@@ -1,0 +1,122 @@
+:root {
+  --text-color: #292524;
+  --bg-color: #f5f5f4;
+}
+.search-container {
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  margin-right: 0 auto;
+  min-height: 800px;
+  .search-bar {
+    align-self: center;
+    height: 54px;
+    width: 800px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #f7d800;
+
+    justify-content: space-between;
+    flex-direction: row;
+
+    .css-yk16xz-control {
+      height: 54px;
+
+      border: none;
+      outline: none;
+      border-radius: 25px;
+
+      -moz-border-radius: 25px;
+      -ms-border-radius: 25px;
+      -o-border-radius: 25px;
+      -webkit-border-radius: 25px;
+    }
+    i {
+      cursor: pointer;
+      &:hover {
+        color: white;
+      }
+    }
+    border-radius: 25px 25px 0 25px;
+    z-index: 10000;
+    input {
+      padding: 0 20px;
+
+      height: 30px;
+      width: 500px;
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+  }
+}
+.search-body {
+  display: flex;
+
+  min-height: 300px;
+  box-shadow: 0 1px 6px #20212447;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  margin: 10px 100px;
+
+  flex-direction: column;
+
+  .title {
+    width: auto;
+    height: 40px;
+    align-self: flex-start;
+    justify-self: center;
+    cursor: pointer;
+    margin: 0px 5px 0 0;
+    padding: 0 5px 0 0;
+    font-size: 30px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    background-color: #efefef;
+    font-style: italic;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-color);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+  .title:hover {
+    color: var(--text-color);
+  }
+  .child {
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px 40px;
+
+    align-items: center;
+    .child-image {
+      cursor: pointer;
+      background-size: cover;
+      border: 1px solid #012301;
+      height: 35px;
+      width: 35px;
+    }
+    .child-info {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+
+      .name {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .specialty {
+        font-style: italic;
+      }
+    }
+  }
+}
