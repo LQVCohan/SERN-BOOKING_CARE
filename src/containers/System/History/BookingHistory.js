@@ -5,7 +5,7 @@ import { getAllHistoryByDoctorId } from "../../../services/userService";
 import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../../utils";
-
+import moment from "moment";
 class BookingHistory extends Component {
   constructor(props) {
     super(props);
@@ -74,6 +74,13 @@ class BookingHistory extends Component {
             let namePatientVi = `${historyItem.historyPatientData.lastName} ${historyItem.historyPatientData.firstName}`;
             let namePatientEn = `${historyItem.historyPatientData.firstName} ${historyItem.historyPatientData.lastName}`;
 
+            let date =
+              language === LANGUAGES.VI
+                ? moment.unix(+historyItem.date / 1000).format("DD/MM/YYYY")
+                : moment
+                    .unix(+historyItem.date / 1000)
+                    .locale("en")
+                    .format("MM/DD/YYYY");
             return (
               <div key={historyItem.id} className="history-item">
                 <div>{index + 1}</div>
@@ -87,7 +94,7 @@ class BookingHistory extends Component {
                 <div>{historyItem.reason}</div>
                 <div>{historyItem.timeType}</div>
 
-                <div>{historyItem.date}</div>
+                <div>{date}</div>
                 <div>{historyItem.address}</div>
                 <div>{historyItem.phoneNumber}</div>
                 <div>
@@ -96,7 +103,7 @@ class BookingHistory extends Component {
                     : `${historyItem.historyData.Doctor_Info.priceData.valueEn}$`}
                 </div>
                 <div className="status-icon">
-                  {historyItem.statusId === "completed" && (
+                  {historyItem.statusId === "Done" && (
                     <FaCheckCircle color="green" />
                   )}
                   {historyItem.statusId === "cancelled" && (

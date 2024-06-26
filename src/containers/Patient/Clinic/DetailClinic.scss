@@ -17,6 +17,12 @@
   .description-clinic {
     background-color: white !important;
     padding: 20px 50px;
+    background: center center no-repeat;
+    background-size: cover;
+    width: auto;
+    height: 300px;
+    opacity: 0.5;
+
     h1 {
       font-size: 20px;
       font-weight: 600;
@@ -26,6 +32,13 @@
       font-size: 16px;
       font-weight: 600;
     }
+  }
+  .name-clinic {
+    display: flex;
+    flex-direction: column;
+    font-size: 50px;
+    font-weight: 600;
+    align-items: center;
   }
   .search-province-doctor {
     margin: 10px 10px;
@@ -42,15 +55,20 @@
     }
   }
   .detail-clinic-body {
+    margin: 0 50px 0;
     padding: 5px 100px;
     background: #eee;
     display: flex;
     flex-direction: column;
-
+    border: 1px solid black;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
     .each-doctor {
       display: flex;
       width: 100%;
-
       min-height: 300px;
       box-shadow: 0 1px 6px #20212447;
       border-radius: 10px;

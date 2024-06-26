@@ -23,7 +23,7 @@ export const adminMenu = [
         // ],
       },
       {
-        name: "menu.doctor.schedule",
+        name: "menu.doctor.manage-schedule",
         link: "/doctor/manage-schedule",
       },
     ],

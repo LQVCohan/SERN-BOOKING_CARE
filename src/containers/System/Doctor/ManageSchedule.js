@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
+import "./ManageSchedule.scss";
 import { FormattedMessage } from "react-intl";
 import Select from "react-select";
 import * as actions from "../../../store/actions";
@@ -33,7 +35,8 @@ class ManageSchedule extends Component {
 
   markSlot = (timeType, unixDate) => {
     const { markedSlots } = this.state;
-    const date = new Date(parseInt(unixDate, 10));
+    // Chuyển đổi UNIX timestamp từ milliseconds
+    const date = new Date(parseInt(unixDate, 10)); // Đảm bảo rằng unixDate là số nguyên
     const formattedDate = moment(date).format("DD/MM/YYYY");
 
     if (!markedSlots[timeType]) {
@@ -45,19 +48,18 @@ class ManageSchedule extends Component {
 
   async componentDidMount() {
     try {
-      await this.props.fetchAllDoctors();
-      await this.props.fetchAllScheduleTime();
+      this.props.fetchAllDoctors();
+      this.props.fetchAllScheduleTime();
 
-      const { user } = this.props;
-      const res = await getTotalSheduleOfDoctor(user.id);
+      let { user } = this.props;
+      let res = await getTotalSheduleOfDoctor(user.id);
       res.res.rows.forEach((item) => {
         this.markSlot(item.timeType, item.date);
       });
-
       if (user && user.roleId === "R2") {
-        const object = {};
-        const labelVi = `${user.lastName} ${user.firstName}`;
-        const labelEn = `${user.firstName} ${user.lastName}`;
+        let object = {};
+        let labelVi = `${user.lastName} ${user.firstName}`;
+        let labelEn = `${user.firstName} ${user.lastName}`;
 
         object.label = this.props.language === LANGUAGES.VI ? labelVi : labelEn;
         object.value = user.id;
@@ -66,48 +68,47 @@ class ManageSchedule extends Component {
         });
       }
     } catch (error) {
-      console.error("Error in componentDidMount:", error);
-      // Handle error appropriately, e.g., show toast or log out user
+      return;
     }
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     try {
-      const { user, language } = this.props;
-      const { selectedDoctor } = this.state;
+      let { user, language } = this.props;
+      let { selectedDoctor } = this.state;
 
       if (prevProps.allDoctors !== this.props.allDoctors) {
-        const dataSelect = this.buildDataInputSelect(this.props.allDoctors);
+        let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
         this.setState({
           listDoctors: dataSelect,
         });
       }
-
       if (prevState.selectedDoctor !== this.state.selectedDoctor) {
-        const res = await getTotalSheduleOfDoctor(selectedDoctor.value);
+        this.setState({
+          markedSlots: {},
+        });
+        let res = await getTotalSheduleOfDoctor(selectedDoctor.value);
         res.res.rows.forEach((item) => {
           this.markSlot(item.timeType, item.date);
         });
       }
-
       if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
         let data = this.props.allScheduleTime;
         if (data && data.length > 0) {
           data = data.map((item) => ({ ...item, isSelected: false }));
         }
-        const res = await getTotalSheduleOfDoctor(user.id);
+        let res = await getTotalSheduleOfDoctor(user.id);
 
         this.setState({
           rangeTime: data,
           totalSchedule: res,
         });
       }
-
       if (prevProps.language !== this.props.language) {
         if (user && user.roleId === "R2") {
-          const object = {};
-          const labelVi = `${user.lastName} ${user.firstName}`;
-          const labelEn = `${user.firstName} ${user.lastName}`;
+          let object = {};
+          let labelVi = `${user.lastName} ${user.firstName}`;
+          let labelEn = `${user.firstName} ${user.lastName}`;
 
           object.label = language === LANGUAGES.VI ? labelVi : labelEn;
           object.value = user.id;
@@ -117,19 +118,18 @@ class ManageSchedule extends Component {
         }
       }
     } catch (error) {
-      console.error("Error in componentDidUpdate:", error);
-      // Handle error appropriately, e.g., show toast or log out user
+      return;
     }
   }
 
   buildDataInputSelect = (inputData) => {
-    const result = [];
-    const language = this.props.language;
+    let result = [];
+    let language = this.props.language;
     if (inputData && inputData.length > 0) {
-      inputData.forEach((item, index) => {
-        const object = {};
-        const labelVi = `${item.lastName} ${item.firstName}`;
-        const labelEn = `${item.firstName} ${item.lastName} `;
+      inputData.map((item, index) => {
+        let object = {};
+        let labelVi = `${item.lastName} ${item.firstName}`;
+        let labelEn = `${item.firstName} ${item.lastName} `;
 
         object.label = language === LANGUAGES.VI ? labelVi : labelEn;
         object.value = item.id;
@@ -164,19 +164,23 @@ class ManageSchedule extends Component {
     try {
       let { rangeTime, selectedDoctor, currentDate } = this.state;
       let result = [];
-      if (!currentDate) {
+      console.log("check date: ", currentDate, new Date());
+      if (
+        !currentDate ||
+        currentDate.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)
+      ) {
         toast.error("Missing Date");
       } else if (selectedDoctor && _.isEmpty(selectedDoctor)) {
         toast.error("Missing Doctor");
       } else {
-        const formatedDate = new Date(currentDate).getTime();
+        let formatedDate = new Date(currentDate).getTime();
         if (rangeTime && rangeTime.length > 0) {
           let selectedTime = rangeTime.filter(
             (item) => item.isSelected === true
           );
           if (selectedTime && selectedTime.length > 0) {
             selectedTime = selectedTime.map((time) => {
-              const object = {};
+              let object = {};
               object.doctorId = selectedDoctor.value;
               object.date = formatedDate;
               object.timeType = time.keyMap;
@@ -190,7 +194,7 @@ class ManageSchedule extends Component {
           }
         }
 
-        const res = await saveBulkScheduleDoctor({
+        let res = await saveBulkScheduleDoctor({
           arrSchedule: result,
           doctorId: selectedDoctor.value,
           date: formatedDate,
@@ -207,15 +211,14 @@ class ManageSchedule extends Component {
         }
       }
     } catch (error) {
-      console.error("Error in handleSaveSchedule:", error);
-      // Handle error appropriately, e.g., show toast or log out user
+      return;
     }
   };
 
   generateDays(startDate, numDays) {
     const days = [];
     for (let i = 0; i < numDays; i++) {
-      const date = new Date(startDate);
+      let date = new Date(startDate);
       date.setDate(date.getDate() + i);
       days.push(date);
     }
@@ -229,33 +232,28 @@ class ManageSchedule extends Component {
   };
 
   handleDeleteSchedule = async (timeType, formattedDate) => {
-    try {
-      let { markedSlots, selectedDoctor } = this.state;
-      let doctorId = selectedDoctor.value;
-      let date = moment(formattedDate, "DD/MM/YYYY").valueOf();
-      let statusId = "SS3";
-      let res = await changeStatusScheduleDoctorByTime({
-        doctorId,
-        timeType,
-        date,
-        statusId,
-      });
-      if (res && res.errCode === 0) {
-        if (markedSlots[timeType] && markedSlots[timeType][formattedDate]) {
-          delete markedSlots[timeType][formattedDate];
-          if (Object.keys(markedSlots[timeType]).length === 0) {
-            delete markedSlots[timeType];
-          }
+    let { markedSlots, selectedDoctor } = this.state;
+    let doctorId = selectedDoctor.value;
+    let date = moment(formattedDate, "DD/MM/YYYY").valueOf();
+    let statusId = "SS3";
+    let res = await changeStatusScheduleDoctorByTime({
+      doctorId,
+      timeType,
+      date,
+      statusId,
+    });
+    if (res && res.errCode === 0) {
+      if (markedSlots[timeType] && markedSlots[timeType][formattedDate]) {
+        delete markedSlots[timeType][formattedDate];
+        if (Object.keys(markedSlots[timeType]).length === 0) {
+          delete markedSlots[timeType];
         }
-        this.setState({ markedSlots });
-        toast.success("Deleted schedule successfully");
       }
-      if (res && res.errCode === 3) {
-        toast.error("This schedule was booked");
-      }
-    } catch (error) {
-      console.error("Error in handleDeleteSchedule:", error);
-      // Handle error appropriately, e.g., show toast or log out user
+      this.setState({ markedSlots });
+      toast.success("Deleted schedule successfully");
+    }
+    if (res && res.errCode === 3) {
+      toast.error("This schedule was booked");
     }
   };
 
@@ -354,7 +352,23 @@ class ManageSchedule extends Component {
               <tbody>
                 {timeSlots.map((slot, index) => (
                   <tr key={index}>
-                    <td>{slot}</td>
+                    <td>
+                      {slot === "T1"
+                        ? "8:00 - 9:00"
+                        : slot === "T2"
+                        ? "9:00 - 10:00"
+                        : slot === "T3"
+                        ? "10:00 - 11:00"
+                        : slot === "T4"
+                        ? "11:00 - 12:00"
+                        : slot === "T5"
+                        ? "13:00 - 14:00"
+                        : slot === "T6"
+                        ? "14:00 - 15:00"
+                        : slot === "T7"
+                        ? "15:00 - 16:00"
+                        : "16:00 - 17:00"}
+                    </td>
                     {days.map((day, dayIndex) => (
                       <td key={dayIndex}>
                         {markedSlots[slot] &&
