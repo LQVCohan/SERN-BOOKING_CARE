@@ -50,10 +50,18 @@ class VerifyEmail extends Component {
                 {+errCode === 0 ? (
                   <div className="info-booking">
                     Xác nhận lịch hẹn thành công
+                    <span>Chuyển tiền cọc qua mã dưới đây - Cọc 50 %</span>
+                    <div className="qr">
+                      <div className="img"></div>
+                    </div>
                   </div>
                 ) : (
                   <div className="info-booking">
                     Lịch hẹn không tồn tại hoặc đã đươc xác nhận từ trước!
+                    <span>Chuyển tiền cọc qua mã dưới đây - Cọc 50 %</span>
+                    <div className="qr">
+                      <div className="img"></div>
+                    </div>
                   </div>
                 )}
               </div>
